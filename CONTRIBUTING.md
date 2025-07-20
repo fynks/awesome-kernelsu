@@ -49,16 +49,6 @@ Each entry should include:
 - [**Resource Name**](https://github.com/user/repo) - Clear description of what it does
 ```
 
-#### With Metrics
-```markdown
-- [**Resource Name**](https://github.com/user/repo) - Description (1.5k+ ⭐)
-```
-
-#### With Additional Info
-```markdown
-- [**Resource Name**](https://github.com/user/repo) - Description (Current: v2.1.0)
-```
-
 ### Link Preferences
 
 1. **Primary**: Official GitHub repository
