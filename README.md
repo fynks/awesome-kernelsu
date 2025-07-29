@@ -6,20 +6,20 @@ KernelSU is a revolutionary kernel-based root solution for Android that provides
 
 ## Contents
 
-- [🏠 Official Resources](#-official-resources)
-- [📖 Documentation](#-documentation)
-- [🚀 KernelSU Derivatives](#-kernelsu-derivatives)
-- [📦 Installation & Setup](#-installation--setup)
-- [🔧 Kernel Sources & Building](#-kernel-sources--building)
-- [🛠️ Development](#️-development)
-- [🧩 Modules & Tools](#-modules--tools)
-- [👥 Community](#-community)
-- [📚 Tutorials & Guides](#-tutorials--guides)
-- [🔗 Related Projects](#-related-projects)
-- [🔍 Comparison](#-comparison)
-- [❓ FAQ & Troubleshooting](#-faq--troubleshooting)
+- [Official Resources](#-official-resources)
+- [Documentation](#-documentation)
+- [KernelSU Derivatives](#-kernelsu-derivatives)
+- [Installation & Setup](#-installation--setup)
+- [Kernel Sources & Building](#-kernel-sources--building)
+- [Development](#️-development)
+- [Modules & Tools](#-modules--tools)
+- [Community](#-community)
+- [Tutorials & Guides](#-tutorials--guides)
+- [Related Projects](#-related-projects)
+- [Comparison](#-comparison)
+- [FAQ & Troubleshooting](#-faq--troubleshooting)
 
-## 🏠 Official Resources
+## Official Resources
 
 ### Main Projects
 - [**KernelSU Official Repository**](https://github.com/tiann/KernelSU) - Main KernelSU project repository
@@ -30,7 +30,7 @@ KernelSU is a revolutionary kernel-based root solution for Android that provides
 - [**KernelSU Releases**](https://github.com/tiann/KernelSU/releases) - Latest stable releases
 - [**Manager APK**](https://github.com/tiann/KernelSU/releases/latest) - Official KernelSU Manager application
 
-## 📖 Documentation
+## Documentation
 
 ### Core Documentation
 - [**What is KernelSU?**](https://kernelsu.org/guide/what-is-kernelsu.html) - Introduction and overview
@@ -46,7 +46,7 @@ KernelSU is a revolutionary kernel-based root solution for Android that provides
 - [**Building Guide**](https://kernelsu.org/guide/how-to-build.html) - Compiling from source
 - [**FAQ**](https://kernelsu.org/guide/faq.html) - Frequently asked questions
 
-## 🚀 KernelSU Derivatives
+## KernelSU Derivatives
 
 ### KernelSU-Next (Enhanced Fork)
 - [**Repository**](https://github.com/KernelSU-Next/KernelSU-Next) - Advanced kernel-based root solution
@@ -83,7 +83,7 @@ KernelSU is a revolutionary kernel-based root solution for Android that provides
 | **KernelSU-Next** | 4.4-6.6 | arm64, arm, x86_64 | Magic Mount, WebUI X |
 | **SuKiSu-Ultra** | 3.4-5.4+ | arm64, arm, x86_64 | KPM, Non-GKI focus |
 
-## 📦 Installation & Setup
+## Installation & Setup
 
 ### Boot Image Patching Tools
 - [**KernelSU Manager**](https://github.com/tiann/KernelSU/releases) - Official app for patching boot images
@@ -99,7 +99,7 @@ KernelSU is a revolutionary kernel-based root solution for Android that provides
 2. **Custom Kernel**: Flash pre-built kernel with KernelSU integrated
 3. **Manual Building**: Compile kernel with KernelSU patches
 
-## 🔧 Kernel Sources & Building
+## Kernel Sources & Building
 
 ### Official Kernels & Sources
 - [**KernelSU GKI Kernels**](https://github.com/tiann/KernelSU/releases) - Official GKI builds
@@ -121,7 +121,7 @@ KernelSU is a revolutionary kernel-based root solution for Android that provides
 - **x86_64** - Intel/AMD 64-bit (limited device support)
 - **armeabi-v7a** - 32-bit ARM (SuKiSu-Ultra only)
 
-## 🛠️ Development
+## Development
 
 ### Module Development
 - [**Module Template**](https://github.com/tiann/KernelSU/blob/main/docs/module.md) - Basic module structure
@@ -139,7 +139,7 @@ KernelSU is a revolutionary kernel-based root solution for Android that provides
 - **Required Configs**: `CONFIG_KALLSYMS=y`, `CONFIG_KALLSYMS_ALL=y`
 - **Build Tools**: Clang, GCC cross-compiler, AnyKernel3
 
-## 🧩 Modules & Tools
+## Modules & Tools
 
 ### Popular KernelSU Modules
 - [**SuSFS4KSU**](https://github.com/sidex15/susfs4ksu-module) - Root hiding service
@@ -153,7 +153,7 @@ KernelSU is a revolutionary kernel-based root solution for Android that provides
 - [**Systemless Hosts**](https://github.com/symbuzzer/systemless-hosts-KernelSU-module) - AdAway compatibility
 - [**BindHosts**](https://github.com/bindhosts/bindhosts) - Advanced hosts management
 
-## 👥 Community
+## Community
 
 ### Official Communities
 - [**Telegram Channel**](https://t.me/KernelSU) - Official announcements
@@ -169,7 +169,7 @@ KernelSU is a revolutionary kernel-based root solution for Android that provides
 - [**Reddit Community**](https://www.reddit.com/r/KernelSU/) - Community discussions
 - [**4PDA Forum**](https://4pda.to/forum/index.php?showtopic=1020374) - Russian community
 
-## 📚 Tutorials & Guides
+## Tutorials & Guides
 
 ### Beginner Guides
 - [**What is KernelSU?**](https://kernelsu.org/guide/what-is-kernelsu.html) - Complete introduction
@@ -188,7 +188,7 @@ KernelSU is a revolutionary kernel-based root solution for Android that provides
 - [**YouTube Tutorials**](https://www.youtube.com/results?search_query=kernelsu+installation) - Visual guides
 - [**Kernel Building Videos**](https://www.youtube.com/results?search_query=kernelsu+kernel+build) - Compilation tutorials
 
-## 🔗 Related Projects
+## Related Projects
 
 ### Alternative Root Solutions
 - [**Magisk**](https://github.com/topjohnwu/Magisk) - Traditional systemless root (54.5k+ ⭐)
@@ -209,7 +209,7 @@ KernelSU is a revolutionary kernel-based root solution for Android that provides
 - [**Android Subsystem for Linux**](https://github.com/RuriOSS/asl) - Linux container on Android
 - [**Kernel Assisted Superuser**](https://git.zx2c4.com/kernel-assisted-superuser/about/) - Original concept
 
-## 🔍 Comparison
+## Comparison
 
 ### KernelSU vs Alternatives
 
@@ -231,7 +231,7 @@ KernelSU is a revolutionary kernel-based root solution for Android that provides
 - **OverlayFS**: More efficient than bind mounting
 - **Future-Proof**: Designed for modern Android security models
 
-## ❓ FAQ & Troubleshooting
+## FAQ & Troubleshooting
 
 ### Common Questions
 
@@ -292,7 +292,6 @@ Contributions are welcome! Please read the [contribution guidelines](CONTRIBUTIN
 5. **Submit** a pull request with a clear description
 
 ### Resource Guidelines
-- Must be actively maintained (updated within 6 months)
 - Should provide clear value to the KernelSU community
 - Links must be working and lead to official sources
 - Include relevant metrics (stars, downloads) where available
