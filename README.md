@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://kernelsu.org/logo.png" alt="KernelSU Logo" width="200"/>
+<img src="./media/kernelsu-logo.svg" alt="KernelSU Logo" width="200"/>
 <br>
 
 # Awesome KernelSU
@@ -739,7 +739,13 @@ updateJson=https://example.com/update.json
 
 Pre-built kernels with KernelSU integration for various devices:
 
-- [**WildKernels**](./media/kernelsu-logo.svg) - Collection of premade kernels with KernelSU for multiple device brands
+#### WildKernels
+
+| **Kernel** | **Device Support** | **Repository** |
+|:-------------:|:---------------------:|:-----------------:|
+| **GKI** | GKI Devices | [![Repo](https://img.shields.io/badge/GitHub-GKI_KernelSU_SUSFS-blue?style=flat-square&logo=github)](https://github.com/WildKernels/GKI_KernelSU_SUSFS) |
+| **Sultan** | Pixel Devices | [![Repo](https://img.shields.io/badge/GitHub-Sultan_KernelSU_SUSFS-blue?style=flat-square&logo=github)](https://github.com/WildKernels/Sultan_KernelSU_SUSFS) |
+| **OnePlus** | OnePlus Devices | [![Repo](https://img.shields.io/badge/GitHub-OnePlus_KernelSU_SUSFS-blue?style=flat-square&logo=github)](https://github.com/WildKernels/OnePlus_KernelSU_SUSFS) |
 
 > [!TIP]
 > Always verify kernel compatibility with your specific device model and Android version before flashing. Check the repository's supported devices list.
