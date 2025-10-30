@@ -735,6 +735,15 @@ updateJson=https://example.com/update.json
 - [**KernelSU-Next Kernels**](https://github.com/KernelSU-Next/KernelSU-Next/releases) - Enhanced builds with extended support
 - [**Kernel Build Action**](https://github.com/dabao1955/kernel_build_action) - Automated building via GitHub Actions
 
+### Community Premade Kernels
+
+Pre-built kernels with KernelSU integration for various devices:
+
+- [**WildKernels**](https://github.com/WildKernels) - Collection of premade kernels with KernelSU for multiple device brands
+
+> [!TIP]
+> Always verify kernel compatibility with your specific device model and Android version before flashing. Check the repository's supported devices list.
+
 ### Device-Specific Resources
 
 - [**OnePlus Kernel Sources**](https://github.com/OnePlusOSS) - Official OnePlus kernel sources
