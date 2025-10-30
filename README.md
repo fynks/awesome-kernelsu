@@ -14,8 +14,8 @@
 
 [Intro](#about-kernelsu) &nbsp; • &nbsp; [Comparison](#comparison) &nbsp; • &nbsp; [Docs](#documentation) &nbsp; • &nbsp; [Community](#community)
 
----
 
+<br>
 </div>
 
 ## About KernelSU
