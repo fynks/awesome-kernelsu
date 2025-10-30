@@ -1,12 +1,22 @@
+<div align="center">
+
+<img src="https://kernelsu.org/logo.png" alt="KernelSU Logo" width="200"/>
+<br>
+
 # Awesome KernelSU
+
+**A comprehensive curated list of KernelSU resources, tools, modules, and documentation**
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 [![GitHub stars](https://img.shields.io/github/stars/fynks/awesome-kernelsu?style=flat-square&logo=github)](https://github.com/fynks/awesome-kernelsu/stargazers)
 [![License](https://img.shields.io/github/license/fynks/awesome-kernelsu?style=flat-square)](LICENSE)
 
-> A comprehensive curated list of KernelSU resources, tools, modules, derivatives, and documentation for Android kernel-based root management
 
-![KernelSU Banner](https://kernelsu.org/logo.png)
+[Get Started](#quick-start) • [Comparison](#comparison) • [Docs](#documentation) • [Community](#community)
+
+---
+
+</div>
 
 ## About KernelSU
 
@@ -69,11 +79,11 @@ Before installing KernelSU, ensure you have:
 
 ### Device Selection Guide
 
-| Device Age | Kernel Version | Recommended Variant | Primary Benefits |
-|------------|----------------|---------------------|------------------|
-| 2021+ | 5.10+ (GKI 2.0) | **KernelSU Official** | Maximum stability, official support |
-| 2018-2021 | 4.4-6.6 | **KernelSU-Next** | Enhanced features, broad compatibility |
-| Pre-2018 | 3.4-5.4+ | **SuKiSu-Ultra** | Legacy support, advanced hiding |
+| Device Age | Kernel Version  | Recommended Variant   | Primary Benefits                       |
+| ---------- | --------------- | --------------------- | -------------------------------------- |
+| 2021+      | 5.10+ (GKI 2.0) | **KernelSU Official** | Maximum stability, official support    |
+| 2018-2021  | 4.4-6.6         | **KernelSU-Next**     | Enhanced features, broad compatibility |
+| Pre-2018   | 3.4-5.4+        | **SuKiSu-Ultra**      | Legacy support, advanced hiding        |
 
 ### Essential First Steps
 
@@ -193,11 +203,11 @@ A KernelSU fork optimized for legacy devices with advanced root hiding capabilit
 
 ### Compatibility Matrix
 
-| Variant | Kernel Support | Android | Architecture | Primary Use Case | Update Frequency |
-|---------|---------------|---------|--------------|------------------|------------------|
-| **KernelSU Official** | 5.10+ (GKI 2.0) | 12+ | arm64, x86_64 | Modern devices, maximum stability | Regular |
-| **KernelSU-Next** | 4.4-6.6 | 9+ | arm64, arm, x86_64 | Enhanced features, broad compatibility | Very Active |
-| **SuKiSu-Ultra** | 3.4-5.4+ | 7+ | arm64, arm, x86_64 | Legacy devices, advanced hiding | Community Active |
+| Variant               | Kernel Support  | Android | Architecture       | Primary Use Case                       | Update Frequency |
+| --------------------- | --------------- | ------- | ------------------ | -------------------------------------- | ---------------- |
+| **KernelSU Official** | 5.10+ (GKI 2.0) | 12+     | arm64, x86_64      | Modern devices, maximum stability      | Regular          |
+| **KernelSU-Next**     | 4.4-6.6         | 9+      | arm64, arm, x86_64 | Enhanced features, broad compatibility | Very Active      |
+| **SuKiSu-Ultra**      | 3.4-5.4+        | 7+      | arm64, arm, x86_64 | Legacy devices, advanced hiding        | Community Active |
 
 ### Selection Guide
 
@@ -343,13 +353,13 @@ See [Building from Source](#kernel-sources-and-building) for detailed instructio
 
 ### Installation Method Comparison
 
-| Method | Difficulty | Requirements | Device Support | Pros | Cons |
-|--------|------------|-------------|----------------|------|------|
-| **GKI Mode** | Easy | Unlocked bootloader, fastboot | Modern GKI devices | Official support, simple | Limited to GKI devices |
-| **LKM Mode** | Easy | Root access or custom recovery | Wide compatibility | Non-invasive | May have limitations |
-| **Manager Patching** | Easy | Unlocked bootloader | Supported devices | One-click, auto-updates | Device-specific support |
-| **Custom Kernel** | Medium | Custom recovery or fastboot | Device-specific | Pre-tested, optimized | Availability varies |
-| **Manual Building** | Hard | Build environment, expertise | Any compatible device | Full control, customization | Time-consuming, complex |
+| Method               | Difficulty | Requirements                   | Device Support        | Pros                        | Cons                    |
+| -------------------- | ---------- | ------------------------------ | --------------------- | --------------------------- | ----------------------- |
+| **GKI Mode**         | Easy       | Unlocked bootloader, fastboot  | Modern GKI devices    | Official support, simple    | Limited to GKI devices  |
+| **LKM Mode**         | Easy       | Root access or custom recovery | Wide compatibility    | Non-invasive                | May have limitations    |
+| **Manager Patching** | Easy       | Unlocked bootloader            | Supported devices     | One-click, auto-updates     | Device-specific support |
+| **Custom Kernel**    | Medium     | Custom recovery or fastboot    | Device-specific       | Pre-tested, optimized       | Availability varies     |
+| **Manual Building**  | Hard       | Build environment, expertise   | Any compatible device | Full control, customization | Time-consuming, complex |
 
 ### Device Compatibility Check
 
@@ -364,12 +374,12 @@ uname -r
 
 **Compatibility Status:**
 
-| Kernel Version | Official KernelSU | KernelSU-Next | SuKiSu-Ultra | Installation Method |
-|----------------|-------------------|---------------|--------------|---------------------|
-| 5.10+ (GKI 2.0) | ✅ Supported | ✅ Supported | ❌ Not needed | GKI Mode / Manager |
-| 4.14-5.9 | ⚠️ Manual build | ✅ Supported | ✅ Supported | Custom Kernel / LKM |
-| 4.4-4.13 | ❌ Not supported | ✅ Supported | ✅ Supported | Custom Kernel |
-| 3.4-4.3 | ❌ Not supported | ❌ Not supported | ✅ Supported | Custom Kernel |
+| Kernel Version  | Official KernelSU | KernelSU-Next   | SuKiSu-Ultra | Installation Method |
+| --------------- | ----------------- | --------------- | ------------ | ------------------- |
+| 5.10+ (GKI 2.0) | ✅ Supported       | ✅ Supported     | ❌ Not needed | GKI Mode / Manager  |
+| 4.14-5.9        | ⚠️ Manual build    | ✅ Supported     | ✅ Supported  | Custom Kernel / LKM |
+| 4.4-4.13        | ❌ Not supported   | ✅ Supported     | ✅ Supported  | Custom Kernel       |
+| 3.4-4.3         | ❌ Not supported   | ❌ Not supported | ✅ Supported  | Custom Kernel       |
 
 ### Post-Installation Setup
 
@@ -760,20 +770,20 @@ jobs:
 
 ### KernelSU vs Alternative Root Solutions
 
-| Feature | KernelSU | KernelSU-Next | SuKiSu-Ultra | Magisk | APatch |
-|---------|----------|---------------|--------------|--------|--------|
-| **Architecture** | Kernel-level | Kernel-level | Kernel-level | Userspace | Kernel-level |
-| **Module System** | OverlayFS | OverlayFS + Magic Mount | Magic Mount + OverlayFS | Magic Mount | OverlayFS |
-| **Kernel Support** | 5.10+ (GKI 2.0) | 4.4-6.6 | 3.4-5.4+ | Any | 3.18-6.1 |
-| **Architecture** | arm64, x86_64 | arm64, arm, x86_64 | arm64, arm, x86_64 | Universal | arm64 |
-| **Security Model** | App Profile | App Profile | App Profile | Root Toggle | SuperKey |
-| **Hide Capability** | Basic | Advanced | SuSFS Integrated | Deprecated | Kernel-level |
-| **Update Method** | Manual | Auto-update | Manual | OTA | Manual |
-| **System Modification** | Zero | Zero | Zero | Minimal | Zero |
-| **OTA Compatibility** | Excellent | Excellent | Good | Good | Excellent |
-| **Development Status** | Active | Very Active | Active | Active | Active |
-| **Learning Curve** | Medium | Medium | Hard | Easy | Hard |
-| **Community Size** | Growing | Medium | Small | Large | Small |
+| Feature                 | KernelSU        | KernelSU-Next           | SuKiSu-Ultra            | Magisk      | APatch       |
+| ----------------------- | --------------- | ----------------------- | ----------------------- | ----------- | ------------ |
+| **Architecture**        | Kernel-level    | Kernel-level            | Kernel-level            | Userspace   | Kernel-level |
+| **Module System**       | OverlayFS       | OverlayFS + Magic Mount | Magic Mount + OverlayFS | Magic Mount | OverlayFS    |
+| **Kernel Support**      | 5.10+ (GKI 2.0) | 4.4-6.6                 | 3.4-5.4+                | Any         | 3.18-6.1     |
+| **Architecture**        | arm64, x86_64   | arm64, arm, x86_64      | arm64, arm, x86_64      | Universal   | arm64        |
+| **Security Model**      | App Profile     | App Profile             | App Profile             | Root Toggle | SuperKey     |
+| **Hide Capability**     | Basic           | Advanced                | SuSFS Integrated        | Deprecated  | Kernel-level |
+| **Update Method**       | Manual          | Auto-update             | Manual                  | OTA         | Manual       |
+| **System Modification** | Zero            | Zero                    | Zero                    | Minimal     | Zero         |
+| **OTA Compatibility**   | Excellent       | Excellent               | Good                    | Good        | Excellent    |
+| **Development Status**  | Active          | Very Active             | Active                  | Active      | Active       |
+| **Learning Curve**      | Medium          | Medium                  | Hard                    | Easy        | Hard         |
+| **Community Size**      | Growing         | Medium                  | Small                   | Large       | Small        |
 
 ### Advantages of KernelSU Ecosystem
 
@@ -880,16 +890,16 @@ jobs:
 
 ### Common Issues
 
-| Issue | Possible Cause | Solution |
-|-------|---------------|----------|
-| **Bootloop** | Incompatible kernel/module | Flash stock boot.img via fastboot, disable modules |
-| **App Crashes** | SELinux policy conflicts | Check and adjust SELinux policies in app profiles |
-| **Module Not Working** | Incompatible module version | Verify module compatibility, check installation logs |
-| **Root Not Detected** | Manager not installed properly | Reinstall KernelSU Manager, verify kernel version |
-| **SafetyNet Failing** | Root detection | Install Shamiko or SuSFS, configure hiding properly |
-| **Update Failed** | Insufficient storage/corrupt download | Clear cache, re-download, ensure adequate storage |
-| **Banking Apps Not Working** | Root detection | Configure app profiles, install hiding modules |
-| **System Unstable** | Conflicting modules | Disable modules one by one to identify culprit |
+| Issue                        | Possible Cause                        | Solution                                             |
+| ---------------------------- | ------------------------------------- | ---------------------------------------------------- |
+| **Bootloop**                 | Incompatible kernel/module            | Flash stock boot.img via fastboot, disable modules   |
+| **App Crashes**              | SELinux policy conflicts              | Check and adjust SELinux policies in app profiles    |
+| **Module Not Working**       | Incompatible module version           | Verify module compatibility, check installation logs |
+| **Root Not Detected**        | Manager not installed properly        | Reinstall KernelSU Manager, verify kernel version    |
+| **SafetyNet Failing**        | Root detection                        | Install Shamiko or SuSFS, configure hiding properly  |
+| **Update Failed**            | Insufficient storage/corrupt download | Clear cache, re-download, ensure adequate storage    |
+| **Banking Apps Not Working** | Root detection                        | Configure app profiles, install hiding modules       |
+| **System Unstable**          | Conflicting modules                   | Disable modules one by one to identify culprit       |
 
 ### Emergency Recovery
 
