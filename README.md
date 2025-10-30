@@ -12,7 +12,7 @@
 [![License](https://img.shields.io/github/license/fynks/awesome-kernelsu?style=flat-square)](LICENSE)
 
 
-[Get Started](#quick-start) • [Comparison](#comparison) • [Docs](#documentation) • [Community](#community)
+[Intro](#about-kernelsu) &nbsp; • &nbsp; [Comparison](#comparison) &nbsp; • &nbsp; [Docs](#documentation) &nbsp; • &nbsp; [Community](#community)
 
 ---
 
@@ -36,6 +36,7 @@ KernelSU is a kernel-based root solution for Android that provides superior secu
 - [Quick Start](#quick-start)
 - [KernelSU Variants](#kernelsu-variants)
 - [Comparison](#comparison)
+- [Premade Kernels](#premade-kernels)
 - [Installation](#installation)
 - [Official Resources](#official-resources)
 - [Documentation](#documentation)
@@ -335,18 +336,71 @@ A KernelSU fork optimized for legacy devices with advanced root hiding capabilit
 </div><br>
 
 
+## Premade Kernels
+
+Pre-built kernels with KernelSU integration save you from manual compilation and are optimized for specific devices.
+
+> [!IMPORTANT]
+> Always verify kernel compatibility with your specific device model and Android version before flashing. Flashing an incompatible kernel can result in bootloop or device damage.
+
+### Official Builds
+
+- [**KernelSU GKI Kernels**](https://github.com/tiann/KernelSU/releases) - Official GKI builds for modern devices (5.10+)
+- [**KernelSU-Next Kernels**](https://github.com/KernelSU-Next/KernelSU-Next/releases) - Enhanced builds with extended kernel support (4.4-6.6)
+
+### Community Kernels
+
+#### WildKernels
+
+High-quality kernels with KernelSU and SUSFS integration for various device families:
+
+| 🚀 **Kernel** | 📱 **Device Support** | 🔗 **Repository** |
+|:-------------:|:---------------------:|:-----------------:|
+| **GKI** | GKI Devices | [![Repo](https://img.shields.io/badge/GitHub-GKI_KernelSU_SUSFS-blue?style=flat-square&logo=github)](https://github.com/WildKernels/GKI_KernelSU_SUSFS) |
+| **Sultan** | Pixel Devices | [![Repo](https://img.shields.io/badge/GitHub-Sultan_KernelSU_SUSFS-blue?style=flat-square&logo=github)](https://github.com/WildKernels/Sultan_KernelSU_SUSFS) |
+| **OnePlus** | OnePlus Devices | [![Repo](https://img.shields.io/badge/GitHub-OnePlus_KernelSU_SUSFS-blue?style=flat-square&logo=github)](https://github.com/WildKernels/OnePlus_KernelSU_SUSFS) |
+
+> [!TIP]
+> Check each kernel's release page for device-specific builds and installation instructions. Many kernels provide AnyKernel3 flashable zips for easy installation.
+
+> [!WARNING]
+> Always backup your current boot image before flashing a new kernel. Keep a copy of your stock boot.img for recovery purposes.
+
+### Choosing a Kernel
+
+**Consider these factors:**
+- **Device Compatibility**: Ensure the kernel explicitly supports your device model
+- **Android Version**: Verify kernel is built for your Android version
+- **Features**: KernelSU version, SUSFS support, additional optimizations
+- **Maintenance**: Active development and regular updates
+- **Community Feedback**: Check XDA, GitHub, or Telegram for user experiences
+
+<div align="right">
+<a href="#awesome-kernelsu">⬆ Back to Top</a>
+</div><br>
+
+
 ## Installation
 
 ### Prerequisites
 
 Before installing KernelSU, ensure you have:
 
-1. **Unlocked Bootloader**: Essential for all installation methods
+> [!IMPORTANT]
+> **Unlocked Bootloader** is essential for all installation methods. Check your device manufacturer's instructions for bootloader unlocking.
+
+1. **Unlocked Bootloader**: Required for all installation methods
 2. **Complete Backup**: Always backup your data and stock boot image
 3. **ADB & Fastboot**: Install [Android SDK Platform Tools](https://developer.android.com/studio/releases/platform-tools)
 4. **USB Debugging**: Enable in Developer Options
 5. **Custom Recovery** (Optional): TWRP or OrangeFox for some methods
 6. **Stock Boot Image**: Keep a copy for recovery purposes
+
+> [!WARNING]
+> Backup your data before proceeding. Installation errors can result in data loss or bootloop situations.
+
+> [!TIP]
+> Use **Awesome-Android-Root Guides** for detailed bootloader unlocking instructions: [Unlock Bootloader Guide](https://awesome-android-root.org/android-root-guides/how-to-unlock-bootloader)
 
 ### Installation Methods
 
@@ -407,19 +461,25 @@ Direct boot image patching through the KernelSU Manager app.
 
 ---
 
-#### Method 4: Custom Kernel
+#### Method 4: Premade Custom Kernels
 
-Using device-specific kernels with KernelSU pre-integrated.
+Using device-specific kernels with KernelSU pre-integrated from the community.
 
 **Advantages:**
 - Device-optimized performance
-- Pre-tested stability
-- May include additional features
+- Pre-tested stability and compatibility
+- Additional features (SUSFS, optimizations)
+- No compilation required
 
 **Steps:**
-1. Find device-specific kernel from community
-2. Flash via custom recovery or fastboot
-3. Install KernelSU Manager APK
+1. Visit [Premade Kernels](#premade-kernels) section to find your device kernel
+2. Download the appropriate kernel for your device
+3. Flash via custom recovery (TWRP) or fastboot
+4. Install KernelSU Manager APK
+5. Verify installation
+
+> [!TIP]
+> Check [WildKernels](#wildkernels) for high-quality premade kernels with KernelSU and SUSFS support for GKI, Pixel, and OnePlus devices.
 
 ---
 
@@ -485,6 +545,9 @@ uname -r
 
 After successful installation:
 
+> [!IMPORTANT]
+> Complete these essential steps to ensure proper KernelSU functionality and security.
+
 1. **Verify Installation**
    ```bash
    # Check KernelSU version
@@ -504,10 +567,16 @@ After successful installation:
    - Configure default deny policy
    - Setup time-based access restrictions
 
+> [!TIP]
+> Use restrictive App Profiles by default. Only grant necessary permissions to trusted applications.
+
 4. **Install Essential Modules**
    - SuSFS for root hiding
    - Shamiko for SafetyNet bypass
    - Performance optimization modules
+
+> [!WARNING]
+> Only install modules from trusted sources. Malicious modules can compromise your device security.
 
 5. **Setup Safety Features**
    - Configure module backup/restore
@@ -729,28 +798,19 @@ updateJson=https://example.com/update.json
 
 ## Kernel Sources and Building
 
-### Official Kernels & Sources
+> [!NOTE]
+> This section covers building KernelSU from source. For ready-to-use kernels, see the [Premade Kernels](#premade-kernels) section.
 
-- [**KernelSU GKI Kernels**](https://github.com/tiann/KernelSU/releases) - Official GKI builds for modern devices
-- [**KernelSU-Next Kernels**](https://github.com/KernelSU-Next/KernelSU-Next/releases) - Enhanced builds with extended support
+### Kernel Source Repositories
+
+- [**KernelSU Source**](https://github.com/tiann/KernelSU) - Official KernelSU source code for integration
+- [**KernelSU-Next Source**](https://github.com/KernelSU-Next/KernelSU-Next) - Enhanced fork with extended support
 - [**Kernel Build Action**](https://github.com/dabao1955/kernel_build_action) - Automated building via GitHub Actions
 
-### Community Premade Kernels
-
-Pre-built kernels with KernelSU integration for various devices:
-
-#### WildKernels
-
-| **Kernel** | **Device Support** | **Repository** |
-|:-------------:|:---------------------:|:-----------------:|
-| **GKI** | GKI Devices | [![Repo](https://img.shields.io/badge/GitHub-GKI_KernelSU_SUSFS-blue?style=flat-square&logo=github)](https://github.com/WildKernels/GKI_KernelSU_SUSFS) |
-| **Sultan** | Pixel Devices | [![Repo](https://img.shields.io/badge/GitHub-Sultan_KernelSU_SUSFS-blue?style=flat-square&logo=github)](https://github.com/WildKernels/Sultan_KernelSU_SUSFS) |
-| **OnePlus** | OnePlus Devices | [![Repo](https://img.shields.io/badge/GitHub-OnePlus_KernelSU_SUSFS-blue?style=flat-square&logo=github)](https://github.com/WildKernels/OnePlus_KernelSU_SUSFS) |
+### Device-Specific Kernel Sources
 
 > [!TIP]
-> Always verify kernel compatibility with your specific device model and Android version before flashing. Check the repository's supported devices list.
-
-### Device-Specific Resources
+> Always use official kernel sources from your device manufacturer for best compatibility.
 
 - [**OnePlus Kernel Sources**](https://github.com/OnePlusOSS) - Official OnePlus kernel sources
 - [**Xiaomi Kernel Sources**](https://github.com/MiCode/Xiaomi_Kernel_OpenSource) - Official Xiaomi kernel sources
@@ -769,6 +829,9 @@ Pre-built kernels with KernelSU integration for various devices:
 <details>
 <summary><b>⚙️ Click to expand: Detailed Build Instructions</b></summary>
 
+> [!IMPORTANT]
+> Building kernels requires significant disk space (50GB+) and time. Ensure you have a proper Linux environment.
+
 #### Linux Build Environment
 
 ```bash
@@ -783,6 +846,9 @@ sudo apt install -y gcc-aarch64-linux-gnu gcc-arm-linux-gnueabihf
 # Clone KernelSU
 git clone https://github.com/tiann/KernelSU
 ```
+
+> [!TIP]
+> Use `ccache` to speed up subsequent builds. Enable it with `export USE_CCACHE=1` and `export CCACHE_DIR=~/.ccache`.
 
 #### Building Process
 
@@ -807,6 +873,9 @@ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)
 # Copy Image.gz-dtb or Image to AnyKernel3 directory
 # Zip and flash
 ```
+
+> [!WARNING]
+> Building with wrong toolchain or configuration can produce non-bootable kernels. Always test on non-critical devices first.
 
 #### Supported Architectures
 
@@ -883,6 +952,9 @@ jobs:
 
 ## Troubleshooting
 
+> [!NOTE]
+> Before troubleshooting, ensure you have a backup of your stock boot image. This is crucial for recovery.
+
 ### Common Issues
 
 | Issue                        | Possible Cause                        | Solution                                             |
@@ -897,6 +969,9 @@ jobs:
 | **System Unstable**          | Conflicting modules                   | Disable modules one by one to identify culprit       |
 
 ### Emergency Recovery
+
+> [!WARNING]
+> If your device is in a bootloop, follow these steps immediately to restore functionality.
 
 <details>
 <summary><b>🚨 Click to expand: Bootloop Recovery & Emergency Procedures</b></summary>
@@ -1432,13 +1507,17 @@ Be respectful, constructive, and welcoming. Give credit, focus on community bene
 
 ## Disclaimer
 
+> [!CAUTION]
+> Rooting and kernel modification can void your warranty, brick your device, and expose security vulnerabilities. Proceed at your own risk.
+
 ### ⚠️ Important Legal Information
 
 This documentation is for **educational and informational purposes only**. Users are solely responsible for understanding and complying with local laws regarding device modification.
 
-**Warranty & Liability:**
-- Rooting typically voids manufacturer warranty
-- Contributors/maintainers are not liable for: device damage, data loss, warranty violations, legal consequences, or security vulnerabilities
+> [!WARNING]
+> **Warranty & Liability:**
+> - Rooting typically **voids manufacturer warranty**
+> - Contributors/maintainers are **not liable** for: device damage, data loss, warranty violations, legal consequences, or security vulnerabilities
 
 **User Responsibilities:**
 - Understand modification risks and create backups before changes
@@ -1530,12 +1609,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Beta testers and bug reporters
 - Everyone who shares knowledge
 
-
----
-
+<br>
 <div align="center">
 
 [![Star History Chart](https://api.star-history.com/svg?repos=fynks/awesome-kernelsu&type=Date)](https://star-history.com/#fynks/awesome-kernelsu&Date)
+
+---
 
 **Made with ❤️ by the KernelSU Community**
 
