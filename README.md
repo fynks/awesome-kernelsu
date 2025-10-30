@@ -1381,102 +1381,45 @@ dmesg > /sdcard/kernel.log
 
 ## Contributing
 
-We welcome contributions from the community! This project thrives on community input and collaboration.
+We welcome contributions from the community! Help us make this the best KernelSU resource.
 
-### How to Contribute
+### Quick Contribution Guide
 
-#### Adding Resources
-
+**To contribute:**
 1. **Fork** this repository
-2. **Add** your resource to the appropriate section
-3. **Follow** the formatting guidelines below
+2. **Add/Update** resources following our formatting standards
+3. **Test** all links and verify information accuracy
 4. **Submit** a pull request with clear description
 
-#### Resource Guidelines
+**What to contribute:**
+- New tools, modules, kernels, and resources
+- Documentation improvements and translations
+- Bug fixes and outdated information updates
+- Tutorials, guides, and troubleshooting solutions
 
-Resources should:
-- Provide clear value to the KernelSU community
-- Link to official or trusted sources
-- Be actively maintained and accessible
-- Include relevant badges and metrics
-- Have accurate and up-to-date information
+**Quality Standards:**
+- Link to official/trusted sources
+- Provide clear, concise descriptions
+- Include version numbers and compatibility info
+- Ensure resources are actively maintained
+- Follow existing formatting patterns
 
-#### Formatting Standards
-
+**Resource Format:**
 ```markdown
-### Section Name
-
-- [**Resource Name**](https://link-to-resource.com) - Clear, concise description
-  - Additional details if needed
-  - Key features or benefits
+- [**Resource Name**](https://link) - Clear, concise description
 ```
-
-#### Quality Standards
-
-- **Accuracy**: All information must be verified and current
-- **Completeness**: Include version numbers and compatibility info
-- **Clarity**: Descriptions should be clear and concise
-- **Consistency**: Follow existing formatting patterns
-- **Attribution**: Credit original authors and sources
-
-### Contribution Types
-
-#### Documentation Improvements
-- Fix typos and grammatical errors
-- Clarify confusing sections
-- Add missing information
-- Translate content
-- Update outdated links
-
-#### New Resources
-- Tools and utilities
-- Modules and extensions
-- Tutorials and guides
-- Community resources
-- Device-specific kernels
-
-#### Technical Contributions
-- Code examples
-- Scripts and automation
-- Build instructions
-- Troubleshooting solutions
-
-### Contribution Guidelines
-
-1. **Search First**: Check if the resource already exists
-2. **Test Links**: Ensure all links are working
-3. **Verify Info**: Confirm accuracy of technical details
-4. **Be Concise**: Keep descriptions clear and brief
-5. **Stay Relevant**: Ensure content is KernelSU-related
-6. **Credit Sources**: Attribute original authors
-7. **Follow Format**: Match existing style and structure
-
-### Pull Request Process
-
-1. Update the README.md with your changes
-2. Ensure the changes follow formatting guidelines
-3. Update the table of contents if adding new sections
-4. Provide a clear PR description explaining changes
-5. Wait for review and address any feedback
-6. Merge will occur after approval
-
-For detailed contribution guidelines, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ### Code of Conduct
 
-- Be respectful and constructive
-- Welcome newcomers and help them learn
-- Give credit where credit is due
-- Focus on what is best for the community
-- Show empathy towards other community members
+Be respectful, constructive, and welcoming. Give credit, focus on community benefit, and show empathy.
 
-### Getting Help
+### Need Help?
 
-If you need help with contributions:
-- Open an issue with the "question" label
-- Ask in Telegram community groups
-- Check existing PRs for examples
-- Review [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines
+- Check existing [issues](https://github.com/fynks/awesome-kernelsu/issues) and [PRs](https://github.com/fynks/awesome-kernelsu/pulls)
+- Ask in [Telegram community](https://t.me/KernelSU_group)
+- Review [CONTRIBUTING.md](CONTRIBUTING.md) for comprehensive guidelines
+
+**📖 For detailed contribution guidelines, formatting standards, review process, and more, see [CONTRIBUTING.md](CONTRIBUTING.md)**
 
 <div align="right">
 <a href="#awesome-kernelsu">⬆ Back to Top</a>
@@ -1484,31 +1427,23 @@ If you need help with contributions:
 
 ## Disclaimer
 
-### Important Legal Information
+### ⚠️ Important Legal Information
 
-This documentation is provided for **educational and informational purposes only**. Users are solely responsible for understanding and complying with their local laws and regulations regarding device modification.
+This documentation is for **educational and informational purposes only**. Users are solely responsible for understanding and complying with local laws regarding device modification.
 
-### Warranty & Liability
+**Warranty & Liability:**
+- Rooting typically voids manufacturer warranty
+- Contributors/maintainers are not liable for: device damage, data loss, warranty violations, legal consequences, or security vulnerabilities
 
-- **Warranty Void**: Rooting your device typically voids manufacturer warranty
-- **No Liability**: Contributors and maintainers are not responsible for:
-  - Device damage or bricking
-  - Data loss or corruption
-  - Warranty violations
-  - Legal consequences
-  - Security vulnerabilities
-
-### User Responsibility
-
-Users acknowledge and accept responsibility for:
-- Understanding risks associated with device modification
-- Creating backups before making changes
-- Complying with local laws and regulations
-- Manufacturer warranty implications
-- Security risks of running root access
-- App compatibility issues
+**User Responsibilities:**
+- Understand modification risks and create backups before changes
+- Comply with local laws and manufacturer warranty terms
+- Accept security risks and app compatibility issues
 
 ### Best Practices
+
+<details>
+<summary><b>Click to expand: Safety Guidelines & Recommendations</b></summary>
 
 **Always:**
 - ✅ Create complete backups before modifying device
@@ -1525,14 +1460,9 @@ Users acknowledge and accept responsibility for:
 - ❌ Ignore security warnings
 - ❌ Modify system without understanding changes
 
-### Security Considerations
+**Security Considerations:**
 
-Root access can:
-- Bypass Android security features
-- Allow malicious apps full system access
-- Expose sensitive data if misconfigured
-- Interfere with security-sensitive apps
-- Affect device encryption
+Root access can bypass Android security, allow malicious apps full system access, expose sensitive data, interfere with security-sensitive apps, and affect device encryption.
 
 **Recommended:**
 - Use App Profiles to restrict root access
@@ -1541,38 +1471,13 @@ Root access can:
 - Regularly review app permissions
 - Keep KernelSU updated
 
-### Third-Party Content
+</details><br>
 
-This list includes links to third-party resources:
-- Content accuracy is not guaranteed
-- External projects have their own licenses (separate from this repository's MIT License)
-- Maintainers are not affiliated with linked projects
-- Verify safety of external resources before use
+**Third-Party Content:** External projects have their own licenses (separate from this repository's MIT License). Verify safety before use.
 
-### Updates & Maintenance
+**Updates:** This community-maintained documentation may contain outdated information. Verify against official sources.
 
-This documentation:
-- Is community-maintained
-- May contain outdated information
-- Should be verified against official sources
-- Is provided "as is" without warranty
-- May change without notice
-
-### Affiliation
-
-KernelSU and its derivatives are independent projects:
-- Not affiliated with Google or Android
-- Not affiliated with device manufacturers
-- Community-driven open source projects
-- Not official support channels
-
-### Contact & Issues
-
-For concerns about this documentation:
-- Open an issue on GitHub
-- Follow contribution guidelines
-- Respect community code of conduct
-- Provide constructive feedback
+**Affiliation:** KernelSU and derivatives are independent, community-driven projects—not affiliated with Google, Android, or device manufacturers.
 
 <div align="right">
 <a href="#awesome-kernelsu">⬆ Back to Top</a>
@@ -1620,36 +1525,16 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Beta testers and bug reporters
 - Everyone who shares knowledge
 
-### Community
-
-Thanks to the vibrant Android rooting community:
-- XDA Developers forum members
-- Telegram group participants
-- GitHub contributors
-- Reddit community members
-- International community leaders
-
-### Resources
-
-Thanks to projects that make KernelSU possible:
-- Linux kernel developers
-- Android Open Source Project
-- OverlayFS and kernel subsystem developers
-- Open source tool creators
-
-<div align="right">
-<a href="#awesome-kernelsu">⬆ Back to Top</a>
-</div><br>
 
 ---
 
 <div align="center">
 
-**Made with ❤️ by the KernelSU Community**
-
 [![Star History Chart](https://api.star-history.com/svg?repos=fynks/awesome-kernelsu&type=Date)](https://star-history.com/#fynks/awesome-kernelsu&Date)
 
-**Last Updated**: October 2025
+**Made with ❤️ by the KernelSU Community**
+
+<small>**Last Updated**: October 2025</small>
 
 [⬆ Back to Top](#awesome-kernelsu)
 
