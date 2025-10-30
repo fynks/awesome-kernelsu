@@ -1,342 +1,773 @@
-# Awesome KernelSU 
-[![Awesome](https://awesome.re/badge.svg)](https://awesome.re) [![GitHub stars](https://img.shields.io/github/stars/fynks/awesome-kernelsu?style=flat-square)](https://github.com/fynks/awesome-kernelsu/stargazers) [![License](https://img.shields.io/github/license/fynks/awesome-kernelsu?style=flat-square)](LICENSE)
+# Awesome KernelSU
+
+[![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
+[![GitHub stars](https://img.shields.io/github/stars/fynks/awesome-kernelsu?style=flat-square&logo=github)](https://github.com/fynks/awesome-kernelsu/stargazers)
+[![License](https://img.shields.io/github/license/fynks/awesome-kernelsu?style=flat-square)](LICENSE)
 
 > A comprehensive curated list of KernelSU resources, tools, modules, derivatives, and documentation for Android kernel-based root management
 
 ![KernelSU Banner](https://kernelsu.org/logo.png)
 
-KernelSU is a revolutionary kernel-based root solution for Android that provides superior security and reliability compared to traditional rooting methods. Operating at the kernel level, it offers enhanced security isolation, system integrity protection, and powerful module management capabilities through OverlayFS.
+## About KernelSU
 
-Unlike traditional rooting methods that modify system partitions, KernelSU operates entirely within the kernel space, providing:
-- **Zero system partition modification** - maintains system integrity and OTA compatibility
-- **Advanced permission control** - granular app-level root access management
-- **Enhanced security model** - kernel-level isolation prevents root detection and tampering
-- **Modern module system** - efficient OverlayFS-based modifications with rollback capability
+KernelSU is a kernel-based root solution for Android that provides superior security and reliability compared to traditional rooting methods. Operating at the kernel level, it offers enhanced security isolation, system integrity protection, and powerful module management capabilities through OverlayFS.
 
-## Contents
+### Key Features
 
-- [🚀 Quick Start](#quick-start)
-- [📚 Official Resources](#official-resources)
-- [📖 Documentation](#documentation)
-- [🔀 KernelSU Derivatives](#kernelsu-derivatives)
-- [⚙️ Installation & Setup](#️installation--setup)
-- [📦 Modules & Tools](#modules--tools)
-- [👥 Community](#community)
-- [📝 Tutorials & Guides](#tutorials--guides)
-- [🔗 Related Projects](#related-projects)
-- [📊 Comparison](#comparison)
-- [❓ FAQ & Troubleshooting](#faq--troubleshooting)
+- **Zero System Modification**: Maintains system integrity and OTA compatibility by operating entirely within kernel space
+- **Advanced Permission Control**: Granular app-level root access management with customizable profiles
+- **Enhanced Security Model**: Kernel-level isolation prevents root detection and tampering
+- **Modern Module System**: Efficient OverlayFS-based modifications with rollback capability
+- **App Profile System**: Customizable groups, capabilities, and SELinux rules for fine-grained root privilege control
+
+
+## Table of Contents
+
+- [Quick Start](#quick-start)
+- [KernelSU Variants](#kernelsu-variants)
+- [Installation](#installation)
+- [Official Resources](#official-resources)
+- [Documentation](#documentation)
+- [Development](#development)
+- [Modules and Tools](#modules-and-tools)
+- [Kernel Sources and Building](#kernel-sources-and-building)
+- [Community](#community)
+- [Comparison](#comparison)
+- [Troubleshooting](#troubleshooting)
+- [FAQ](#faq)
+- [Contributing](#contributing)
+- [Disclaimer](#disclaimer)
 
 ## Quick Start
 
-### New to KernelSU?
-1. **Check compatibility**: Ensure your device has kernel 5.10+ (for official KernelSU)
-2. **Download manager**: Get the [official KernelSU Manager](https://github.com/tiann/KernelSU/releases/latest)
-3. **Install**: Follow the [installation guide](https://kernelsu.org/guide/installation.html)
-4. **Verify**: Confirm installation through the manager app
+### Prerequisites
 
-### For Older Devices
-- **Kernel 4.4-5.4**: Use [KernelSU-Next](https://github.com/KernelSU-Next/KernelSU-Next)
-- **Kernel 3.x-5.4**: Use [SuKiSu-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra)
+Before installing KernelSU, ensure you have:
+- **Unlocked bootloader** (required for all installation methods)
+- **Complete data backup** (always backup before modifying your device)
+- **ADB and Fastboot tools** installed on your computer
+- **Compatible device** (check compatibility below)
+
+> [!TIP]
+> You can use **Awesome-Android-Root Guides** for unlocking bootloaders: [Unlock Bootloader Guide](https://awesome-android-root.org/android-root-guides/how-to-unlock-bootloader)
+
+### New to KernelSU?
+
+1. **Check Compatibility**
+   - Kernel 5.10+ for official KernelSU (Android 12+)
+   - Kernel 4.4-6.6 for KernelSU-Next (Android 9+)
+   - Kernel 3.4-5.4+ for SuKiSu-Ultra (Android 7+)
+
+2. **Download Manager**
+   - Get the [official KernelSU Manager](https://github.com/tiann/KernelSU/releases/latest) for your variant
+
+3. **Install KernelSU**
+   - Follow the [installation guide](#installation) for your chosen method
+
+4. **Verify Installation**
+   - Open KernelSU Manager and confirm root status
+
+### Device Selection Guide
+
+| Device Age | Kernel Version | Recommended Variant | Primary Benefits |
+|------------|----------------|---------------------|------------------|
+| 2021+ | 5.10+ (GKI 2.0) | **KernelSU Official** | Maximum stability, official support |
+| 2018-2021 | 4.4-6.6 | **KernelSU-Next** | Enhanced features, broad compatibility |
+| Pre-2018 | 3.4-5.4+ | **SuKiSu-Ultra** | Legacy support, advanced hiding |
 
 ### Essential First Steps
-- Configure [App Profiles](https://kernelsu.org/guide/app-profile.html) for root permission management
-- Install [MMRL](https://github.com/MMRLApp/MMRL) for module management
-- Join the [Telegram community](https://t.me/KernelSU_group) for support
+
+After successful installation:
+
+1. **Configure App Profiles**: Set up [App Profiles](https://kernelsu.org/guide/app-profile.html) for granular root permission management
+2. **Install Module Manager**: Use [MMRL](https://github.com/MMRLApp/MMRL) for easier module management
+3. **Setup Root Hiding**: Install *SuSFS* module for banking/payment app compatibility
+4. **Join Community**: Connect with [Telegram community](https://t.me/KernelSU_group) for support and updates
+5. **Create Backup**: Make a backup of your patched boot image for recovery
+
+<div align="right">
+<a href="#awesome-kernelsu">⬆ Back to Top</a>
+</div><br>
+
+## KernelSU Variants
+
+### Official KernelSU
+
+[![GitHub](https://img.shields.io/badge/GitHub-tiann%2FKernelSU-blue?logo=github&style=flat-square)](https://github.com/tiann/KernelSU)
+[![Documentation](https://img.shields.io/badge/Docs-kernelsu.org-green?style=flat-square)](https://kernelsu.org/)
+[![Release](https://img.shields.io/github/v/release/tiann/KernelSU?style=flat-square)](https://github.com/tiann/KernelSU/releases)
+
+The original and official KernelSU implementation, designed for modern Android devices with GKI (Generic Kernel Image) support.
+
+**Key Features:**
+- Official GKI 2.0 support (kernel 5.10+)
+- Stable and thoroughly tested
+- Regular security updates
+- Comprehensive official documentation
+- Wide device compatibility for modern phones
+- Active development and support
+
+**Supported:**
+- **Kernel Version**: 5.10+ (GKI 2.0), 4.14+ with manual compilation
+- **Android Version**: 12+ (officially), 10+ (unofficially)
+- **Architecture**: arm64-v8a, x86_64
+- **Devices**: WSA, ChromeOS, container-based Android
+
+**Links:**
+- [Official Repository](https://github.com/tiann/KernelSU)
+- [Official Website](https://kernelsu.org/)
+- [Latest Releases](https://github.com/tiann/KernelSU/releases)
+- [Manager APK](https://github.com/tiann/KernelSU/releases/latest)
+- [Telegram Channel](https://t.me/KernelSU)
+
+---
+
+### KernelSU-Next
+
+[![GitHub](https://img.shields.io/badge/GitHub-KernelSU--Next-blue?logo=github&style=flat-square)](https://github.com/KernelSU-Next/KernelSU-Next)
+[![Documentation](https://img.shields.io/badge/Docs-kernelsu--next.github.io-green?style=flat-square)](https://kernelsu-next.github.io/webpage/)
+[![Release](https://img.shields.io/github/v/release/KernelSU-Next/KernelSU-Next?style=flat-square)](https://github.com/KernelSU-Next/KernelSU-Next/releases)
+
+An enhanced fork of KernelSU with extended kernel support, additional features, and improved user experience.
+
+**Enhanced Features:**
+- Extended kernel support (4.4-6.6, both GKI and non-GKI)
+- Dual module system (Magic Mount + OverlayFS with seamless toggle)
+- Enhanced Material You UI with dynamic theming
+- Advanced module management (backup/restore, bulk operations, dependency handling)
+- Automatic update system with rollback capability
+- WebUI X framework for advanced module interfaces
+- Built-in developer tools (logcat viewer, performance monitor)
+- Custom OverlayFS options (configurable image size, compression, mount strategies)
+
+**Supported:**
+- **Kernel Version**: 4.4-6.6 (Non-GKI & GKI)
+- **Android Version**: 9+
+- **Architecture**: arm64-v8a, armeabi-v7a, x86_64
+- **Update Frequency**: Very active development
+
+**Links:**
+- [Repository](https://github.com/KernelSU-Next/KernelSU-Next)
+- [Official Website](https://kernelsu-next.github.io/webpage/)
+- [Latest Release](https://github.com/KernelSU-Next/KernelSU-Next/releases)
+- [Telegram Community](https://t.me/KernelSU_Next)
+
+---
+
+### SuKiSu-Ultra
+
+[![GitHub](https://img.shields.io/badge/GitHub-SukiSU--Ultra-blue?logo=github&style=flat-square)](https://github.com/SukiSU-Ultra/SukiSU-Ultra)
+[![Documentation](https://img.shields.io/badge/Docs-sukisu.org-green?style=flat-square)](https://sukisu.org/)
+[![Release](https://img.shields.io/github/v/release/SukiSU-Ultra/SukiSU-Ultra?style=flat-square)](https://github.com/SukiSU-Ultra/SukiSU-Ultra/releases)
+
+A KernelSU fork optimized for legacy devices with advanced root hiding capabilities and broad kernel compatibility.
+
+**Unique Features:**
+- Broad legacy kernel compatibility (3.4-5.4+) with extensive backports
+- Built on Magic Mount technology from 5ec1cff for enhanced stability
+- KPM (Kernel Patch Module) integration for advanced kernel modifications
+- SuSFS built-in for advanced root hiding with customizable profiles
+- Multi-architecture support including 32-bit ARM
+- Enhanced manager with dark/light themes and SuSFS management panel
+- Legacy device focus with optimizations for older Android versions
+- Extensive device support with community-maintained database
+
+**Supported:**
+- **Kernel Version**: 3.4-5.4+ (Non-GKI focused)
+- **Android Version**: 7+
+- **Architecture**: arm64-v8a, armeabi-v7a, x86_64
+- **Update Frequency**: Active community development
+
+**Links:**
+- [Repository](https://github.com/SukiSU-Ultra/SukiSU-Ultra)
+- [Official Website](httcps://sukisu.org/)
+- [Latest Release](https://github.com/SukiSU-Ultra/SukiSU-Ultra/releases)
+- [Official Telegram Group](https://t.me/SukiKSU)
+- [Guide](https://github.com/SukiSU-Ultra/SukiSU-Ultra/blob/main/docs/guide/installation.md)
+
+<div align="right">
+<a href="#awesome-kernelsu">⬆ Back to Top</a>
+</div><br>
+
+---
+
+### Compatibility Matrix
+
+| Variant | Kernel Support | Android | Architecture | Primary Use Case | Update Frequency |
+|---------|---------------|---------|--------------|------------------|------------------|
+| **KernelSU Official** | 5.10+ (GKI 2.0) | 12+ | arm64, x86_64 | Modern devices, maximum stability | Regular |
+| **KernelSU-Next** | 4.4-6.6 | 9+ | arm64, arm, x86_64 | Enhanced features, broad compatibility | Very Active |
+| **SuKiSu-Ultra** | 3.4-5.4+ | 7+ | arm64, arm, x86_64 | Legacy devices, advanced hiding | Community Active |
+
+### Selection Guide
+
+**Choose Official KernelSU if:**
+- You have a modern device (2021+) with GKI 2.0
+- Stability and official support are top priorities
+- You prefer established, well-tested solutions
+- OTA compatibility is essential
+
+**Choose KernelSU-Next if:**
+- You want enhanced features and better UI
+- Your device has kernel 4.4-6.6 support
+- You value active development and innovation
+- Auto-updates and advanced module management appeal to you
+- You need both Magic Mount and OverlayFS options
+
+**Choose SuKiSu-Ultra if:**
+- You have an older device with kernel 3.x-5.4
+- Advanced root hiding is critical (banking apps, etc.)
+- You need KPM support for kernel modifications
+- Legacy device optimization is important
+- You require 32-bit ARM support
+
+<div align="right">
+<a href="#awesome-kernelsu">⬆ Back to Top</a>
+</div><br>
+
+## Installation
+
+### Prerequisites
+
+Before installing KernelSU, ensure you have:
+
+1. **Unlocked Bootloader**: Essential for all installation methods
+2. **Complete Backup**: Always backup your data and stock boot image
+3. **ADB & Fastboot**: Install [Android SDK Platform Tools](https://developer.android.com/studio/releases/platform-tools)
+4. **USB Debugging**: Enable in Developer Options
+5. **Custom Recovery** (Optional): TWRP or OrangeFox for some methods
+6. **Stock Boot Image**: Keep a copy for recovery purposes
+
+### Installation Methods
+
+#### Method 1: GKI Mode (Kernel Replacement)
+
+Best for modern devices with GKI support. Replaces the original kernel with KernelSU's generic kernel image.
+
+**Advantages:**
+- Strong universality, suitable for most modern devices
+- Official support and regular updates
+- Clean installation with minimal configuration
+
+**Steps:**
+```bash
+# 1. Download appropriate boot.img from releases
+# 2. Boot to fastboot mode
+adb reboot bootloader
+
+# 3. Flash the kernel
+fastboot flash boot boot.img
+
+# 4. Reboot device
+fastboot reboot
+```
+
+---
+
+#### Method 2: LKM Mode (Loadable Kernel Module)
+
+Loads KernelSU as a module into the existing kernel without replacement.
+
+**Advantages:**
+- Preserves original kernel
+- Less intrusive modification
+- Easier to revert
+
+**Steps:**
+1. Download LKM package for your kernel version
+2. Install via KernelSU Manager app
+3. Reboot device to activate
+
+---
+
+#### Method 3: Manager Patching (One-Click)
+
+Direct boot image patching through the KernelSU Manager app.
+
+**Advantages:**
+- User-friendly, no PC required after initial setup
+- Automatic updates available
+- Simplest for non-technical users
+
+**Steps:**
+1. Install KernelSU Manager APK
+2. Grant necessary permissions
+3. Select "Install" and choose patching method
+4. Flash the patched boot image via fastboot or custom recovery
+
+---
+
+#### Method 4: Custom Kernel
+
+Using device-specific kernels with KernelSU pre-integrated.
+
+**Advantages:**
+- Device-optimized performance
+- Pre-tested stability
+- May include additional features
+
+**Steps:**
+1. Find device-specific kernel from community
+2. Flash via custom recovery or fastboot
+3. Install KernelSU Manager APK
+
+---
+
+#### Method 5: Manual Building
+
+Compile KernelSU integrated kernel from source.
+
+**Advantages:**
+- Full customization control
+- Latest features and patches
+- Learn kernel development
+
+**Requirements:**
+- Linux build environment
+- Kernel source code
+- Cross-compiler toolchain
+- Build dependencies
+
+**Steps:**
+1. Setup build environment
+2. Clone kernel source and KernelSU repository
+3. Apply KernelSU patches
+4. Configure kernel (enable CONFIG_KSU)
+5. Compile kernel
+6. Package with AnyKernel3
+7. Flash to device
+
+See [Building from Source](#kernel-sources-and-building) for detailed instructions.
+
+---
+
+### Installation Method Comparison
+
+| Method | Difficulty | Requirements | Device Support | Pros | Cons |
+|--------|------------|-------------|----------------|------|------|
+| **GKI Mode** | Easy | Unlocked bootloader, fastboot | Modern GKI devices | Official support, simple | Limited to GKI devices |
+| **LKM Mode** | Easy | Root access or custom recovery | Wide compatibility | Non-invasive | May have limitations |
+| **Manager Patching** | Easy | Unlocked bootloader | Supported devices | One-click, auto-updates | Device-specific support |
+| **Custom Kernel** | Medium | Custom recovery or fastboot | Device-specific | Pre-tested, optimized | Availability varies |
+| **Manual Building** | Hard | Build environment, expertise | Any compatible device | Full control, customization | Time-consuming, complex |
+
+### Device Compatibility Check
+
+**Check Your Kernel Version:**
+```bash
+# Using ADB
+adb shell uname -r
+
+# Or on device terminal
+uname -r
+```
+
+**Compatibility Status:**
+
+| Kernel Version | Official KernelSU | KernelSU-Next | SuKiSu-Ultra | Installation Method |
+|----------------|-------------------|---------------|--------------|---------------------|
+| 5.10+ (GKI 2.0) | ✅ Supported | ✅ Supported | ❌ Not needed | GKI Mode / Manager |
+| 4.14-5.9 | ⚠️ Manual build | ✅ Supported | ✅ Supported | Custom Kernel / LKM |
+| 4.4-4.13 | ❌ Not supported | ✅ Supported | ✅ Supported | Custom Kernel |
+| 3.4-4.3 | ❌ Not supported | ❌ Not supported | ✅ Supported | Custom Kernel |
+
+### Post-Installation Setup
+
+After successful installation:
+
+1. **Verify Installation**
+   ```bash
+   # Check KernelSU version
+   su -c "kernelsu --version"
+   
+   # Verify root access
+   su -c "id"
+   ```
+
+2. **Install KernelSU Manager**
+   - Download and install the appropriate manager app
+   - Grant all required permissions
+   - Confirm root access in manager
+
+3. **Configure App Profiles**
+   - Set up granular permissions for apps requiring root
+   - Configure default deny policy
+   - Setup time-based access restrictions
+
+4. **Install Essential Modules**
+   - SuSFS for root hiding
+   - Shamiko for SafetyNet bypass
+   - Performance optimization modules
+
+5. **Setup Safety Features**
+   - Configure module backup/restore
+   - Enable automatic updates (if available)
+   - Test SafetyNet/Play Integrity status
+
+6. **Create Recovery Backup**
+   - Backup patched boot image
+   - Save module configurations
+   - Document your setup for recovery
+
+### Verification Commands
+
+```bash
+# Check if KernelSU is loaded
+cat /proc/version | grep KernelSU
+
+# Test root access
+su -c "whoami"
+
+# Check module directory
+ls -la /data/adb/modules/
+
+# View KernelSU logs
+dmesg | grep kernelsu
+
+# Check SELinux status
+getenforce
+```
+
+<div align="right">
+<a href="#awesome-kernelsu">⬆ Back to Top</a>
+</div><br>
 
 ## Official Resources
 
 ### Main Projects
+
 - [**KernelSU Official Repository**](https://github.com/tiann/KernelSU) - Main KernelSU project repository
 - [**Official Website**](https://kernelsu.org/) - Comprehensive documentation, downloads, and guides
 - [**Official Telegram Channel**](https://t.me/KernelSU) - Official announcements and updates
 
 ### Latest Releases & Downloads
+
 - [**KernelSU Releases**](https://github.com/tiann/KernelSU/releases) - Latest stable releases with changelogs
 - [**Manager APK**](https://github.com/tiann/KernelSU/releases/latest) - Official KernelSU Manager application
-- [**CI Builds**](https://github.com/tiann/KernelSU/actions) - Development builds and automated testing
 
 ### Official Tools
+
 - [**KernelSU Flasher**](https://github.com/tiann/KernelSU/releases) - AnyKernel3-based universal flasher
 - [**Kernel Patches**](https://github.com/tiann/KernelSU/tree/main/kernel) - Official kernel integration patches
+- [**KernelSU Action**](https://github.com/dabao1955/kernel_build_action) - GitHub Actions for automated kernel building
 
-[↑ Back to top](#contents)
+<div align="right">
+<a href="#awesome-kernelsu">⬆ Back to Top</a>
+</div><br>
 
 ## Documentation
 
 ### Core Documentation
+
 - [**What is KernelSU?**](https://kernelsu.org/guide/what-is-kernelsu.html) - Introduction and architectural overview
 - [**Installation Guide**](https://kernelsu.org/guide/installation.html) - Complete installation instructions for all methods
-- [**Module Development Guide**](https://kernelsu.org/guide/module.html) - Creating and distributing KernelSU modules
-- [**Module WebUI Guide**](https://kernelsu.org/guide/module-webui.html) - Building web interfaces for modules
 - [**App Profile System**](https://kernelsu.org/guide/app-profile.html) - Advanced root permission management
+- [**Module System**](https://kernelsu.org/guide/module.html) - Understanding KernelSU modules
 - [**API Documentation**](https://kernelsu.org/guide/module.html#kernelsu-modules) - Complete developer API reference
 
-### Integration & Building Guides
+### Integration & Building
+
 - [**Non-GKI Integration**](https://kernelsu.org/guide/how-to-integrate-for-non-gki.html) - Integrating KernelSU into custom kernels
 - [**GKI Integration**](https://kernelsu.org/guide/how-to-integrate-for-gki.html) - Generic Kernel Image integration guide
 - [**Building from Source**](https://kernelsu.org/guide/how-to-build.html) - Compiling KernelSU and kernels from source
 - [**Kernel Requirements**](https://kernelsu.org/guide/installation.html#requirements) - Prerequisites and compatibility matrix
+- [**Unofficially Supported Devices**](https://kernelsu.org/guide/unofficially-support-devices.html) - Manual compilation for older kernels
 
 ### Advanced Topics
-- [**Security Model**](https://kernelsu.org/guide/security.html) - Understanding KernelSU's security architecture
-- [**OverlayFS Deep Dive**](https://kernelsu.org/guide/overlayfs.html) - Technical details of the module system
-- [**Debugging Guide**](https://kernelsu.org/guide/debug.html) - Troubleshooting kernel and module issues
-- [**Migration Guide**](https://kernelsu.org/guide/migration.html) - Moving from Magisk to KernelSU
 
-### Troubleshooting Resources
-- [**Common Issues**](https://kernelsu.org/guide/faq.html) - Frequently asked questions and solutions
+- [**Security Model**](https://kernelsu.org/guide/security.html) - Understanding KernelSU's security architecture
+- [**OverlayFS System**](https://kernelsu.org/guide/overlayfs.html) - Technical details of the module system
+- [**SELinux Configuration**](https://kernelsu.org/guide/selinux.html) - Managing SELinux policies
+- [**Debugging Guide**](https://kernelsu.org/guide/debug.html) - Troubleshooting kernel and module issues
+- [**Migration from Magisk**](https://kernelsu.org/guide/migration.html) - Moving from Magisk to KernelSU
+
+### Module Development
+
+- [**Module Development Guide**](https://kernelsu.org/guide/module.html) - Creating and distributing KernelSU modules
+- [**Module WebUI Guide**](https://kernelsu.org/guide/module-webui.html) - Building web interfaces for modules
+- [**Module Examples**](https://github.com/topics/kernelsu-module) - Community module examples
+
+### Recovery & Troubleshooting
+
+- [**FAQ**](https://kernelsu.org/guide/faq.html) - Frequently asked questions and solutions
 - [**Bootloop Recovery**](https://kernelsu.org/guide/rescue.html) - Emergency recovery procedures
+- [**Rescue from Bootloop**](https://kernelsu.org/guide/rescue-from-bootloop.html) - Additional recovery methods
 - [**Log Analysis**](https://kernelsu.org/guide/logs.html) - Understanding and analyzing system logs
 
-[↑ Back to top](#contents)
-
-## KernelSU Derivatives
-
-### KernelSU-Next (Enhanced Fork)
-- [**Repository**](https://github.com/KernelSU-Next/KernelSU-Next) - Advanced kernel-based root solution
-- [**Official Website**](https://kernelsu-next.github.io/webpage/) - Documentation and comprehensive guides
-- [**Latest Release**](https://github.com/KernelSU-Next/KernelSU-Next/releases) - Stable releases with enhanced features
-- [**Nightly Builds**](https://nightly.link/KernelSU-Next/KernelSU-Next/workflows/build-manager-ci/next/Manager) - Development builds with latest features
-- [**Telegram Community**](https://t.me/KernelSU_Next) - Official support and discussion group
-
-#### KernelSU-Next Features
-- **Extended Kernel Support**: 4.4-6.6 kernels (Non-GKI & GKI) with wide device compatibility
-- **Dual Module System**: Magic Mount + OverlayFS with seamless toggle switching
-- **Enhanced Material You UI**: Redesigned manager with dynamic theming and improved UX
-- **Advanced Module Management**: Backup/restore functionality, bulk operations, and dependency handling
-- **Auto-Update System**: Automatic manager updates with rollback capability
-- **WebUI X Framework**: Enhanced WebUI system with system-level APIs and React support
-- **Developer Tools**: Built-in logcat viewer, performance monitor, and debugging utilities
-- **Custom OverlayFS Options**: Configurable image size, compression, and mount strategies
-
-### SuKiSu-Ultra (Non-GKI Specialized)
-- [**Repository**](https://github.com/SukiSU-Ultra/SukiSU-Ultra) - KernelSU fork optimized for legacy devices
-- [**Official Website**](https://sukisu.org/) - Project homepage with detailed documentation
-- [**Latest Release**](https://github.com/SukiSU-Ultra/SukiSU-Ultra/releases) - Download latest stable release
-- [**Official Telegram Group**](https://t.me/SukiKSU) - Community support and announcements
-- [**Wiki & Guides**](https://github.com/SukiSU-Ultra/SukiSU-Ultra/wiki) - Comprehensive setup and troubleshooting guides
-
-#### SuKiSu-Ultra Features
-- **Broad Kernel Compatibility**: Supports kernels 3.4-5.4+ with extensive backports
-- **KPM Integration**: Kernel Patch Module support for advanced kernel modifications
-- **SuSFS Built-in**: Advanced root hiding capabilities with customizable profiles  
-- **Multi-Architecture**: arm64-v8a, armeabi-v7a, x86_64 with optimized builds
-- **Enhanced Manager**: Refined UI with dark/light themes and SuSFS management panel
-- **Legacy Device Focus**: Optimizations for older Android versions and hardware
-- **Extensive Device Support**: Community-maintained device database and kernel sources
-
-### Compatibility & Selection Matrix
-
-| Derivative | Kernel Support | Android Version | Architecture | Primary Use Case | Update Frequency |
-|------------|---------------|-----------------|-------------|------------------|------------------|
-| **KernelSU Official** | 5.10+ (GKI 2.0) | 12+ | arm64, x86_64 | Modern devices, stability | Regular |
-| **KernelSU-Next** | 4.4-6.6 | 9+ | arm64, arm, x86_64 | Enhanced features, broad support | Active |
-| **SuKiSu-Ultra** | 3.4-5.4+ | 7+ | arm64, arm, x86_64 | Legacy devices, advanced hiding | Community |
-
-### Choosing the Right Derivative
-
-#### Recommended for New Devices (2021+)
-- **Primary**: KernelSU Official for maximum stability and official support
-- **Alternative**: KernelSU-Next for additional features and enhanced UI
-
-#### Recommended for Mid-range Devices (2018-2021)  
-- **Primary**: KernelSU-Next for optimal balance of features and compatibility
-- **Alternative**: SuKiSu-Ultra if advanced root hiding is required
-
-#### Recommended for Legacy Devices (Pre-2018)
-- **Primary**: SuKiSu-Ultra for comprehensive legacy support
-- **Fallback**: KernelSU-Next if kernel 4.4+ is available
-
-[↑ Back to top](#contents)
-
-## Installation & Setup
-
-### Boot Image Patching Tools
-- [**KernelSU Manager**](https://github.com/tiann/KernelSU/releases) - Official app for patching boot images with one-click installation
-- [**Kernel Flasher**](https://github.com/tiann/KernelSU/releases) - AnyKernel3-based universal flasher for custom recovery
-- [**KernelSU Action**](https://github.com/dabao1955/kernel_build_action) - GitHub Actions for automated kernel building and CI/CD
-
-### Pre-built Images & Kernels
-- [**GKI Boot Images**](https://github.com/tiann/KernelSU/releases) - Ready-to-flash Generic Kernel Images
-- [**Device-Specific Kernels**](https://github.com/search?q=kernelsu%20kernel&type=repositories) - Community-built kernels for specific devices
-
-### Installation Methods Comparison
-
-| Method | Difficulty | Requirements | Pros | Cons |
-|--------|------------|-------------|------|------|
-| **Manager Patching** | Easy | Unlocked bootloader | One-click process, automatic updates | Limited to supported devices |
-| **Custom Kernel** | Medium | Custom recovery/fastboot | Pre-tested stability | Device-specific availability |
-| **Manual Building** | Hard | Build environment | Full customization | Time-consuming, requires expertise |
-| **Recovery Flash** | Easy | Custom recovery | Works offline | Requires recovery access |
-
-### Installation Prerequisites
-- **Unlocked Bootloader**: Essential for all installation methods
-- **Root/ADB Access**: Required for manager-based patching  
-- **Custom Recovery**: Needed for flashable zip installation
-- **Backup Tools**: Create full system backup before installation
-
-### Post-Installation Setup
-1. **Verify Installation**: Check KernelSU status in manager app
-2. **Configure App Profiles**: Set up granular root permissions
-3. **Install Essential Modules**: SuSFS for hiding, performance tweaks
-4. **Setup Module Manager**: Install MMRL for easier module management
-5. **Create Safety Net**: Configure hiding for banking/payment apps
-
-[↑ Back to top](#contents)
-
-## Kernel Sources & Building
-
-### Official Kernels & Sources
-- [**KernelSU GKI Kernels**](https://github.com/tiann/KernelSU/releases) - Official GKI builds
-- [**KernelSU-Next Kernels**](https://github.com/KernelSU-Next/KernelSU-Next/releases) - Enhanced builds
-- [**Kernel Build Action**](https://github.com/dabao1955/kernel_build_action) - Automated building
-
-### Device-Specific Resources
-- [**OnePlus Sources**](https://github.com/OnePlusOSS) - OnePlus kernel sources
-- [**Xiaomi Sources**](https://github.com/MiCode/Xiaomi_Kernel_OpenSource) - Xiaomi kernel sources
-- [**Google Sources**](https://android.googlesource.com/kernel/) - AOSP kernel sources
-
-### Building Tools & Scripts
-- [**Universal Patcher**](https://github.com/KernelSU-Next/KernelSU-Next/tree/next/scripts) - Kernel patching scripts
-- [**KernelSU Builder**](https://github.com/dabao1955/kernel_build_action) - CI/CD building system
-- [**Manual Build Guide**](https://kernelsu.org/guide/how-to-build.html) - Step-by-step building
-
-### Supported Architectures
-- **arm64-v8a** - Primary support (64-bit ARM)
-- **x86_64** - Intel/AMD 64-bit (limited device support)
-- **armeabi-v7a** - 32-bit ARM (SuKiSu-Ultra only)
-
-[↑ Back to top](#contents)
+<div align="right">
+<a href="#awesome-kernelsu">⬆ Back to Top</a>
+</div><br>
 
 ## Development
 
 ### Module Development
 
+<details>
+<summary><b>📦 Click to expand: Module Development Guide</b></summary>
+
 #### Getting Started
-- [**Module Template**](https://github.com/tiann/KernelSU/blob/main/docs/module.md) - Official module development template with examples
-- [**API Documentation**](https://kernelsu.org/guide/module.html#kernelsu-modules) - Complete KernelSU API reference and usage guide
-- [**WebUI Development Guide**](https://kernelsu.org/guide/module-webui.html) - Creating interactive web interfaces for modules
-- [**Module Examples Repository**](https://github.com/topics/kernelsu-module) - Community-contributed example modules
 
-#### Advanced Module Development
-- [**OverlayFS Integration**](https://kernelsu.org/guide/overlayfs-advanced.html) - Deep dive into OverlayFS module system
-- [**Native Library Support**](https://kernelsu.org/guide/native-modules.html) - Integrating C/C++ components in modules
-- [**SELinux Policy Handling**](https://kernelsu.org/guide/selinux-modules.html) - Working with SELinux in KernelSU modules
-- [**Module Security Guidelines**](https://kernelsu.org/guide/module-security.html) - Best practices for secure module development
+- [**Module Template**](https://github.com/tiann/KernelSU/blob/main/docs/module.md) - Official module development template
+- [**API Documentation**](https://kernelsu.org/guide/module.html#kernelsu-modules) - Complete KernelSU API reference
+- [**WebUI Development**](https://kernelsu.org/guide/module-webui.html) - Creating interactive web interfaces
+- [**Module Examples**](https://github.com/topics/kernelsu-module) - Community-contributed examples
 
+#### Module Structure
+
+```
+module_name/
+├── module.prop          # Module metadata
+├── post-fs-data.sh     # Post-fs-data script
+├── service.sh          # Late service script
+├── uninstall.sh        # Uninstallation script (optional)
+├── system/             # System files to overlay
+├── webroot/            # WebUI files (optional)
+└── ...
+```
+
+#### Module Properties (module.prop)
+
+```properties
+id=module_id
+name=Module Name
+version=v1.0
+versionCode=1
+author=Author Name
+description=Module description
+updateJson=https://example.com/update.json
+```
+
+</details>
 
 ### Kernel Development & Integration
 
+<details>
+<summary><b>🔧 Click to expand: Kernel Integration & Building</b></summary>
+
 #### Integration Guides
-- [**Non-GKI Integration**](https://kernelsu.org/guide/how-to-integrate-for-non-gki.html) - Comprehensive guide for custom kernel integration
 
+- [**Non-GKI Integration**](https://kernelsu.org/guide/how-to-integrate-for-non-gki.html) - For custom kernels 4.14 and earlier
+- [**GKI Integration**](https://kernelsu.org/guide/how-to-integrate-for-gki.html) - For Generic Kernel Images
+- [**Manual Building**](https://kernelsu.org/guide/how-to-build.html) - Complete build instructions
+- [**KernelSU Action**](https://github.com/dabao1955/kernel_build_action) - GitHub Actions for CI/CD
+- [**Kernel Build Scripts**](https://github.com/KernelSU-Next/KernelSU-Next/tree/next/scripts) - Universal patcher scripts
 
-### Building & Compilation
+#### Integration Process
 
-#### Automated Building Systems
-- [**KernelSU Action**](https://github.com/dabao1955/kernel_build_action) - GitHub Actions for automated kernel building
+1. **Environment Setup**: Install required dependencies and cross-compiler
+2. **Source Preparation**: Clone kernel sources and KernelSU repository
+3. **Apply Patches**: Integrate KernelSU into kernel source
+4. **Configuration**: Enable KernelSU in kernel config (CONFIG_KSU)
+5. **Compilation**: Build kernel with appropriate toolchain
+6. **Packaging**: Create flashable zip with AnyKernel3
 
-#### Manual Building Procedures
-1. **Environment Setup**: Install required dependencies and tools
-2. **Source Preparation**: Clone kernel sources and apply KernelSU patches
-3. **Configuration**: Set up kernel config with KernelSU requirements
-4. **Compilation**: Build kernel with appropriate cross-compiler
-5. **Packaging**: Create flashable zip with AnyKernel3 or similar
+</details>
 
-#### Cross-Platform Development
-- **Android Studio Integration**: Plugin for KernelSU module development
-- **VS Code Extensions**: Syntax highlighting and debugging support
-- **Docker Containers**: Standardized development environments
-- **Remote Development**: Cloud-based building and testing systems
+<div align="right">
+<a href="#awesome-kernelsu">⬆ Back to Top</a>
+</div><br>
 
-[↑ Back to top](#contents)
+## Modules and Tools
 
-## Modules & Tools
-
-### Essential KernelSU Modules
+### Essential Modules
 
 #### Root Management & Hiding
-- [**SuSFS4KSU**](https://github.com/sidex15/susfs4ksu-module) - Advanced root hiding with customizable profiles
-- [**Shamiko**](https://github.com/LSPosed/LSPosed.github.io/releases) - DenyList bypass for enhanced hiding capabilities
 
-#### Performance & System Optimization
-- [**MAGNETAR**](https://github.com/Kyliekyler/MAGNETAR) - Comprehensive device performance optimizer
+- [**SuSFS4KSU**](https://github.com/sidex15/susfs4ksu-module) - Advanced root hiding with customizable profiles and filesystem manipulation
+- [**Shamiko**](https://github.com/LSPosed/LSPosed.github.io/releases) - DenyList bypass for enhanced hiding capabilities and SafetyNet/Play Integrity
+- [**Tricky Store**](https://github.com/5ec1cff/TrickyStore) - Key attestation bypass for banking and payment apps
 
-#### System Customization
-- [**SystemUI Tuner**](https://github.com/Magisk-Modules-Repo/systemui-tuner) - Advanced SystemUI customization
-- [**AdAway**](https://github.com/AdAway/AdAway) - System-wide ad blocking
+#### System Optimization
 
-### Module Manager
+- [**Universal GMS Doze**](https://github.com/gloeyisk/universal-gms-doze) - Aggressive Google Play Services battery optimization
 
-#### Modern Module Managers
-- [**MMRL (Modern Module Manager)**](https://github.com/MMRLApp/MMRL) - Feature-rich module manager with repository support
+> [!TIP]
+> Explore more modules on the: **[Awesome Android Root](https://awesome-android-root.org/android-root-apps/?filters=%5BK%5D)**
 
-[↑ Back to top](#contents)
+#### Framework Modifications
+
+- [**LSPosed**](https://github.com/LSPosed/LSPosed) - Xposed framework implementation for KernelSU (via Zygisk)
+- [**ZygiskNext**](https://github.com/Dr-TSNG/ZygiskNext) - Standalone Zygisk implementation for KernelSU
+- [**ReZygisk**](https://github.com/PerformanC/ReZygisk) - Transparent Zygisk implementation
+
+### Module Managers
+
+- [**MMRL (Modern Module Manager)**](https://github.com/MMRLApp/MMRL) - Feature-rich module manager with:
+  - Built-in module repository
+  - Automatic updates
+  - Module backup/restore
+  - Dependency management
+  - WebUI support
+  - Material You design
+
+### Management Apps
+
+- [**KernelSU Manager**](https://github.com/tiann/KernelSU/releases) - Official management app for KernelSU
+- [**SukiSU Manager**](https://github.com/SukiSU-Ultra/SukiSU-Ultra/releases) - Manager for SuKiSu-Ultra variant
+- [**Franco Kernel Manager**](https://play.google.com/store/apps/details?id=com.franco.kernel) - Kernel tweaking and monitoring
+- [**SmartPack-Kernel Manager**](https://github.com/SmartPack/SmartPack-Kernel-Manager) - Open-source kernel management tool
+
+### Development & Debugging Tools
+
+- [**Root Checker**](https://play.google.com/store/apps/details?id=com.joeykrim.rootcheck) - Verify root status and installation
+- [**Logcat Reader**](https://github.com/darshanparajuli/LogcatReader) - System log viewer and analyzer
+- [**Terminal Emulator**](https://github.com/termux/termux-app) - Full Linux terminal environment
+
+<div align="right">
+<a href="#awesome-kernelsu">⬆ Back to Top</a>
+</div><br>
+
+## Kernel Sources and Building
+
+### Official Kernels & Sources
+
+- [**KernelSU GKI Kernels**](https://github.com/tiann/KernelSU/releases) - Official GKI builds for modern devices
+- [**KernelSU-Next Kernels**](https://github.com/KernelSU-Next/KernelSU-Next/releases) - Enhanced builds with extended support
+- [**Kernel Build Action**](https://github.com/dabao1955/kernel_build_action) - Automated building via GitHub Actions
+
+### Device-Specific Resources
+
+- [**OnePlus Kernel Sources**](https://github.com/OnePlusOSS) - Official OnePlus kernel sources
+- [**Xiaomi Kernel Sources**](https://github.com/MiCode/Xiaomi_Kernel_OpenSource) - Official Xiaomi kernel sources
+- [**Google AOSP Kernels**](https://android.googlesource.com/kernel/) - Android Open Source Project kernels
+- [**Samsung Opensource**](https://opensource.samsung.com) - Samsung kernel sources
+
+### Building Tools & Scripts
+
+- [**Universal Patcher**](https://github.com/KernelSU-Next/KernelSU-Next/tree/next/scripts) - Automated kernel patching scripts
+- [**KernelSU Builder**](https://github.com/dabao1955/kernel_build_action) - CI/CD building system with GitHub Actions
+- [**⭐ AnyKernel3**](https://github.com/osm0sis/AnyKernel3) - Universal kernel flasher and packaging tool
+- [**Manual Build Guide**](https://kernelsu.org/guide/how-to-build.html) - Step-by-step building instructions
+
+### Build Environment Setup
+
+<details>
+<summary><b>⚙️ Click to expand: Detailed Build Instructions</b></summary>
+
+#### Linux Build Environment
+
+```bash
+# Install dependencies (Ubuntu/Debian)
+sudo apt update
+sudo apt install -y git build-essential kernel-package fakeroot libncurses5-dev \
+  libssl-dev ccache bison flex libelf-dev bc python3
+
+# Install cross-compiler
+sudo apt install -y gcc-aarch64-linux-gnu gcc-arm-linux-gnueabihf
+
+# Clone KernelSU
+git clone https://github.com/tiann/KernelSU
+```
+
+#### Building Process
+
+```bash
+# 1. Clone your device kernel source
+git clone <kernel_source_url> kernel
+
+# 2. Apply KernelSU patches
+cd kernel
+curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
+
+# 3. Configure kernel
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- <defconfig>
+
+# 4. Enable KernelSU in config
+./scripts/config --file .config -e CONFIG_KSU
+
+# 5. Build kernel
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)
+
+# 6. Package with AnyKernel3
+# Copy Image.gz-dtb or Image to AnyKernel3 directory
+# Zip and flash
+```
+
+#### Supported Architectures
+
+- **arm64-v8a**: Primary support (64-bit ARM) - most modern devices
+- **x86_64**: Intel/AMD 64-bit (emulators, some tablets)
+- **armeabi-v7a**: 32-bit ARM (legacy devices, SuKiSu-Ultra only)
+
+#### Continuous Integration
+
+```yaml
+name: Build Kernel
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build Kernel with KernelSU
+        uses: dabao1955/kernel_build_action@main
+        with:
+          kernel-url: <your_kernel_repo>
+          branch: <branch_name>
+          config: <defconfig_name>
+          arch: arm64
+```
+
+</details>
+
+<div align="right">
+<a href="#awesome-kernelsu">⬆ Back to Top</a>
+</div><br>
 
 ## Community
 
 ### Official Communities
-- [**Telegram Channel**](https://t.me/KernelSU) - Official announcements
-- [**GitHub Discussions**](https://github.com/tiann/KernelSU/discussions) - Technical discussions
-- [**Telegram Group**](https://t.me/KernelSU_group) - Community chat
 
-### Derivative Communities
-- [**KernelSU-Next Telegram**](https://t.me/KernelSU_Next) - KernelSU-Next discussions
-- [**SuKiSu Telegram**](https://t.me/Sukiksu) - SuKiSu-Ultra community
+#### Telegram
+- [**KernelSU Channel**](https://t.me/KernelSU) - Official announcements and updates
+- [**KernelSU Group**](https://t.me/KernelSU_group) - Community support and discussion
+- [**KernelSU-Next Group**](https://t.me/KernelSU_Next) - KernelSU-Next specific discussions
+- [**SuKiSu Group**](https://t.me/Sukiksu) - SuKiSu-Ultra community support
+
+#### GitHub
+- [**GitHub Discussions**](https://github.com/tiann/KernelSU/discussions) - Technical discussions and Q&A
+- [**GitHub Issues**](https://github.com/tiann/KernelSU/issues) - Bug reports and feature requests
+- [**KernelSU-Next Discussions**](https://github.com/KernelSU-Next/KernelSU-Next/discussions) - Enhanced fork discussions
 
 ### Forums & Discussion Platforms
-- [**XDA Developers Thread**](https://forum.xda-developers.com/t/kernelsu-a-kernel-based-root-solution-for-android.4511259/) - Main discussion
-- [**Reddit Community**](https://www.reddit.com/r/KernelSU/) - Community discussions
-- [**4PDA Forum**](https://4pda.to/forum/index.php?showtopic=1020374) - Russian community
 
-[↑ Back to top](#contents)
+- [**XDA Developers**](https://forum.xda-developers.com/t/kernelsu-a-kernel-based-root-solution-for-android.4511259/) - Main discussion thread with device-specific forums
+- [**Reddit r/KernelSU**](https://www.reddit.com/r/KernelSU/) - Community discussions and support
+- [**4PDA Forum**](https://4pda.to/forum/index.php?showtopic=1020374) - Russian-language community and resources
 
-## Tutorials & Guides
+### International Communities
 
-### Beginner Guides
-- [**What is KernelSU?**](https://kernelsu.org/guide/what-is-kernelsu.html) - Complete introduction
-- [**First Installation**](https://kernelsu.org/guide/installation.html) - Step-by-step setup
-- [**Manager App Guide**](https://kernelsu.org/guide/installation.html#verify-installation) - Using the manager
-- [**App Profile Setup**](https://kernelsu.org/guide/app-profile.html) - Managing app permissions
+- **Chinese Community**: Official documentation and support in Chinese at [kernelsu.org](https://kernelsu.org/)
+- **Russian Community**: Active discussions on [4PDA](https://4pda.to/)
+- **Spanish Community**: Latin American users on XDA and Telegram
+- **Indian Community**: Growing Hindi/English community on Telegram
 
-### Advanced Guides
-- [**Custom Kernel Building**](https://kernelsu.org/guide/how-to-build.html) - Compile your own kernel
-- [**Module Development**](https://kernelsu.org/guide/module.html) - Create custom modules
-- [**WebUI Development**](https://kernelsu.org/guide/module-webui.html) - Advanced module interfaces
-- [**Troubleshooting Guide**](https://kernelsu.org/guide/faq.html) - Common issues and solutions
+### Community Resources
 
-[↑ Back to top](#contents)
+- **Module Repositories**: Community-maintained collections of KernelSU modules
+- **Device Databases**: Lists of tested devices and kernel compatibility
+- **Troubleshooting Wikis**: Community-contributed solutions and guides
+- **Tutorial Videos**: YouTube channels with installation and usage guides
 
-## Related Projects
-
-### Alternative Root Solutions
-- [**Magisk**](https://github.com/topjohnwu/Magisk) - Traditional systemless root
-- [**APatch**](https://github.com/bmax121/APatch) - KernelPatch-based root solution
-- [**KernelPatch**](https://github.com/bmax121/KernelPatch) - Kernel patching framework
-
-### Compatibility Layers
-- [**ZygiskNext**](https://github.com/Dr-TSNG/ZygiskNext) - Standalone Zygisk implementation
-- [**ReZygisk**](https://github.com/PerformanC/ReZygisk) - Transparent Zygisk implementation
-- [**Shamiko**](https://github.com/LSPosed/LSPosed.github.io/releases) - Magisk hide successor
-
-### Root Detection & Hiding
-- [**SuSFS**](https://gitlab.com/simonpunk/susfs4ksu) - Advanced root hiding kernel patches
-- [**Tricky Store**](https://github.com/5ec1cff/TrickyStore) - Key attestation bypass
-
-[↑ Back to top](#contents)
+<div align="right">
+<a href="#awesome-kernelsu">⬆ Back to Top</a>
+</div><br>
 
 ## Comparison
 
 ### KernelSU vs Alternative Root Solutions
+
 | Feature | KernelSU | KernelSU-Next | SuKiSu-Ultra | Magisk | APatch |
-| :--- | :--- | :--- | :--- | :--- | :--- |
+|---------|----------|---------------|--------------|--------|--------|
 | **Architecture** | Kernel-level | Kernel-level | Kernel-level | Userspace | Kernel-level |
 | **Module System** | OverlayFS | OverlayFS + Magic Mount | Magic Mount + OverlayFS | Magic Mount | OverlayFS |
 | **Kernel Support** | 5.10+ (GKI 2.0) | 4.4-6.6 | 3.4-5.4+ | Any | 3.18-6.1 |
 | **Architecture** | arm64, x86_64 | arm64, arm, x86_64 | arm64, arm, x86_64 | Universal | arm64 |
 | **Security Model** | App Profile | App Profile | App Profile | Root Toggle | SuperKey |
-| **Hide Capability** | Basic | Advanced | SuSFS Integrated | MagiskHide (deprecated) | Kernel-level |
+| **Hide Capability** | Basic | Advanced | SuSFS Integrated | Deprecated | Kernel-level |
 | **Update Method** | Manual | Auto-update | Manual | OTA | Manual |
 | **System Modification** | Zero | Zero | Zero | Minimal | Zero |
 | **OTA Compatibility** | Excellent | Excellent | Good | Good | Excellent |
@@ -344,286 +775,882 @@ Unlike traditional rooting methods that modify system partitions, KernelSU opera
 | **Learning Curve** | Medium | Medium | Hard | Easy | Hard |
 | **Community Size** | Growing | Medium | Small | Large | Small |
 
-### Technical Architecture Comparison
-
-#### Security Models
-- **KernelSU Family**: Kernel-level operation provides superior isolation and tamper resistance
-- **Magisk**: Userspace operation with systemless modifications, easier detection
-- **APatch**: Kernel patching with advanced hiding but complex setup
-- **SuperSU**: Traditional system modification, highest detectability
-
-#### Module Systems Performance
-- **OverlayFS (KernelSU)**: Efficient copy-on-write, minimal performance impact
-- **Magic Mount (Magisk)**: Bind mounting, higher overhead but broader compatibility  
-- **Hybrid Systems**: Best of both worlds but increased complexity
-
 ### Advantages of KernelSU Ecosystem
 
-#### Security Benefits
-- **Kernel-Level Isolation**: Root access operates in kernel space, preventing userspace tampering
-- **App Profile System**: Granular per-application permission control with temporal restrictions
-- **Hardware-Level Protection**: Utilizes ARM TrustZone and other hardware security features
-- **Verified Boot Compatibility**: Maintains system integrity verification where possible
+<details>
+<summary><b>✨ Click to expand: Detailed Advantages & Benefits</b></summary>
 
-#### Technical Advantages  
-- **Zero System Modification**: No changes to system partitions, preserving OTA capabilities
-- **OverlayFS Efficiency**: More efficient than bind mounting with better performance characteristics
-- **Future-Proof Design**: Built for modern Android security models and requirements
-- **Developer-Friendly**: Clean APIs and comprehensive documentation
+#### Security Benefits
+
+1. **Kernel-Level Isolation**: Root access operates in kernel space, preventing userspace tampering
+2. **App Profile System**: Granular per-application permission control with temporal restrictions
+3. **Hardware-Level Protection**: Utilizes ARM TrustZone and hardware security features
+4. **Verified Boot Compatible**: Maintains system integrity verification where possible
+5. **Advanced Hiding**: Kernel-level hiding harder to detect than userspace methods
+
+#### Technical Advantages
+
+1. **Zero System Modification**: No changes to system partitions, preserving OTA capabilities
+2. **OverlayFS Efficiency**: More efficient than bind mounting with better performance
+3. **Future-Proof Design**: Built for modern Android security models and requirements
+4. **Developer-Friendly**: Clean APIs and comprehensive documentation
+5. **Modular Architecture**: Easy to extend and customize
 
 #### Ecosystem Maturity
-- **Multiple Derivatives**: Options for different use cases and device compatibility
-- **Active Development**: Regular updates and feature additions across all derivatives
-- **Growing Module Repository**: Expanding collection of high-quality modules
-- **Community Support**: Knowledgeable community with expert developers
+
+1. **Multiple Derivatives**: Options for different use cases and device compatibility
+2. **Active Development**: Regular updates and feature additions across all variants
+3. **Growing Module Repository**: Expanding collection of high-quality modules
+4. **Community Support**: Knowledgeable community with expert developers
+5. **Documentation**: Comprehensive guides in multiple languages
+
+</details>
 
 ### Migration Considerations
 
+<details>
+<summary><b>🔄 Click to expand: Migration from Magisk or Legacy Solutions</b></summary>
+
 #### From Magisk to KernelSU
-**Pros:**
+
+**Advantages:**
 - Enhanced security and hiding capabilities
 - Better performance with OverlayFS
-- Future-proof architecture
+- Future-proof architecture for modern Android
 - Maintained OTA compatibility
 
 **Considerations:**
 - Module compatibility may require updates
-- Different app profile management
+- Different app profile management approach
 - Learning curve for new concepts
+- Some Magisk-specific features unavailable
 
-#### From SuperSU/Other Legacy Solutions
-**Pros:**
-- Dramatically improved security
-- Modern Android compatibility  
-- Systemless approach
-- Active development and support
+**Migration Steps:**
+1. Backup all data and current setup
+2. Document installed modules and configurations
+3. Uninstall Magisk completely
+4. Flash stock boot image
+5. Install KernelSU using preferred method
+6. Reinstall compatible modules
+7. Configure app profiles
 
-**Essential:**
+#### From SuperSU/Legacy Solutions
+
+**Essential Steps:**
 - Complete system restoration recommended
 - Fresh start with modern practices
 - Understanding of new security model
+- Backup and data migration planning
+
+**Benefits:**
+- Dramatically improved security
+- Modern Android compatibility
+- Systemless approach
+- Active development and support
+
+</details>
 
 ### Use Case Recommendations
 
-#### Choose KernelSU Official If:
+**Choose Official KernelSU If:**
 - You have a modern device (2021+) with GKI 2.0
-- Stability and official support are priorities  
-- You prefer established, well-tested solutions
+- Stability and official support are top priorities
 - OTA compatibility is essential
 
-#### Choose KernelSU-Next If:
+**Choose KernelSU-Next If:**
 - You want enhanced features and better UI
 - Your device has kernel 4.4-6.6 support
-- You value active development and innovation
 - Auto-updates and advanced module management appeal to you
 
-#### Choose SuKiSu-Ultra If:
+**Choose SuKiSu-Ultra If:**
 - You have an older device with kernel 3.x-5.4
 - Advanced root hiding is critical (banking apps, etc.)
-- You need KPM support for kernel modifications
 - Legacy device optimization is important
 
-#### Stick with Magisk If:
+**Stick with Magisk If:**
 - You have very old hardware not supported by KernelSU derivatives
-- You rely heavily on Xposed or other Magisk-specific modules
-- You're satisfied with current functionality and stability
+- You rely heavily on Xposed or Magisk-specific modules
 - Migration effort outweighs potential benefits
 
-## FAQ & Troubleshooting
+<div align="right">
+<a href="#awesome-kernelsu">⬆ Back to Top</a>
+</div><br>
 
-### Frequently Asked Questions
+## Troubleshooting
 
-#### **Q: What's the difference between KernelSU and its derivatives?**
-**A: Each derivative targets different use cases:**
-- **KernelSU Official**: Best for modern devices (5.10+ kernels), maximum stability, official support
-- **KernelSU-Next**: Enhanced features, broader compatibility (4.4-6.6 kernels), automatic updates, advanced UI
-- **SuKiSu-Ultra**: Legacy device focus (3.x-5.4 kernels), advanced hiding (SuSFS), KPM support
+### Common Issues
 
-#### **Q: Which version should I choose for my device?**
-**A: Selection guide:**
-- **Android 12+ devices**: KernelSU Official → KernelSU-Next (if you want extra features)
-- **Android 9-11 devices**: KernelSU-Next → SuKiSu-Ultra (if kernel too old)
-- **Android 7-8 devices**: SuKiSu-Ultra (only option for legacy kernels)
+| Issue | Possible Cause | Solution |
+|-------|---------------|----------|
+| **Bootloop** | Incompatible kernel/module | Flash stock boot.img via fastboot, disable modules |
+| **App Crashes** | SELinux policy conflicts | Check and adjust SELinux policies in app profiles |
+| **Module Not Working** | Incompatible module version | Verify module compatibility, check installation logs |
+| **Root Not Detected** | Manager not installed properly | Reinstall KernelSU Manager, verify kernel version |
+| **SafetyNet Failing** | Root detection | Install Shamiko or SuSFS, configure hiding properly |
+| **Update Failed** | Insufficient storage/corrupt download | Clear cache, re-download, ensure adequate storage |
+| **Banking Apps Not Working** | Root detection | Configure app profiles, install hiding modules |
+| **System Unstable** | Conflicting modules | Disable modules one by one to identify culprit |
 
-#### **Q: Is KernelSU safer than Magisk?**
-**A: Yes, in several ways:**
-- **Kernel-level operation** provides superior isolation from userspace attacks
-- **App Profile system** offers granular, time-based permission control
-- **Zero system modification** maintains system integrity and OTA compatibility  
-- **Hardware security integration** utilizes ARM TrustZone and secure boot when available
-- **Advanced hiding** at kernel level is harder to detect than userspace methods
+### Emergency Recovery
 
-#### **Q: Can I use Magisk modules with KernelSU?**
-**A: Compatibility varies:**
-- **Simple modules**: Many work without modification
-- **Complex modules**: May require adaptation for OverlayFS
-- **Zygisk modules**: Need ZygiskNext or ReZygisk for KernelSU
-- **Hardware-specific**: Usually compatible across root solutions
+<details>
+<summary><b>🚨 Click to expand: Bootloop Recovery & Emergency Procedures</b></summary>
 
-#### **Q: Will KernelSU break OTA updates?**
-**A: Generally no:**
-- **KernelSU preserves** system partition integrity
-- **Boot partition modification** may need re-patching after OTA
-- **Automatic tools** in some derivatives handle OTA survival
-- **Manual re-installation** may be required for major Android updates
-
-[↑ Back to top](#contents)
-
-### Advanced Troubleshooting
-
-#### **Bootloop Recovery Procedures**
+#### Bootloop Recovery
 
 **Immediate Steps:**
-1. **Power + Volume Down** to enter fastboot mode
-2. **Flash stock boot image**: `fastboot flash boot stock_boot.img`
-3. **Clear cache partition** if available in recovery
-4. **Factory reset** only as last resort (data loss)
+```bash
+# 1. Enter fastboot mode (Power + Volume Down)
+# 2. Connect device to PC
+# 3. Flash stock boot image
+fastboot flash boot stock_boot.img
+
+# 4. If needed, clear cache
+fastboot erase cache
+
+# 5. Reboot
+fastboot reboot
+```
+
+**Alternative via Recovery:**
+1. Boot into TWRP/custom recovery
+2. Flash stock boot image from recovery
+3. Wipe cache and dalvik cache
+4. Reboot system
 
 **Prevention:**
 - Always keep stock boot image backup
-- Test kernels with temporary boot before permanent flash
-- Use TWRP/recovery with restore capabilities
+- Test kernels with temporary boot first: `fastboot boot test_boot.img`
+- Create TWRP backups before major changes
 - Keep emergency download mode access available
 
-#### **Manager App Issues**
+#### Module-Related Issues
 
-**App Won't Open:**
-1. Check KernelSU kernel installation: `su -c "kernelsu --version"`
-2. Verify app signature and install from official sources
-3. Clear app data and cache, reinstall if necessary  
-4. Check for conflicting security apps or policies
+**Safe Mode Boot:**
+1. Create file `/data/adb/modules/.disable_modules` before boot
+2. This disables all modules for troubleshooting
+3. Remove problematic modules
+4. Delete the disable file and reboot
 
-**Root Permission Denied:**
-1. Verify KernelSU service is running: `ps aux | grep kernelsu`
-2. Check app profile configuration in manager
-3. Ensure SELinux policies allow KernelSU operation
-4. Debug with: `dmesg | grep kernelsu`
+**Commands:**
+```bash
+# Disable all modules
+adb shell su -c "touch /data/adb/modules/.disable_modules"
+adb reboot
 
-**Module Installation Failures:**
-1. Verify OverlayFS support: `mount | grep overlay`
-2. Check available storage space in data partition  
-3. Validate module format and compatibility
-4. Review module logs: `/data/adb/modules/[module]/install.log`
+# Remove specific module
+adb shell su -c "rm -rf /data/adb/modules/[module_name]"
+adb reboot
 
-#### **Performance and Stability Issues**
+# View module logs
+adb shell su -c "cat /data/adb/modules/[module_name]/install.log"
+```
 
-**System Slowdown:**
+</details>
+
+### Debugging Commands
+
+<details>
+<summary><b>🔍 Click to expand: Debug Commands & Diagnostics</b></summary>
+
+```bash
+# Check KernelSU status
+cat /proc/version | grep KernelSU
+su -c "kernelsu --version"
+
+# Kernel logs
+dmesg > /sdcard/dmesg.log
+cat /proc/last_kmsg > /sdcard/last_kmsg.log
+
+# KernelSU specific logs
+logcat -s "KernelSU" > /sdcard/kernelsu.log
+logcat -b all > /sdcard/full_logcat.log
+
+# Module installation logs
+cat /data/adb/modules/*/install.log > /sdcard/module_logs.log
+
+# Check SELinux status
+getenforce
+sestatus
+
+# List loaded modules
+ls -la /data/adb/modules/
+cat /data/adb/modules/*/module.prop
+
+# Check mount points
+mount | grep overlay
+mount | grep /system
+
+# Verify root access
+su -c "id"
+su -c "whoami"
+
+# Check kernel config
+zcat /proc/config.gz | grep KSU
+
+# Monitor system resources
+top -n 1
+free -h
+df -h
+```
+
+</details>
+
+### Device-Specific Issues
+
+<details>
+<summary><b>📱 Click to expand: Device-Specific Troubleshooting</b></summary>
+
+#### Samsung Devices
+- **Knox Triggered**: Some Samsung devices trip Knox warranty bit (irreversible)
+- **Secure Boot**: May need to disable secure boot verification in kernel
+- **Encryption Issues**: Some kernels incompatible with Samsung encryption
+- **OEM Unlock**: Ensure OEM unlocking is enabled in Developer Options
+
+#### OnePlus Devices
+- **Fastboot Commands**: Use `fastboot oem unlock` for bootloader
+- **Color OS Migration**: Recent devices need special handling for OxygenOS vs ColorOS
+- **Parallel Apps**: OxygenOS parallel apps may conflict with root
+- **Slot System**: A/B partition devices need careful slot management
+
+#### Xiaomi Devices
+- **Anti-Rollback**: Be careful with MIUI version downgrades (brick risk)
+- **Bootloader Unlock**: Xiaomi requires waiting period (up to 168 hours)
+- **MIUI Optimizations**: Some MIUI features conflict with KernelSU
+- **Vendor Mismatch**: Ensure kernel matches vendor version
+
+#### Google Pixel Devices
+- **Hardware Attestation**: Strong SafetyNet enforcement on newer Pixels
+- **Verified Boot**: Orange state warning on boot (normal)
+- **Titan M Security**: Hardware security module affects root hiding
+- **OTA Updates**: Easy to re-root after OTAs with KernelSU
+
+</details>
+
+### Performance Issues
+
+<details>
+<summary><b>⚡ Click to expand: Performance Troubleshooting</b></summary>
+
+#### System Slowdown
+
+**Diagnosis:**
 1. **Identify problematic modules**: Disable modules one by one
 2. **Check CPU throttling**: Monitor thermals and frequency scaling
 3. **Review I/O performance**: OverlayFS overhead on slow storage
 4. **Analyze system logs**: Look for kernel errors or warnings
 
-**Random Reboots:**
-1. **Check kernel logs**: `dmesg` and `/proc/last_kmsg`
-2. **Monitor memory usage**: OOM killer activity
-3. **Verify hardware stability**: Stress test without KernelSU
-4. **Test minimal configuration**: Remove all modules temporarily
-
-**App Compatibility Problems:**
-1. **Configure app profiles**: Restrict root access for sensitive apps
-2. **Enable advanced hiding**: Install SuSFS or similar modules
-3. **Check SafetyNet status**: Use apps like YASNAC or SafetyNet Test
-4. **Review detection methods**: Banking apps may use hardware attestation
-
-[↑ Back to top](#contents)
-
-### Device-Specific Troubleshooting
-
-#### **Samsung Devices**
-- **Knox triggered**: Some Samsung devices may trip Knox warranty bit
-- **Secure boot issues**: Disable secure boot verification if possible
-- **Encryption problems**: Some kernels may have issues with Samsung encryption
-
-#### **OnePlus Devices**  
-- **Fastboot mode**: Use `fastboot oem unlock` for bootloader unlocking
-- **Color OS migration**: Recent devices may need special handling
-- **Parallel app conflicts**: OxygenOS parallel apps may conflict with root
-
-#### **Xiaomi Devices**
-- **Anti-rollback protection**: Be careful with MIUI version downgrades
-- **Bootloader unlock delay**: Xiaomi requires waiting period for unlock
-- **MIUI optimizations**: Some MIUI features may conflict with KernelSU
-
-#### **Google Pixel Devices**
-- **Hardware attestation**: Strong SafetyNet enforcement on newer Pixels
-- **Verified boot warnings**: May show orange state warning on boot
-- **Titan M security**: Hardware security module may affect root hiding
-
-[↑ Back to top](#contents)
-
-### Community Support Resources
-
-#### **Getting Help Priority Order**
-1. **Official Documentation**: Check kernelsu.org FAQ and troubleshooting guides
-2. **GitHub Discussions**: Search existing issues and discussions on official repo
-3. **Telegram Groups**: Ask in appropriate group (official/derivative-specific)
-4. **XDA Forums**: Post in device-specific or general KernelSU threads
-5. **Reddit Communities**: r/KernelSU for general discussion and support
-
-#### **Effective Bug Reporting**
-**Include in bug reports:**
-- Device model, Android version, kernel version
-- KernelSU derivative and version  
-- Steps to reproduce the issue
-- Full logs: `dmesg`, manager logs, module logs
-- Module list and configuration
-
-**Log Collection Commands:**
+**Commands:**
 ```bash
-# Kernel logs
-dmesg > /sdcard/dmesg.log
+# Monitor CPU usage
+top -m 10
 
-# KernelSU specific logs  
-logcat -s "KernelSU" > /sdcard/kernelsu.log
+# Check I/O stats
+iostat -x 1 10
 
-# Module installation logs
-cat /data/adb/modules/*/install.log > /sdcard/module_logs.log
+# View thermal zones
+cat /sys/class/thermal/thermal_zone*/temp
+
+# Check for errors
+dmesg | grep -i error
+logcat | grep -i error
 ```
 
-#### **Contributing to Solutions**
-- **Document solutions**: Add working fixes to community wikis
-- **Test beta versions**: Help with testing new releases and features
-- **Contribute modules**: Create and maintain useful modules
-- **Support others**: Answer questions in community forums
-- **Improve documentation**: Submit PR for documentation improvements
+#### Random Reboots
 
-[↑ Back to top](#contents)
+**Troubleshooting:**
+1. **Check kernel logs**: `dmesg` and `/proc/last_kmsg`
+2. **Monitor memory usage**: Look for OOM (Out Of Memory) killer activity
+3. **Verify hardware stability**: Stress test without KernelSU
+4. **Test minimal config**: Remove all modules temporarily
 
----
+**Prevention:**
+- Avoid aggressive kernel tweaks
+- Monitor temperature during stress tests
+- Ensure adequate RAM for modules
+- Use stable kernel versions
+
+</details>
+
+### App Compatibility
+
+<details>
+<summary><b>🏦 Click to expand: Banking & Gaming App Compatibility</b></summary>
+
+#### Banking/Payment Apps
+
+**Solutions:**
+1. **Configure app profiles**: Restrict root access for sensitive apps
+2. **Enable advanced hiding**: Install SuSFS or Shamiko modules
+3. **Check SafetyNet**: Use YASNAC or Play Integrity API tester
+4. **Hardware attestation**: Some devices use hardware-based detection (harder to bypass)
+
+**Recommended Setup:**
+```bash
+# Install hiding modules
+# 1. Install Shamiko module
+# 2. Install SuSFS4KSU module
+# 3. Configure DenyList in manager
+# 4. Reboot device
+# 5. Test with SafetyNet checker
+```
+
+#### Game Apps
+
+**Anti-cheat Detection:**
+- Some games detect root and ban accounts
+- Use hiding modules carefully
+- Configure app profiles to deny root access
+- Consider using non-rooted profiles for gaming
+
+</details>
+
+### Getting Help
+
+<details>
+<summary><b>💬 Click to expand: Support Resources & Log Collection</b></summary>
+
+#### Information to Provide
+
+When seeking help, include:
+1. **Device Information**: Model, Android version, kernel version
+2. **KernelSU Variant**: Official, Next, or SuKiSu-Ultra + version number
+3. **Installation Method**: How you installed KernelSU
+4. **Reproduction Steps**: Detailed steps to reproduce the issue
+5. **Logs**: Relevant log files (dmesg, logcat, module logs)
+6. **Module List**: All installed modules and versions
+
+#### Log Collection Script
+
+```bash
+#!/system/bin/sh
+# Collect comprehensive logs for troubleshooting
+
+LOGDIR="/sdcard/kernelsu_logs_$(date +%Y%m%d_%H%M%S)"
+mkdir -p "$LOGDIR"
+
+# System info
+getprop > "$LOGDIR/system_props.txt"
+uname -a > "$LOGDIR/kernel_info.txt"
+cat /proc/version > "$LOGDIR/kernel_version.txt"
+
+# KernelSU info
+su -c "kernelsu --version" > "$LOGDIR/kernelsu_version.txt" 2>&1
+
+# Logs
+dmesg > "$LOGDIR/dmesg.log"
+logcat -d > "$LOGDIR/logcat.log"
+cat /proc/last_kmsg > "$LOGDIR/last_kmsg.log" 2>/dev/null
+
+# Module info
+ls -laR /data/adb/modules > "$LOGDIR/modules_list.txt"
+cat /data/adb/modules/*/module.prop > "$LOGDIR/modules_props.txt" 2>/dev/null
+
+# Mount info
+mount > "$LOGDIR/mount_points.txt"
+df -h > "$LOGDIR/disk_usage.txt"
+
+echo "Logs collected in: $LOGDIR"
+```
+
+</details>
+
+#### Support Priority
+
+1. **Official Documentation**: Check [kernelsu.org](https://kernelsu.org/) FAQ
+2. **GitHub Discussions**: Search existing issues and discussions
+3. **Telegram Groups**: Ask in appropriate variant-specific group
+4. **XDA Forums**: Device-specific threads
+5. **Reddit**: r/KernelSU for general questions
+
+<div align="right">
+<a href="#awesome-kernelsu">⬆ Back to Top</a>
+</div><br>
+
+## FAQ
+
+### General Questions
+
+**Q: What is KernelSU and how does it differ from Magisk?**
+
+A: KernelSU is a kernel-based root solution that operates entirely in kernel space, providing superior security and isolation compared to Magisk's userspace approach. Key differences:
+- **Architecture**: Kernel-level vs userspace
+- **Security**: Better isolation and tamper resistance
+- **Compatibility**: Requires compatible kernel vs universal support
+- **Module System**: OverlayFS vs Magic Mount
+- **Future**: Designed for modern Android security model
+
+**Q: Which KernelSU variant should I use?**
+
+A: Selection guide:
+- **Modern devices (Android 12+, kernel 5.10+)**: Official KernelSU
+- **Mid-range devices (Android 9-11, kernel 4.4-6.6)**: KernelSU-Next
+- **Legacy devices (Android 7-8, kernel 3.4-5.4)**: SuKiSu-Ultra
+
+**Q: Is KernelSU safer than Magisk?**
+
+A: Yes, in several ways:
+- Kernel-level operation prevents userspace attacks
+- App Profile system offers granular permission control
+- Zero system modification maintains integrity
+- Hardware security integration (ARM TrustZone)
+- Advanced hiding at kernel level
+
+**Q: Can I use Magisk modules with KernelSU?**
+
+A: Compatibility varies:
+- **Simple modules**: Many work without modification
+- **Complex modules**: May need adaptation for OverlayFS
+- **Zygisk modules**: Require ZygiskNext or ReZygisk
+- **Hardware-specific**: Usually compatible
+
+**Q: Will KernelSU break OTA updates?**
+
+A: Generally no:
+- System partition remains unmodified
+- Boot partition modification may need re-patching
+- Some variants have automatic OTA survival
+- Manual re-installation may be required for major updates
+
+### Installation & Setup
+
+<details>
+<summary><b>📥 Click to expand: Installation & Setup FAQs</b></summary>
+
+**Q: How do I check if my device is compatible?**
+
+A: Check your kernel version:
+```bash
+adb shell uname -r
+# or on device
+uname -r
+```
+Then refer to the [compatibility matrix](#compatibility-matrix).
+
+**Q: Do I need to uninstall Magisk before installing KernelSU?**
+
+A: Yes, it's strongly recommended to:
+1. Uninstall all Magisk modules
+2. Uninstall Magisk completely
+3. Flash stock boot image
+4. Then install KernelSU
+
+**Q: Can I have both Magisk and KernelSU installed?**
+
+A: Not recommended. They modify the boot process differently and will conflict. Choose one solution.
+
+**Q: How do I backup my current setup before installing?**
+
+A: Create backups:
+1. Full TWRP backup (if available)
+2. Backup stock boot.img
+3. Document installed modules
+4. Export app data
+5. Save important files to external storage
+
+</details>
+
+### Modules & Features
+
+<details>
+<summary><b>🔌 Click to expand: Modules & Features FAQs</b></summary>
+
+**Q: Where can I find KernelSU modules?**
+
+A: Sources:
+- [MMRL](https://github.com/MMRLApp/MMRL) - Module manager with repository
+- GitHub - Search for "kernelsu module"
+- Telegram groups - Community shared modules
+- XDA Forums - Device-specific modules
+
+**Q: How do I create my own KernelSU module?**
+
+A: Follow the [module development guide](https://kernelsu.org/guide/module.html):
+1. Use the official module template
+2. Create module.prop file
+3. Add necessary scripts
+4. Test thoroughly
+5. Package as zip file
+
+**Q: What are App Profiles and how do I use them?**
+
+A: App Profiles allow granular control of root permissions per app:
+- Custom UID/GID assignment
+- Capability restrictions
+- SELinux context customization
+- Time-based access control
+- Namespace isolation
+
+Configure in KernelSU Manager under each app's settings.
+
+</details>
+
+### Troubleshooting
+
+<details>
+<summary><b>🔧 Click to expand: Common Troubleshooting FAQs</b></summary>
+
+**Q: My device is stuck in a bootloop, what do I do?**
+
+A: Emergency recovery:
+```bash
+# Enter fastboot mode (Power + Volume Down)
+# Flash stock boot image
+fastboot flash boot stock_boot.img
+fastboot reboot
+```
+Always keep stock boot.img backup!
+
+**Q: Banking apps are not working, how do I fix this?**
+
+A: Root hiding setup:
+1. Install Shamiko or SuSFS module
+2. Configure DenyList in manager
+3. Add banking apps to DenyList
+4. Hide KernelSU Manager app
+5. Test with SafetyNet checker
+
+**Q: How do I check if KernelSU is working?**
+
+A: Verification:
+```bash
+# Check kernel version
+cat /proc/version | grep KernelSU
+
+# Test root
+su -c "id"
+
+# Check manager
+# Open KernelSU Manager and verify status
+```
+
+**Q: Modules are not loading, what's wrong?**
+
+A: Common causes:
+- Incompatible module version
+- Insufficient permissions
+- Module conflicts
+- OverlayFS not supported
+
+Check module logs: `/data/adb/modules/[module]/install.log`
+
+</details>
+
+### Development
+
+<details>
+<summary><b>👨‍💻 Click to expand: Development & Debugging FAQs</b></summary>
+
+**Q: How do I build KernelSU for my device?**
+
+A: Follow the [building guide](#kernel-sources-and-building):
+1. Setup Linux build environment
+2. Clone kernel source
+3. Apply KernelSU patches
+4. Configure kernel (enable CONFIG_KSU)
+5. Compile kernel
+6. Package with AnyKernel3
+
+**Q: Can I contribute to KernelSU?**
+
+A: Yes! Contributions welcome:
+- Report bugs on GitHub
+- Submit pull requests
+- Create and share modules
+- Improve documentation
+- Help in community support
+- Test beta versions
+
+**Q: How do I enable debug mode?**
+
+A: Enable debugging:
+```bash
+# Enable verbose logging
+setprop persist.kernelsu.debug 1
+
+# Collect logs
+logcat -s "KernelSU" > /sdcard/debug.log
+dmesg > /sdcard/kernel.log
+```
+
+</details>
+
+<div align="right">
+<a href="#awesome-kernelsu">⬆ Back to Top</a>
+</div><br>
 
 ## Contributing
 
-Contributions are welcome! Please read the [contribution guidelines](CONTRIBUTING.md) first.
+We welcome contributions from the community! This project thrives on community input and collaboration.
 
 ### How to Contribute
+
+#### Adding Resources
+
 1. **Fork** this repository
 2. **Add** your resource to the appropriate section
-3. **Ensure** the resource is actively maintained and relevant
-4. **Test** all links and verify information accuracy
-5. **Submit** a pull request with a clear description
+3. **Follow** the formatting guidelines below
+4. **Submit** a pull request with clear description
 
-### Resource Guidelines
-- Should provide clear value to the KernelSU community
-- Links must be working and lead to official sources
-- Include relevant metrics (stars, downloads) where available
-- Maintain alphabetical order within sections
+#### Resource Guidelines
 
-### Quality Standards
-- All information must be accurate and up-to-date
-- Links should be to official repositories or trusted sources
-- Descriptions should be clear and concise
-- Include version numbers and compatibility information
+Resources should:
+- Provide clear value to the KernelSU community
+- Link to official or trusted sources
+- Be actively maintained and accessible
+- Include relevant badges and metrics
+- Have accurate and up-to-date information
 
-### Legal & Disclaimer
-This documentation is provided for educational purposes. Users are responsible for understanding their local laws regarding device modification. The contributors and maintainers of this list are not responsible for any damage to devices or violation of warranties. Always create backups before modifying your device.
+#### Formatting Standards
 
-*KernelSU and its derivatives are independent projects not affiliated with Google, Android, or device manufacturers.*
+```markdown
+### Section Name
 
-[↑ Back to top](#contents)
+- [**Resource Name**](https://link-to-resource.com) - Clear, concise description
+  - Additional details if needed
+  - Key features or benefits
+```
+
+#### Quality Standards
+
+- **Accuracy**: All information must be verified and current
+- **Completeness**: Include version numbers and compatibility info
+- **Clarity**: Descriptions should be clear and concise
+- **Consistency**: Follow existing formatting patterns
+- **Attribution**: Credit original authors and sources
+
+### Contribution Types
+
+#### Documentation Improvements
+- Fix typos and grammatical errors
+- Clarify confusing sections
+- Add missing information
+- Translate content
+- Update outdated links
+
+#### New Resources
+- Tools and utilities
+- Modules and extensions
+- Tutorials and guides
+- Community resources
+- Device-specific kernels
+
+#### Technical Contributions
+- Code examples
+- Scripts and automation
+- Build instructions
+- Troubleshooting solutions
+
+### Contribution Guidelines
+
+1. **Search First**: Check if the resource already exists
+2. **Test Links**: Ensure all links are working
+3. **Verify Info**: Confirm accuracy of technical details
+4. **Be Concise**: Keep descriptions clear and brief
+5. **Stay Relevant**: Ensure content is KernelSU-related
+6. **Credit Sources**: Attribute original authors
+7. **Follow Format**: Match existing style and structure
+
+### Pull Request Process
+
+1. Update the README.md with your changes
+2. Ensure the changes follow formatting guidelines
+3. Update the table of contents if adding new sections
+4. Provide a clear PR description explaining changes
+5. Wait for review and address any feedback
+6. Merge will occur after approval
+
+For detailed contribution guidelines, see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+### Code of Conduct
+
+- Be respectful and constructive
+- Welcome newcomers and help them learn
+- Give credit where credit is due
+- Focus on what is best for the community
+- Show empathy towards other community members
+
+### Getting Help
+
+If you need help with contributions:
+- Open an issue with the "question" label
+- Ask in Telegram community groups
+- Check existing PRs for examples
+- Review [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines
+
+<div align="right">
+<a href="#awesome-kernelsu">⬆ Back to Top</a>
+</div><br>
+
+## Disclaimer
+
+### Important Legal Information
+
+This documentation is provided for **educational and informational purposes only**. Users are solely responsible for understanding and complying with their local laws and regulations regarding device modification.
+
+### Warranty & Liability
+
+- **Warranty Void**: Rooting your device typically voids manufacturer warranty
+- **No Liability**: Contributors and maintainers are not responsible for:
+  - Device damage or bricking
+  - Data loss or corruption
+  - Warranty violations
+  - Legal consequences
+  - Security vulnerabilities
+
+### User Responsibility
+
+Users acknowledge and accept responsibility for:
+- Understanding risks associated with device modification
+- Creating backups before making changes
+- Complying with local laws and regulations
+- Manufacturer warranty implications
+- Security risks of running root access
+- App compatibility issues
+
+### Best Practices
+
+**Always:**
+- ✅ Create complete backups before modifying device
+- ✅ Read and understand documentation thoroughly
+- ✅ Test changes on non-critical devices first
+- ✅ Keep stock firmware and boot images
+- ✅ Research device-specific considerations
+- ✅ Understand security implications
+
+**Never:**
+- ❌ Proceed without proper backups
+- ❌ Grant root access to untrusted apps
+- ❌ Install modules from unknown sources
+- ❌ Ignore security warnings
+- ❌ Modify system without understanding changes
+
+### Security Considerations
+
+Root access can:
+- Bypass Android security features
+- Allow malicious apps full system access
+- Expose sensitive data if misconfigured
+- Interfere with security-sensitive apps
+- Affect device encryption
+
+**Recommended:**
+- Use App Profiles to restrict root access
+- Install root hiding for sensitive apps
+- Only grant root to trusted applications
+- Regularly review app permissions
+- Keep KernelSU updated
+
+### Third-Party Content
+
+This list includes links to third-party resources:
+- Content accuracy is not guaranteed
+- External projects have their own licenses (separate from this repository's MIT License)
+- Maintainers are not affiliated with linked projects
+- Verify safety of external resources before use
+
+### Updates & Maintenance
+
+This documentation:
+- Is community-maintained
+- May contain outdated information
+- Should be verified against official sources
+- Is provided "as is" without warranty
+- May change without notice
+
+### Affiliation
+
+KernelSU and its derivatives are independent projects:
+- Not affiliated with Google or Android
+- Not affiliated with device manufacturers
+- Community-driven open source projects
+- Not official support channels
+
+### Contact & Issues
+
+For concerns about this documentation:
+- Open an issue on GitHub
+- Follow contribution guidelines
+- Respect community code of conduct
+- Provide constructive feedback
+
+<div align="right">
+<a href="#awesome-kernelsu">⬆ Back to Top</a>
+</div><br>
 
 ---
-<div style="text-align:center">
 
-**Made with ❤️ by the KernelSU community**
+## License
+
+[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+**Copyright (c) 2025 Fynks**
+
+### License Terms
+
+- **Free to Use**: Permission is granted to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+- **Attribution Required**: Copyright notice and permission notice must be included in all copies or substantial portions
+- **No Warranty**: The software is provided "as is", without warranty of any kind
+- **Liability**: Authors or copyright holders are not liable for any claim, damages or other liability
+
+<div align="right">
+<a href="#awesome-kernelsu">⬆ Back to Top</a>
+</div><br>
+
+---
+
+## Acknowledgments
+
+### Special Thanks
+
+**Project Creators:**
+- [**tiann**](https://github.com/tiann) - Creator of KernelSU, visionary behind kernel-based root
+- [**topjohnwu**](https://github.com/topjohnwu) - Magisk creator, inspiration for systemless modifications
+
+**Derivative Maintainers:**
+- KernelSU-Next team - Enhanced fork development
+- SuKiSu-Ultra team - Legacy device support
+
+**Community Contributors:**
+- Module developers creating useful tools
+- Documentation translators and writers
+- Community moderators and support staff
+- Beta testers and bug reporters
+- Everyone who shares knowledge
+
+### Community
+
+Thanks to the vibrant Android rooting community:
+- XDA Developers forum members
+- Telegram group participants
+- GitHub contributors
+- Reddit community members
+- International community leaders
+
+### Resources
+
+Thanks to projects that make KernelSU possible:
+- Linux kernel developers
+- Android Open Source Project
+- OverlayFS and kernel subsystem developers
+- Open source tool creators
+
+<div align="right">
+<a href="#awesome-kernelsu">⬆ Back to Top</a>
+</div><br>
+
+---
+
+<div align="center">
+
+**Made with ❤️ by the KernelSU Community**
+
+[![Star History Chart](https://api.star-history.com/svg?repos=fynks/awesome-kernelsu&type=Date)](https://star-history.com/#fynks/awesome-kernelsu&Date)
+
+**Last Updated**: October 2025
+
+[⬆ Back to Top](#awesome-kernelsu)
 
 </div>
