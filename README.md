@@ -739,7 +739,7 @@ updateJson=https://example.com/update.json
 
 Pre-built kernels with KernelSU integration for various devices:
 
-- [**WildKernels**](https://github.com/WildKernels) - Collection of premade kernels with KernelSU for multiple device brands
+- [**WildKernels**](./media/kernelsu-logo.svg) - Collection of premade kernels with KernelSU for multiple device brands
 
 > [!TIP]
 > Always verify kernel compatibility with your specific device model and Android version before flashing. Check the repository's supported devices list.
