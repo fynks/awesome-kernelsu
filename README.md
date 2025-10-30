@@ -35,6 +35,7 @@ KernelSU is a kernel-based root solution for Android that provides superior secu
 
 - [Quick Start](#quick-start)
 - [KernelSU Variants](#kernelsu-variants)
+- [Comparison](#comparison)
 - [Installation](#installation)
 - [Official Resources](#official-resources)
 - [Documentation](#documentation)
@@ -42,7 +43,6 @@ KernelSU is a kernel-based root solution for Android that provides superior secu
 - [Modules and Tools](#modules-and-tools)
 - [Kernel Sources and Building](#kernel-sources-and-building)
 - [Community](#community)
-- [Comparison](#comparison)
 - [Troubleshooting](#troubleshooting)
 - [FAQ](#faq)
 - [Contributing](#contributing)
@@ -234,6 +234,106 @@ A KernelSU fork optimized for legacy devices with advanced root hiding capabilit
 <div align="right">
 <a href="#awesome-kernelsu">⬆ Back to Top</a>
 </div><br>
+
+## Comparison
+
+### KernelSU vs Alternative Root Solutions
+
+| Feature                 | KernelSU        | KernelSU-Next           | SuKiSu-Ultra            | Magisk      | APatch       |
+| ----------------------- | --------------- | ----------------------- | ----------------------- | ----------- | ------------ |
+| **Architecture**        | Kernel-level    | Kernel-level            | Kernel-level            | Userspace   | Kernel-level |
+| **Module System**       | OverlayFS       | OverlayFS + Magic Mount | Magic Mount + OverlayFS | Magic Mount | OverlayFS    |
+| **Kernel Support**      | 5.10+ (GKI 2.0) | 4.4-6.6                 | 3.4-5.4+                | Any         | 3.18-6.1     |
+| **Architecture**        | arm64, x86_64   | arm64, arm, x86_64      | arm64, arm, x86_64      | Universal   | arm64        |
+| **Security Model**      | App Profile     | App Profile             | App Profile             | Root Toggle | SuperKey     |
+| **Hide Capability**     | Basic           | Advanced                | SuSFS Integrated        | Deprecated  | Kernel-level |
+| **Update Method**       | Manual          | Auto-update             | Manual                  | OTA         | Manual       |
+| **System Modification** | Zero            | Zero                    | Zero                    | Minimal     | Zero         |
+| **OTA Compatibility**   | Excellent       | Excellent               | Good                    | Good        | Excellent    |
+| **Development Status**  | Active          | Very Active             | Active                  | Active      | Active       |
+| **Learning Curve**      | Medium          | Medium                  | Hard                    | Easy        | Hard         |
+| **Community Size**      | Growing         | Medium                  | Small                   | Large       | Small        |
+
+### Advantages of KernelSU Ecosystem
+
+<details>
+<summary><b>✨ Click to expand: Detailed Advantages & Benefits</b></summary>
+
+#### Security Benefits
+
+1. **Kernel-Level Isolation**: Root access operates in kernel space, preventing userspace tampering
+2. **App Profile System**: Granular per-application permission control with temporal restrictions
+3. **Hardware-Level Protection**: Utilizes ARM TrustZone and hardware security features
+4. **Verified Boot Compatible**: Maintains system integrity verification where possible
+5. **Advanced Hiding**: Kernel-level hiding harder to detect than userspace methods
+
+#### Technical Advantages
+
+1. **Zero System Modification**: No changes to system partitions, preserving OTA capabilities
+2. **OverlayFS Efficiency**: More efficient than bind mounting with better performance
+3. **Future-Proof Design**: Built for modern Android security models and requirements
+4. **Developer-Friendly**: Clean APIs and comprehensive documentation
+5. **Modular Architecture**: Easy to extend and customize
+
+#### Ecosystem Maturity
+
+1. **Multiple Derivatives**: Options for different use cases and device compatibility
+2. **Active Development**: Regular updates and feature additions across all variants
+3. **Growing Module Repository**: Expanding collection of high-quality modules
+4. **Community Support**: Knowledgeable community with expert developers
+5. **Documentation**: Comprehensive guides in multiple languages
+
+</details>
+
+### Migration Considerations
+
+<details>
+<summary><b>🔄 Click to expand: Migration from Magisk or Legacy Solutions</b></summary>
+
+#### From Magisk to KernelSU
+
+**Advantages:**
+- Enhanced security and hiding capabilities
+- Better performance with OverlayFS
+- Future-proof architecture for modern Android
+- Maintained OTA compatibility
+
+**Considerations:**
+- Module compatibility may require updates
+- Different app profile management approach
+- Learning curve for new concepts
+- Some Magisk-specific features unavailable
+
+**Migration Steps:**
+1. Backup all data and current setup
+2. Document installed modules and configurations
+3. Uninstall Magisk completely
+4. Flash stock boot image
+5. Install KernelSU using preferred method
+6. Reinstall compatible modules
+7. Configure app profiles
+
+#### From SuperSU/Legacy Solutions
+
+**Essential Steps:**
+- Complete system restoration recommended
+- Fresh start with modern practices
+- Understanding of new security model
+- Backup and data migration planning
+
+**Benefits:**
+- Dramatically improved security
+- Modern Android compatibility
+- Systemless approach
+- Active development and support
+
+</details>
+
+
+<div align="right">
+<a href="#awesome-kernelsu">⬆ Back to Top</a>
+</div><br>
+
 
 ## Installation
 
@@ -761,126 +861,6 @@ jobs:
 - **Device Databases**: Lists of tested devices and kernel compatibility
 - **Troubleshooting Wikis**: Community-contributed solutions and guides
 - **Tutorial Videos**: YouTube channels with installation and usage guides
-
-<div align="right">
-<a href="#awesome-kernelsu">⬆ Back to Top</a>
-</div><br>
-
-## Comparison
-
-### KernelSU vs Alternative Root Solutions
-
-| Feature                 | KernelSU        | KernelSU-Next           | SuKiSu-Ultra            | Magisk      | APatch       |
-| ----------------------- | --------------- | ----------------------- | ----------------------- | ----------- | ------------ |
-| **Architecture**        | Kernel-level    | Kernel-level            | Kernel-level            | Userspace   | Kernel-level |
-| **Module System**       | OverlayFS       | OverlayFS + Magic Mount | Magic Mount + OverlayFS | Magic Mount | OverlayFS    |
-| **Kernel Support**      | 5.10+ (GKI 2.0) | 4.4-6.6                 | 3.4-5.4+                | Any         | 3.18-6.1     |
-| **Architecture**        | arm64, x86_64   | arm64, arm, x86_64      | arm64, arm, x86_64      | Universal   | arm64        |
-| **Security Model**      | App Profile     | App Profile             | App Profile             | Root Toggle | SuperKey     |
-| **Hide Capability**     | Basic           | Advanced                | SuSFS Integrated        | Deprecated  | Kernel-level |
-| **Update Method**       | Manual          | Auto-update             | Manual                  | OTA         | Manual       |
-| **System Modification** | Zero            | Zero                    | Zero                    | Minimal     | Zero         |
-| **OTA Compatibility**   | Excellent       | Excellent               | Good                    | Good        | Excellent    |
-| **Development Status**  | Active          | Very Active             | Active                  | Active      | Active       |
-| **Learning Curve**      | Medium          | Medium                  | Hard                    | Easy        | Hard         |
-| **Community Size**      | Growing         | Medium                  | Small                   | Large       | Small        |
-
-### Advantages of KernelSU Ecosystem
-
-<details>
-<summary><b>✨ Click to expand: Detailed Advantages & Benefits</b></summary>
-
-#### Security Benefits
-
-1. **Kernel-Level Isolation**: Root access operates in kernel space, preventing userspace tampering
-2. **App Profile System**: Granular per-application permission control with temporal restrictions
-3. **Hardware-Level Protection**: Utilizes ARM TrustZone and hardware security features
-4. **Verified Boot Compatible**: Maintains system integrity verification where possible
-5. **Advanced Hiding**: Kernel-level hiding harder to detect than userspace methods
-
-#### Technical Advantages
-
-1. **Zero System Modification**: No changes to system partitions, preserving OTA capabilities
-2. **OverlayFS Efficiency**: More efficient than bind mounting with better performance
-3. **Future-Proof Design**: Built for modern Android security models and requirements
-4. **Developer-Friendly**: Clean APIs and comprehensive documentation
-5. **Modular Architecture**: Easy to extend and customize
-
-#### Ecosystem Maturity
-
-1. **Multiple Derivatives**: Options for different use cases and device compatibility
-2. **Active Development**: Regular updates and feature additions across all variants
-3. **Growing Module Repository**: Expanding collection of high-quality modules
-4. **Community Support**: Knowledgeable community with expert developers
-5. **Documentation**: Comprehensive guides in multiple languages
-
-</details>
-
-### Migration Considerations
-
-<details>
-<summary><b>🔄 Click to expand: Migration from Magisk or Legacy Solutions</b></summary>
-
-#### From Magisk to KernelSU
-
-**Advantages:**
-- Enhanced security and hiding capabilities
-- Better performance with OverlayFS
-- Future-proof architecture for modern Android
-- Maintained OTA compatibility
-
-**Considerations:**
-- Module compatibility may require updates
-- Different app profile management approach
-- Learning curve for new concepts
-- Some Magisk-specific features unavailable
-
-**Migration Steps:**
-1. Backup all data and current setup
-2. Document installed modules and configurations
-3. Uninstall Magisk completely
-4. Flash stock boot image
-5. Install KernelSU using preferred method
-6. Reinstall compatible modules
-7. Configure app profiles
-
-#### From SuperSU/Legacy Solutions
-
-**Essential Steps:**
-- Complete system restoration recommended
-- Fresh start with modern practices
-- Understanding of new security model
-- Backup and data migration planning
-
-**Benefits:**
-- Dramatically improved security
-- Modern Android compatibility
-- Systemless approach
-- Active development and support
-
-</details>
-
-### Use Case Recommendations
-
-**Choose Official KernelSU If:**
-- You have a modern device (2021+) with GKI 2.0
-- Stability and official support are top priorities
-- OTA compatibility is essential
-
-**Choose KernelSU-Next If:**
-- You want enhanced features and better UI
-- Your device has kernel 4.4-6.6 support
-- Auto-updates and advanced module management appeal to you
-
-**Choose SuKiSu-Ultra If:**
-- You have an older device with kernel 3.x-5.4
-- Advanced root hiding is critical (banking apps, etc.)
-- Legacy device optimization is important
-
-**Stick with Magisk If:**
-- You have very old hardware not supported by KernelSU derivatives
-- You rely heavily on Xposed or Magisk-specific modules
-- Migration effort outweighs potential benefits
 
 <div align="right">
 <a href="#awesome-kernelsu">⬆ Back to Top</a>
