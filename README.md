@@ -36,22 +36,18 @@ KernelSU is a **kernel-based root solution** for Android that delivers superior 
 
 
 ## Table of Contents
-
-- [Quick Start](#quick-start)
+- [What is KernelSU?](#what-is-kernelsu)
+- [Getting Started](#getting-started)
 - [KernelSU Variants](#kernelsu-variants)
 - [Comparison](#comparison)
-- [Premade Kernels](#premade-kernels)
-- [Installation](#installation)
-- [Official Resources](#official-resources)
-- [Documentation](#documentation)
-- [Development](#development)
-- [Modules and Tools](#modules-and-tools)
-- [Kernel Sources and Building](#kernel-sources-and-building)
-- [Community](#community)
-- [Troubleshooting](#troubleshooting)
-- [FAQ](#faq)
-- [Contributing](#contributing)
-- [Disclaimer](#disclaimer)
+- [Prebuilt Kernels](#prebuilt-kernels)
+- [Installation](#-installation)
+- [Documentation](#-documentation)
+- [Modules and Tools](#modules-and-tools)    
+- [Building from Source](#-building-from-source)  
+- [Community](#-community)
+- [Troubleshooting](#-troubleshooting) • [FAQ](#-faq) • [Contributing](#-contributing)
+- [Disclaimer](#disclaimer) • [License](#license)
 
 ## Getting Started
 
