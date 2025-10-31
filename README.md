@@ -360,6 +360,73 @@ High-quality kernels with KernelSU and SUSFS integration for various device fami
 | **Sultan** | Pixel Devices | [![Repo](https://img.shields.io/badge/GitHub-Sultan_KernelSU_SUSFS-blue?style=flat-square&logo=github)](https://github.com/WildKernels/Sultan_KernelSU_SUSFS) |
 | **OnePlus** | OnePlus Devices | [![Repo](https://img.shields.io/badge/GitHub-OnePlus_KernelSU_SUSFS-blue?style=flat-square&logo=github)](https://github.com/WildKernels/OnePlus_KernelSU_SUSFS) |
 
+
+#### Xiaomi Device Kernels
+
+| Device Model | Features | ROM Support | Download |
+|--------------|----------|-------------|----------|
+| Redmi 9 (lancelot) | KernelSU Next, SukiSU Ultra, SUSFS, OverlayFS, MT6768, Kernel 4.14 | AOSP-based ROMs | [![GitHub](https://img.shields.io/badge/GitHub-Edhic1-blue?style=flat-square&logo=github)](https://github.com/Edhic1/kernel_KSu_Next_Lancelot) |
+| Redmi Note 12 4G (topaz/tapas) | Kernel 5.15, Optimized for smoothness | Custom ROMs | [![GitHub](https://img.shields.io/badge/GitHub-chickendrop89-blue?style=flat-square&logo=github)](https://github.com/chickendrop89/device_xiaomi_gemstones-kernel) |
+| Redmi Note 13 4G (sapphire/sapphiren) | Kernel 5.15, Optimized for smoothness | Custom ROMs | [![GitHub](https://img.shields.io/badge/GitHub-chickendrop89-blue?style=flat-square&logo=github)](https://github.com/chickendrop89/device_xiaomi_gemstones-kernel) |
+| Redmi Note 12/13 4G (topaz/sapphire) | SukiSU Ultra v3.2.0, KPM, SUSFS v1.5.11, Baseband-guard, Kernel 5.15 | Android 13-16 | [![GitHub](https://img.shields.io/badge/GitHub-ZEPHARO-blue?style=flat-square&logo=github)](https://github.com/topnotchfreaks/kernel_msm-5.15/releases/tag/ZEPHARO) |
+| Redmi Note 12/13 4G (topaz/sapphire) | SukiSU Ultra, KPM, SUSFS, LTO, Kernel 5.15 | Android 13-16 | [![GitHub](https://img.shields.io/badge/GitHub-YASK-blue?style=flat-square&logo=github)](https://github.com/topnotchfreaks/kernel_msm-5.15/releases/tag/YASK) |
+| Redmi Pad SE (xun) | SukiSU Ultra, KPM, SUSFS, LTO, Kernel 5.15 | Android 13-16 | [![GitHub](https://img.shields.io/badge/GitHub-YASK-blue?style=flat-square&logo=github)](https://github.com/topnotchfreaks/kernel_msm-5.15/releases/tag/YASK) |
+| Redmi 15 / POCO M7 4G (creek) | SukiSU Ultra, KPM, SUSFS, LTO, Kernel 5.15 | Android 13-16 | [![GitHub](https://img.shields.io/badge/GitHub-YASK-blue?style=flat-square&logo=github)](https://github.com/topnotchfreaks/kernel_msm-5.15/releases/tag/YASK) |
+| Redmi 4X (santoni) | KernelSU, Kernel 4.9 | AOSP-based ROMs | [![GitHub](https://img.shields.io/badge/GitHub-zeta96-blue?style=flat-square&logo=github)](https://github.com/zeta96/L_soul_santoni_msm4.9) |
+| Redmi Note 12 5G / POCO X5 (stone) | KernelSU, APatch compatible, Kernel 5.4 | Custom ROMs | [![GitHub](https://img.shields.io/badge/GitHub-gawasvedraj-blue?style=flat-square&logo=github)](https://github.com/gawasvedraj/KernelOwO) |
+
+#### Samsung Device Kernels
+
+| Device Model | Features | ROM Support | Download |
+|--------------|----------|-------------|----------|
+| Galaxy S24 Snapdragon (S92XX / sm8650) | KernelSU, MKSU, SukiSU-Ultra variants, LKM mode, Kernel 6.1 | One UI 8.0 | [![GitHub](https://img.shields.io/badge/GitHub-YuzakiKokuban-blue?style=flat-square&logo=github)](https://github.com/YuzakiKokuban/android_kernel_samsung_sm8650) |
+| Galaxy S25 (S93XX / sm8750) | KernelSU, MKSU, SukiSU-Ultra variants, LKM mode, Kernel 6.6 | One UI 9.0 | [![GitHub](https://img.shields.io/badge/GitHub-Kokuban-blue?style=flat-square&logo=github)](https://github.com/YuzakiKokuban/android_kernel_samsung_sm8750) |
+| Galaxy S25 (S93XX / sm8750) | KernelSU LKM mode compatible, Kernel 6.6 | One UI 9.0 | [![GitHub](https://img.shields.io/badge/GitHub-GKI-blue?style=flat-square&logo=github)](https://github.com/fei-ke/android_kernel_samsung_sm8750) |
+| Galaxy S23 (S91XX / sm8550) | KernelSU, MKSU, SukiSU-Ultra variants, LKM mode, Kernel 5.15 | One UI 7.0 | [![GitHub](https://img.shields.io/badge/GitHub-YuzakiKokuban-blue?style=flat-square&logo=github)](https://github.com/YuzakiKokuban/android_kernel_samsung_sm8550_S23) |
+| Galaxy S20 Snapdragon (x1q/y2q/z3q / sm8250) | KernelSU-Next, SuSFS v1.5.9, Kernel 4.19 | One UI | [![GitHub](https://img.shields.io/badge/GitHub-GoRhanHee-blue?style=flat-square&logo=github)](https://github.com/GoRhanHee/kernel_samsung_sm8250) |
+| Galaxy S10 / Note 10 (Exynos 9820) | KernelSU-Next, SuSFS v1.5.11, Ramdisk support | One UI | [![GitHub](https://img.shields.io/badge/GitHub-GoRhanHee-blue?style=flat-square&logo=github)](https://github.com/GoRhanHee/exynos9820_samsung_Kernel) |
+| Galaxy Tab S10 Series (SM-X82XX/X92XX / mt6989) | KernelSU, MKSU, SukiSU-Ultra, LKM variants, Kernel 6.1 | One UI 8.0 | [![GitHub](https://img.shields.io/badge/GitHub-YuzakiKokuban-blue?style=flat-square&logo=github)](https://github.com/YuzakiKokuban/android_kernel_samsung_mt6989_TabS10) [![XDA](https://img.shields.io/badge/XDA-Thread-orange?style=flat-square&logo=xda-developers)](https://xdaforums.com/t/kernel-root-oneui8-0-tab-s10-series-kernel-with-kernelsu.4739268/) |
+| Galaxy A12 (SM-A127F) | KernelSU-Next, SUSFS v1.5.7, Wireguard, SELinux toggle | Stock, AOSP | [![XDA](https://img.shields.io/badge/XDA-Thread-orange?style=flat-square&logo=xda-developers)](https://xdaforums.com/t/kernel-a127f-project-xed-kernelsu-next-susfs.4735546/) |
+| Galaxy A15 4G (SM-A155F) | KernelSU-Next 1.0.9, SuSFS 1.5.9, Kernel 5.10 | Custom ROMs | [![GitHub](https://img.shields.io/badge/GitHub-ReeViiS69-blue?style=flat-square&logo=github)](https://github.com/ReeViiS69/sm155f) |
+| Galaxy M30s (M307F) | KernelSU 0.9.5 (Non-GKI), Kernel 4.9 | Custom ROMs | [![GitHub](https://img.shields.io/badge/GitHub-JuiIm-blue?style=flat-square&logo=github)](https://github.com/JuiIm/M30s-custom-kernel-M307f---KernelSU-support) |
+
+#### OnePlus Device Kernels
+
+| Device Model | Features | ROM Support | Download |
+|--------------|----------|-------------|----------|
+| OnePlus Nord N200 5G (dre) | SukiSU Ultra, Kernel 5.4 | LineageOS 22+ | [![XDA](https://img.shields.io/badge/XDA-Thread-orange?style=flat-square&logo=xda-developers)](https://xdaforums.com/t/kernel-aosp-lineageos-kernel-kernelsu-included.4749302/) |
+| OnePlus 13 | KernelSU-Next, SUSFS | OxygenOS | [![GitHub](https://img.shields.io/badge/GitHub-FerGus786-blue?style=flat-square&logo=github)](https://github.com/FerGus786/OnePlus_13_KernelSU_SUSFS) |
+| OnePlus 12 | KernelSU LKM mode | OxygenOS | [![GitHub](https://img.shields.io/badge/GitHub-snowwolf725-blue?style=flat-square&logo=github)](https://github.com/snowwolf725/KernelSU_LKM_For_Oneplus12) |
+| OnePlus 7 Pro (guacamole) | KernelSU v0.9.5, Requires full system flash | LineageOS 21 | [![GitHub](https://img.shields.io/badge/GitHub-surfaceocean-blue?style=flat-square&logo=github)](https://github.com/surfaceocean/kernelsu_oneplus_7_pro_lineageos_guacamole) |
+
+#### Motorola Device Kernels
+
+| Device Model | Features | ROM Support | Download |
+|--------------|----------|-------------|----------|
+| Moto G20 (java) | KernelSU 0.9.5, KernelSU-Next, SukiSU Ultra, Kernel 4.14 | Stock, AOSP | [![XDA](https://img.shields.io/badge/XDA-Thread-orange?style=flat-square&logo=xda-developers)](https://xdaforums.com/t/kernel-custom-kernels-with-su-kernelsu-kernelsu-next-and-sukisu-ultra-for-motorola-g20-java.4711782/) |
+
+#### Google Pixel Device Kernels
+
+| Device Model | Features | ROM Support | Download |
+|--------------|----------|-------------|----------|
+| Pixel 7 / 7 Pro (gs201) | KernelSU-Next, SuSFS v1.5.8, Additional patches, Kernel 5.10 | Custom ROMs | [![GitHub](https://img.shields.io/badge/GitHub-wspyams-blue?style=flat-square&logo=github)](https://github.com/wspyams/android_kernel_google_gs201) |
+| Pixel 8a (GKI) | KernelSU-Next, SuSFS, Hide patches, Kernel 6.1 | Android 14 | [![GitHub](https://img.shields.io/badge/GitHub-TheRetikGM-blue?style=flat-square&logo=github)](https://github.com/TheRetikGM/gki-kernelsunext-susfs) |
+
+#### Huawei Device Kernels
+
+| Device Model | Features | ROM Support | Download |
+|--------------|----------|-------------|----------|
+| Huawei Nova 2 | KernelSU, Kernel 4.4 | LineageOS | [![GitHub](https://img.shields.io/badge/GitHub-CoolestEnoch-blue?style=flat-square&logo=github)](https://github.com/CoolestEnoch/kernel-su-huawei-nova2) |
+
+#### LG Device Kernels
+
+| Device Model | Features | ROM Support | Download |
+|--------------|----------|-------------|----------|
+| LG G7 (judyln) | KernelSU-Next, SuSFS, Kernel 4.9 | LineageOS 22.1 | [![GitHub](https://img.shields.io/badge/GitHub-No--22--Github-blue?style=flat-square&logo=github)](https://github.com/No-22-Github/LG-G7-LineageOS-22.1-KernelSU-Next-SuSFS-Kernel) |
+
+
+
+
 > [!TIP]
 > Check each kernel's release page for device-specific builds and installation instructions. Many kernels provide AnyKernel3 flashable zips for easy installation.
 
