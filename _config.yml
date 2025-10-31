@@ -1,0 +1,45 @@
+# Site Settings
+title: Awesome KernelSU
+description: A comprehensive curated list of KernelSU, KernelSU-next, and SukiSU-Ultra resources, tools, modules, and documentation for Android devices.
+author: fynks
+url: https://fynks.github.io
+baseurl: /awesome-kernelsu
+
+# Theme Configuration
+remote_theme: pages-themes/hacker@v0.2.0
+show_downloads: false
+
+# Plugins
+plugins:
+  - jekyll-remote-theme
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+
+# SEO and Social
+lang: en-US
+logo: /media/kernelsu-logo.svg
+social:
+  links:
+    - https://github.com/fynks/awesome-kernelsu
+
+# GitHub Metadata
+repository: fynks/awesome-kernelsu
+
+# Build Settings
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: 'highlight'
+    
+# Exclude from processing
+exclude:
+  - .git
+  - .github
+  - .gitignore
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
