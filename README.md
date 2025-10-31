@@ -406,7 +406,7 @@ Pre-built kernels save you from manual compilation and come optimized for specif
 
 ### Quick Navigation
 
-**Jump to your device manufacturer:**
+Jump to your device manufacturer:
 - [Official GKI](#-official-gki-builds)
 - [WildKernels](#-wildkernels-multi-device)
 - [Xiaomi](#-xiaomi-devices)
