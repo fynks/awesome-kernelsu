@@ -404,14 +404,14 @@ Pre-built kernels save you from manual compilation and come optimized for specif
 
 Jump to your device manufacturer:
 - [Official GKI](#-official-gki-builds)
-- [WildKernels](#-wildkernels-multi-device)
-- [Xiaomi](#-xiaomi-devices)
-- [Samsung](#-samsung-devices)
-- [OnePlus](#-oneplus-devices)
-- [Motorola](#-motorola-devices)
-- [Google Pixel](#-google-pixel-devices)
-- [Huawei](#-huawei-devices)
-- [LG](#-lg-devices)
+- [WildKernels](#wildkernels-multi-device)
+- [Xiaomi](#xiaomi-devices)
+- [Samsung](#samsung-devices)
+- [OnePlus](#oneplus-devices)
+- [Motorola](#motorola-devices)
+- [Google Pixel](#google-pixel-devices)
+- [Huawei](#huawei-devices)
+- [LG](#lg-devices)
 
 ---
 
