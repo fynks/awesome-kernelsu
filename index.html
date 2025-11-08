@@ -462,418 +462,10 @@
     </div>
 
     <script>
-        const kernelData = [
-            // Official GKI Builds
-            {
-                manufacturer: "official",
-                device: "KernelSU Official GKI",
-                codename: "GKI 2.0",
-                kernel: "5.10+",
-                android: "12+",
-                features: ["Official GKI 2.0", "Battle-tested", "Regular updates"],
-                romSupport: "Android 12+",
-                links: [
-                    { type: "github", url: "https://github.com/tiann/KernelSU/releases" }
-                ]
-            },
-            {
-                manufacturer: "official",
-                device: "KernelSU-Next Enhanced",
-                codename: "Enhanced",
-                kernel: "4.4-6.6",
-                android: "9+",
-                features: ["Extended kernel support", "Material You UI", "Auto-updates"],
-                romSupport: "Android 9+",
-                links: [
-                    { type: "github", url: "https://github.com/KernelSU-Next/KernelSU-Next/releases" }
-                ]
-            },
-            // WildKernels
-            {
-                manufacturer: "wildkernels",
-                device: "WildKernels GKI Series",
-                codename: "GKI",
-                kernel: "GKI 2.0",
-                android: "Modern GKI",
-                features: ["KernelSU", "SUSFS", "GKI 2.0"],
-                romSupport: "Modern GKI Devices",
-                links: [
-                    { type: "github", url: "https://github.com/WildKernels/GKI_KernelSU_SUSFS" }
-                ]
-            },
-            {
-                manufacturer: "wildkernels",
-                device: "WildKernels Sultan Series",
-                codename: "Sultan",
-                kernel: "Latest",
-                android: "Pixel",
-                features: ["KernelSU", "SUSFS", "Pixel Optimizations"],
-                romSupport: "Google Pixel Devices",
-                links: [
-                    { type: "github", url: "https://github.com/WildKernels/Sultan_KernelSU_SUSFS" }
-                ]
-            },
-            {
-                manufacturer: "wildkernels",
-                device: "WildKernels OnePlus Series",
-                codename: "OnePlus",
-                kernel: "Latest",
-                android: "OxygenOS",
-                features: ["KernelSU", "SUSFS", "OxygenOS Tuned"],
-                romSupport: "OnePlus Devices",
-                links: [
-                    { type: "github", url: "https://github.com/WildKernels/OnePlus_KernelSU_SUSFS" }
-                ]
-            },
-            // Xiaomi Devices
-            {
-                manufacturer: "xiaomi",
-                device: "Redmi 9",
-                codename: "lancelot",
-                kernel: "4.14",
-                android: "MIUI/AOSP",
-                features: ["KernelSU Next", "SukiSU Ultra", "SUSFS", "MT6768"],
-                romSupport: "Stock, AOSP",
-                links: [
-                    { type: "github", url: "https://github.com/Edhic1/kernel_KSu_Next_Lancelot" }
-                ]
-            },
-            {
-                manufacturer: "xiaomi",
-                device: "Redmi Note 12 4G",
-                codename: "topaz/tapas",
-                kernel: "5.15",
-                android: "Custom ROM",
-                features: ["Smooth optimization", "Custom ROM support"],
-                romSupport: "Custom ROMs",
-                links: [
-                    { type: "github", url: "https://github.com/chickendrop89/device_xiaomi_gemstones-kernel" }
-                ]
-            },
-            {
-                manufacturer: "xiaomi",
-                device: "Redmi Note 13 4G",
-                codename: "sapphire/sapphiren",
-                kernel: "5.15",
-                android: "Custom ROM",
-                features: ["Smooth optimization", "Custom ROM support"],
-                romSupport: "Custom ROMs",
-                links: [
-                    { type: "github", url: "https://github.com/chickendrop89/device_xiaomi_gemstones-kernel" }
-                ]
-            },
-            {
-                manufacturer: "xiaomi",
-                device: "Redmi Note 12/13 4G (ZEPHARO)",
-                codename: "topaz/sapphire",
-                kernel: "5.15",
-                android: "MIUI/Custom",
-                features: ["SukiSU Ultra v3.2.0", "KPM", "SUSFS v1.5.11", "Baseband-guard"],
-                romSupport: "MIUI, Custom",
-                links: [
-                    { type: "github", url: "https://github.com/topnotchfreaks/kernel_msm-5.15/releases/tag/ZEPHARO" }
-                ]
-            },
-            {
-                manufacturer: "xiaomi",
-                device: "Redmi Note 12/13 4G (YASK)",
-                codename: "topaz/sapphire",
-                kernel: "5.15",
-                android: "MIUI/Custom",
-                features: ["SukiSU Ultra", "KPM", "SUSFS", "LTO"],
-                romSupport: "MIUI, Custom",
-                links: [
-                    { type: "github", url: "https://github.com/topnotchfreaks/kernel_msm-5.15/releases/tag/YASK" }
-                ]
-            },
-            {
-                manufacturer: "xiaomi",
-                device: "Redmi Pad SE",
-                codename: "xun",
-                kernel: "5.15",
-                android: "MIUI",
-                features: ["SukiSU Ultra", "KPM", "SUSFS", "LTO"],
-                romSupport: "MIUI",
-                links: [
-                    { type: "github", url: "https://github.com/topnotchfreaks/kernel_msm-5.15/releases/tag/YASK" }
-                ]
-            },
-            {
-                manufacturer: "xiaomi",
-                device: "Redmi 15 / POCO M7 4G",
-                codename: "creek",
-                kernel: "5.15",
-                android: "MIUI",
-                features: ["SukiSU Ultra", "KPM", "SUSFS", "LTO"],
-                romSupport: "MIUI",
-                links: [
-                    { type: "github", url: "https://github.com/topnotchfreaks/kernel_msm-5.15/releases/tag/YASK" }
-                ]
-            },
-            {
-                manufacturer: "xiaomi",
-                device: "Redmi 4X",
-                codename: "santoni",
-                kernel: "4.9",
-                android: "AOSP",
-                features: ["KernelSU", "AOSP Compatible"],
-                romSupport: "AOSP",
-                links: [
-                    { type: "github", url: "https://github.com/zeta96/L_soul_santoni_msm4.9" }
-                ]
-            },
-            {
-                manufacturer: "xiaomi",
-                device: "Redmi Note 12 5G / POCO X5",
-                codename: "stone",
-                kernel: "5.4",
-                android: "AOSP",
-                features: ["KernelSU", "APatch compatible"],
-                romSupport: "AOSP",
-                links: [
-                    { type: "github", url: "https://github.com/gawasvedraj/KernelOwO" }
-                ]
-            },
-            // Samsung Devices
-            {
-                manufacturer: "samsung",
-                device: "Galaxy S25",
-                codename: "S93XX (sm8750)",
-                kernel: "6.6",
-                android: "OneUI",
-                features: ["KernelSU", "MKSU", "SukiSU-Ultra", "LKM mode"],
-                romSupport: "OneUI",
-                links: [
-                    { type: "github", url: "https://github.com/YuzakiKokuban/android_kernel_samsung_sm8750" }
-                ]
-            },
-            {
-                manufacturer: "samsung",
-                device: "Galaxy S25 (GKI)",
-                codename: "S93XX (sm8750)",
-                kernel: "6.6",
-                android: "OneUI",
-                features: ["KernelSU LKM compatible"],
-                romSupport: "OneUI",
-                links: [
-                    { type: "github", url: "https://github.com/fei-ke/android_kernel_samsung_sm8750" }
-                ]
-            },
-            {
-                manufacturer: "samsung",
-                device: "Galaxy S24",
-                codename: "S92XX (sm8650)",
-                kernel: "6.1",
-                android: "OneUI",
-                features: ["KernelSU", "MKSU", "SukiSU-Ultra", "LKM mode"],
-                romSupport: "OneUI",
-                links: [
-                    { type: "github", url: "https://github.com/YuzakiKokuban/android_kernel_samsung_sm8650" }
-                ]
-            },
-            {
-                manufacturer: "samsung",
-                device: "Galaxy S23",
-                codename: "S91XX (sm8550)",
-                kernel: "5.15",
-                android: "OneUI",
-                features: ["KernelSU", "MKSU", "SukiSU-Ultra", "LKM mode"],
-                romSupport: "OneUI",
-                links: [
-                    { type: "github", url: "https://github.com/YuzakiKokuban/android_kernel_samsung_sm8550_S23" }
-                ]
-            },
-            {
-                manufacturer: "samsung",
-                device: "Galaxy S20",
-                codename: "x1q/y2q/z3q (sm8250)",
-                kernel: "4.19",
-                android: "OneUI",
-                features: ["KernelSU-Next", "SuSFS v1.5.9"],
-                romSupport: "OneUI",
-                links: [
-                    { type: "github", url: "https://github.com/GoRhanHee/kernel_samsung_sm8250" }
-                ]
-            },
-            {
-                manufacturer: "samsung",
-                device: "Galaxy S10 / Note 10",
-                codename: "Exynos 9820",
-                kernel: "4.14",
-                android: "OneUI",
-                features: ["KernelSU-Next", "SuSFS v1.5.11", "Ramdisk support"],
-                romSupport: "OneUI",
-                links: [
-                    { type: "github", url: "https://github.com/GoRhanHee/exynos9820_samsung_Kernel" }
-                ]
-            },
-            {
-                manufacturer: "samsung",
-                device: "Galaxy A15 4G",
-                codename: "SM-A155F",
-                kernel: "5.10",
-                android: "OneUI",
-                features: ["KernelSU-Next 1.0.9", "SuSFS 1.5.9"],
-                romSupport: "OneUI",
-                links: [
-                    { type: "github", url: "https://github.com/ReeViiS69/sm155f" }
-                ]
-            },
-            {
-                manufacturer: "samsung",
-                device: "Galaxy A12",
-                codename: "SM-A127F",
-                kernel: "4.14",
-                android: "OneUI",
-                features: ["KernelSU-Next", "SUSFS v1.5.7", "Wireguard", "SELinux toggle"],
-                romSupport: "OneUI",
-                links: [
-                    { type: "xda", url: "https://xdaforums.com/t/kernel-a127f-project-xed-kernelsu-next-susfs.4735546/" }
-                ]
-            },
-            {
-                manufacturer: "samsung",
-                device: "Galaxy Tab S10 Series",
-                codename: "SM-X82XX/X92XX (mt6989)",
-                kernel: "6.1",
-                android: "OneUI 8.0",
-                features: ["KernelSU", "MKSU", "SukiSU-Ultra", "LKM variants"],
-                romSupport: "OneUI 8.0",
-                links: [
-                    { type: "github", url: "https://github.com/YuzakiKokuban/android_kernel_samsung_mt6989_TabS10" },
-                    { type: "xda", url: "https://xdaforums.com/t/kernel-root-oneui8-0-tab-s10-series-kernel-with-kernelsu.4739268/" }
-                ]
-            },
-            {
-                manufacturer: "samsung",
-                device: "Galaxy M30s",
-                codename: "M307F",
-                kernel: "4.9",
-                android: "OneUI",
-                features: ["KernelSU 0.9.5", "Non-GKI"],
-                romSupport: "OneUI",
-                links: [
-                    { type: "github", url: "https://github.com/JuiIm/M30s-custom-kernel-M307f---KernelSU-support" }
-                ]
-            },
-            // OnePlus Devices
-            {
-                manufacturer: "oneplus",
-                device: "OnePlus 13",
-                codename: "OP13",
-                kernel: "Latest",
-                android: "OxygenOS",
-                features: ["KernelSU-Next", "SUSFS"],
-                romSupport: "OxygenOS",
-                links: [
-                    { type: "github", url: "https://github.com/FerGus786/OnePlus_13_KernelSU_SUSFS" }
-                ]
-            },
-            {
-                manufacturer: "oneplus",
-                device: "OnePlus 12",
-                codename: "OP12",
-                kernel: "Latest",
-                android: "OxygenOS",
-                features: ["KernelSU LKM mode"],
-                romSupport: "OxygenOS",
-                links: [
-                    { type: "github", url: "https://github.com/snowwolf725/KernelSU_LKM_For_Oneplus12" }
-                ]
-            },
-            {
-                manufacturer: "oneplus",
-                device: "OnePlus 7 Pro",
-                codename: "guacamole",
-                kernel: "Latest",
-                android: "LineageOS 21",
-                features: ["KernelSU v0.9.5", "Full system flash required"],
-                romSupport: "LineageOS 21",
-                links: [
-                    { type: "github", url: "https://github.com/surfaceocean/kernelsu_oneplus_7_pro_lineageos_guacamole" }
-                ]
-            },
-            {
-                manufacturer: "oneplus",
-                device: "OnePlus Nord N200 5G",
-                codename: "dre",
-                kernel: "5.4",
-                android: "LineageOS 22+",
-                features: ["SukiSU Ultra"],
-                romSupport: "LineageOS 22+",
-                links: [
-                    { type: "xda", url: "https://xdaforums.com/t/kernel-aosp-lineageos-kernel-kernelsu-included.4749302/" }
-                ]
-            },
-            // Motorola Devices
-            {
-                manufacturer: "motorola",
-                device: "Moto G20",
-                codename: "java",
-                kernel: "4.14",
-                android: "Stock, AOSP",
-                features: ["KernelSU 0.9.5", "KernelSU-Next", "SukiSU Ultra"],
-                romSupport: "Stock, AOSP",
-                links: [
-                    { type: "xda", url: "https://xdaforums.com/t/kernel-custom-kernels-with-su-kernelsu-kernelsu-next-and-sukisu-ultra-for-motorola-g20-java.4711782/" }
-                ]
-            },
-            // Google Pixel Devices
-            {
-                manufacturer: "google",
-                device: "Pixel 8a",
-                codename: "GKI",
-                kernel: "6.1",
-                android: "Android 14",
-                features: ["KernelSU-Next", "SuSFS", "Hide patches"],
-                romSupport: "Android 14",
-                links: [
-                    { type: "github", url: "https://github.com/TheRetikGM/gki-kernelsunext-susfs" }
-                ]
-            },
-            {
-                manufacturer: "google",
-                device: "Pixel 7 / 7 Pro",
-                codename: "gs201",
-                kernel: "5.10",
-                android: "Custom ROMs",
-                features: ["KernelSU-Next", "SuSFS v1.5.8", "Additional patches"],
-                romSupport: "Custom ROMs",
-                links: [
-                    { type: "github", url: "https://github.com/wspyams/android_kernel_google_gs201" }
-                ]
-            },
-            // Huawei Devices
-            {
-                manufacturer: "huawei",
-                device: "Huawei Nova 2",
-                codename: "nova2",
-                kernel: "4.4",
-                android: "LineageOS",
-                features: ["KernelSU"],
-                romSupport: "LineageOS",
-                links: [
-                    { type: "github", url: "https://github.com/CoolestEnoch/kernel-su-huawei-nova2" }
-                ]
-            },
-            // LG Devices
-            {
-                manufacturer: "lg",
-                device: "LG G7",
-                codename: "judyln",
-                kernel: "4.9",
-                android: "LineageOS 22.1",
-                features: ["KernelSU-Next", "SuSFS"],
-                romSupport: "LineageOS 22.1",
-                links: [
-                    { type: "github", url: "https://github.com/No-22-Github/LG-G7-LineageOS-22.1-KernelSU-Next-SuSFS-Kernel" }
-                ]
-            }
-        ];
-
+        let kernelData = [];
         let currentFilter = 'all';
         let searchTerm = '';
-        let filteredData = [...kernelData];
+        let filteredData = [];
 
         const searchInput = document.getElementById('searchInput');
         const clearBtn = document.getElementById('clearBtn');
@@ -881,6 +473,39 @@
         const filterButtons = document.querySelectorAll('.filter-btn');
         const kernelGrid = document.getElementById('kernelGrid');
         const statsText = document.getElementById('statsText');
+
+        // Load kernel data from JSON file
+        async function loadKernelData() {
+            try {
+                statsText.textContent = 'Loading kernel data...';
+                const response = await fetch('data.json');
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                kernelData = data.kernels;
+                filteredData = [...kernelData];
+
+                // Initialize the app after data is loaded
+                updateDisplay();
+            } catch (error) {
+                console.error('Error loading kernel data:', error);
+                statsText.textContent = 'Error loading kernel data';
+                kernelGrid.innerHTML = `
+                    <div class="empty-state">
+                        <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 8v4m0 4h.01"/>
+                        </svg>
+                        <h3>Failed to load kernel data</h3>
+                        <p>Please check your connection and try again</p>
+                        <p style="font-size: 12px; margin-top: 8px; color: var(--text-tertiary);">${error.message}</p>
+                    </div>
+                `;
+            }
+        }
 
         // Theme management
         function initTheme() {
@@ -1026,7 +651,7 @@
 
         // Initialize
         initTheme();
-        updateDisplay();
+        loadKernelData();
     </script>
 </body>
 </html>
