@@ -9,8 +9,9 @@
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 [![GitHub stars](https://img.shields.io/github/stars/fynks/awesome-kernelsu?style=flat-square&logo=github)](https://github.com/fynks/awesome-kernelsu/stargazers)
+[![Browse Kernels](https://img.shields.io/badge/🔍_Browse-Prebuilt_Kernels-2563eb?style=flat-square)](https://fynks.github.io/awesome-kernelsu/)
 [![License](https://img.shields.io/github/license/fynks/awesome-kernelsu?style=flat-square)](LICENSE)
-[![Last Updated](https://img.shields.io/badge/Updated-October%202025-brightgreen?style=flat-square)](https://github.com/fynks/awesome-kernelsu)
+
 
 <br>
 
