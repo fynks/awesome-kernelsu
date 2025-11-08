@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KernelSU Browser - Prebuilt Kernels</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f5;
+            --bg-tertiary: #e8e8e8;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --text-tertiary: #999999;
+            --accent-primary: #2563eb;
+            --accent-hover: #1d4ed8;
+            --border-color: #d4d4d4;
+            --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --card-hover: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #2a2a2a;
+            --text-primary: #e8e8e8;
+            --text-secondary: #a0a0a0;
+            --text-tertiary: #707070;
+            --accent-primary: #3b82f6;
+            --accent-hover: #60a5fa;
+            --border-color: #404040;
+            --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            --card-hover: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 24px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background: var(--bg-secondary);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .search-container {
+            position: relative;
+            flex: 1;
+            min-width: 280px;
+            max-width: 500px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 48px 12px 44px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 15px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .search-icon, .clear-icon {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+        }
+
+        .search-icon {
+            left: 14px;
+            color: var(--text-tertiary);
+        }
+
+        .clear-icon {
+            right: 14px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            display: none;
+        }
+
+        .clear-icon.visible {
+            display: block;
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .theme-toggle {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 24px 0;
+            padding: 20px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .filter-btn.active {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+
+        .stats {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            font-size: 14px;
+            color: var(--text-secondary);
+            padding: 12px 0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 20px;
+            margin-top: 24px;
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.2s ease;
+            box-shadow: var(--card-shadow);
+        }
+
+        .card:hover {
+            box-shadow: var(--card-hover);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            gap: 12px;
+        }
+
+        .device-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+
+        .manufacturer-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            background: var(--accent-primary);
+            color: white;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .card-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 16px 0;
+        }
+
+        .detail-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .detail-label {
+            color: var(--text-tertiary);
+            min-width: 80px;
+            font-size: 13px;
+        }
+
+        .detail-value {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 12px;
+        }
+
+        .feature-tag {
+            padding: 4px 8px;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .card-footer {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 8px;
+        }
+
+        .link-btn {
+            flex: 1;
+            padding: 10px;
+            background: var(--accent-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .link-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        .link-btn.secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .link-btn.secondary:hover {
+            background: var(--border-color);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 16px;
+            opacity: 0.3;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 12px;
+            }
+
+            header {
+                padding: 16px 0;
+            }
+
+            h1 {
+                font-size: 1.25rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-container {
+                max-width: 100%;
+            }
+
+            .controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .filter-group {
+                padding: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card-header {
+                flex-direction: column;
+            }
+
+            .manufacturer-tag {
+                align-self: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1>
+                    <svg class="logo-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7v10c0 5.5 3.8 9.7 10 11 6.2-1.3 10-5.5 10-11V7l-10-5z"/>
+                        <path d="M12 22s8-4 8-10V7l-8-4-8 4v5c0 6 8 10 8 10z"/>
+                    </svg>
+                    KernelSU Browser
+                </h1>
+                <div class="search-container">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/>
+                        <path d="M21 21l-4.35-4.35"/>
+                    </svg>
+                    <input
+                        type="text"
+                        class="search-input"
+                        id="searchInput"
+                        placeholder="Search by device, brand, codename, kernel version..."
+                        autocomplete="off"
+                    >
+                    <svg class="clear-icon" id="clearBtn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M15 9l-6 6M9 9l6 6"/>
+                    </svg>
+                </div>
+                <div class="controls">
+                    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"/>
+                            <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="filter-group" id="filterGroup">
+            <button class="filter-btn active" data-filter="all">All Manufacturers</button>
+            <button class="filter-btn" data-filter="official">Official GKI</button>
+            <button class="filter-btn" data-filter="wildkernels">WildKernels</button>
+            <button class="filter-btn" data-filter="xiaomi">Xiaomi</button>
+            <button class="filter-btn" data-filter="samsung">Samsung</button>
+            <button class="filter-btn" data-filter="oneplus">OnePlus</button>
+            <button class="filter-btn" data-filter="motorola">Motorola</button>
+            <button class="filter-btn" data-filter="google">Google Pixel</button>
+            <button class="filter-btn" data-filter="huawei">Huawei</button>
+            <button class="filter-btn" data-filter="lg">LG</button>
+        </div>
+
+        <div class="stats">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7"/>
+                <rect x="14" y="3" width="7" height="7"/>
+                <rect x="14" y="14" width="7" height="7"/>
+                <rect x="3" y="14" width="7" height="7"/>
+            </svg>
+            <span id="statsText">Loading kernels...</span>
+        </div>
+
+        <div class="grid" id="kernelGrid"></div>
+    </div>
+
+    <script>
+        const kernelData = [
+            // Official GKI Builds
+            {
+                manufacturer: "official",
+                device: "KernelSU Official GKI",
+                codename: "GKI 2.0",
+                kernel: "5.10+",
+                android: "12+",
+                features: ["Official GKI 2.0", "Battle-tested", "Regular updates"],
+                romSupport: "Android 12+",
+                links: [
+                    { type: "github", url: "https://github.com/tiann/KernelSU/releases" }
+                ]
+            },
+            {
+                manufacturer: "official",
+                device: "KernelSU-Next Enhanced",
+                codename: "Enhanced",
+                kernel: "4.4-6.6",
+                android: "9+",
+                features: ["Extended kernel support", "Material You UI", "Auto-updates"],
+                romSupport: "Android 9+",
+                links: [
+                    { type: "github", url: "https://github.com/KernelSU-Next/KernelSU-Next/releases" }
+                ]
+            },
+            // WildKernels
+            {
+                manufacturer: "wildkernels",
+                device: "WildKernels GKI Series",
+                codename: "GKI",
+                kernel: "GKI 2.0",
+                android: "Modern GKI",
+                features: ["KernelSU", "SUSFS", "GKI 2.0"],
+                romSupport: "Modern GKI Devices",
+                links: [
+                    { type: "github", url: "https://github.com/WildKernels/GKI_KernelSU_SUSFS" }
+                ]
+            },
+            {
+                manufacturer: "wildkernels",
+                device: "WildKernels Sultan Series",
+                codename: "Sultan",
+                kernel: "Latest",
+                android: "Pixel",
+                features: ["KernelSU", "SUSFS", "Pixel Optimizations"],
+                romSupport: "Google Pixel Devices",
+                links: [
+                    { type: "github", url: "https://github.com/WildKernels/Sultan_KernelSU_SUSFS" }
+                ]
+            },
+            {
+                manufacturer: "wildkernels",
+                device: "WildKernels OnePlus Series",
+                codename: "OnePlus",
+                kernel: "Latest",
+                android: "OxygenOS",
+                features: ["KernelSU", "SUSFS", "OxygenOS Tuned"],
+                romSupport: "OnePlus Devices",
+                links: [
+                    { type: "github", url: "https://github.com/WildKernels/OnePlus_KernelSU_SUSFS" }
+                ]
+            },
+            // Xiaomi Devices
+            {
+                manufacturer: "xiaomi",
+                device: "Redmi 9",
+                codename: "lancelot",
+                kernel: "4.14",
+                android: "MIUI/AOSP",
+                features: ["KernelSU Next", "SukiSU Ultra", "SUSFS", "MT6768"],
+                romSupport: "Stock, AOSP",
+                links: [
+                    { type: "github", url: "https://github.com/Edhic1/kernel_KSu_Next_Lancelot" }
+                ]
+            },
+            {
+                manufacturer: "xiaomi",
+                device: "Redmi Note 12 4G",
+                codename: "topaz/tapas",
+                kernel: "5.15",
+                android: "Custom ROM",
+                features: ["Smooth optimization", "Custom ROM support"],
+                romSupport: "Custom ROMs",
+                links: [
+                    { type: "github", url: "https://github.com/chickendrop89/device_xiaomi_gemstones-kernel" }
+                ]
+            },
+            {
+                manufacturer: "xiaomi",
+                device: "Redmi Note 13 4G",
+                codename: "sapphire/sapphiren",
+                kernel: "5.15",
+                android: "Custom ROM",
+                features: ["Smooth optimization", "Custom ROM support"],
+                romSupport: "Custom ROMs",
+                links: [
+                    { type: "github", url: "https://github.com/chickendrop89/device_xiaomi_gemstones-kernel" }
+                ]
+            },
+            {
+                manufacturer: "xiaomi",
+                device: "Redmi Note 12/13 4G (ZEPHARO)",
+                codename: "topaz/sapphire",
+                kernel: "5.15",
+                android: "MIUI/Custom",
+                features: ["SukiSU Ultra v3.2.0", "KPM", "SUSFS v1.5.11", "Baseband-guard"],
+                romSupport: "MIUI, Custom",
+                links: [
+                    { type: "github", url: "https://github.com/topnotchfreaks/kernel_msm-5.15/releases/tag/ZEPHARO" }
+                ]
+            },
+            {
+                manufacturer: "xiaomi",
+                device: "Redmi Note 12/13 4G (YASK)",
+                codename: "topaz/sapphire",
+                kernel: "5.15",
+                android: "MIUI/Custom",
+                features: ["SukiSU Ultra", "KPM", "SUSFS", "LTO"],
+                romSupport: "MIUI, Custom",
+                links: [
+                    { type: "github", url: "https://github.com/topnotchfreaks/kernel_msm-5.15/releases/tag/YASK" }
+                ]
+            },
+            {
+                manufacturer: "xiaomi",
+                device: "Redmi Pad SE",
+                codename: "xun",
+                kernel: "5.15",
+                android: "MIUI",
+                features: ["SukiSU Ultra", "KPM", "SUSFS", "LTO"],
+                romSupport: "MIUI",
+                links: [
+                    { type: "github", url: "https://github.com/topnotchfreaks/kernel_msm-5.15/releases/tag/YASK" }
+                ]
+            },
+            {
+                manufacturer: "xiaomi",
+                device: "Redmi 15 / POCO M7 4G",
+                codename: "creek",
+                kernel: "5.15",
+                android: "MIUI",
+                features: ["SukiSU Ultra", "KPM", "SUSFS", "LTO"],
+                romSupport: "MIUI",
+                links: [
+                    { type: "github", url: "https://github.com/topnotchfreaks/kernel_msm-5.15/releases/tag/YASK" }
+                ]
+            },
+            {
+                manufacturer: "xiaomi",
+                device: "Redmi 4X",
+                codename: "santoni",
+                kernel: "4.9",
+                android: "AOSP",
+                features: ["KernelSU", "AOSP Compatible"],
+                romSupport: "AOSP",
+                links: [
+                    { type: "github", url: "https://github.com/zeta96/L_soul_santoni_msm4.9" }
+                ]
+            },
+            {
+                manufacturer: "xiaomi",
+                device: "Redmi Note 12 5G / POCO X5",
+                codename: "stone",
+                kernel: "5.4",
+                android: "AOSP",
+                features: ["KernelSU", "APatch compatible"],
+                romSupport: "AOSP",
+                links: [
+                    { type: "github", url: "https://github.com/gawasvedraj/KernelOwO" }
+                ]
+            },
+            // Samsung Devices
+            {
+                manufacturer: "samsung",
+                device: "Galaxy S25",
+                codename: "S93XX (sm8750)",
+                kernel: "6.6",
+                android: "OneUI",
+                features: ["KernelSU", "MKSU", "SukiSU-Ultra", "LKM mode"],
+                romSupport: "OneUI",
+                links: [
+                    { type: "github", url: "https://github.com/YuzakiKokuban/android_kernel_samsung_sm8750" }
+                ]
+            },
+            {
+                manufacturer: "samsung",
+                device: "Galaxy S25 (GKI)",
+                codename: "S93XX (sm8750)",
+                kernel: "6.6",
+                android: "OneUI",
+                features: ["KernelSU LKM compatible"],
+                romSupport: "OneUI",
+                links: [
+                    { type: "github", url: "https://github.com/fei-ke/android_kernel_samsung_sm8750" }
+                ]
+            },
+            {
+                manufacturer: "samsung",
+                device: "Galaxy S24",
+                codename: "S92XX (sm8650)",
+                kernel: "6.1",
+                android: "OneUI",
+                features: ["KernelSU", "MKSU", "SukiSU-Ultra", "LKM mode"],
+                romSupport: "OneUI",
+                links: [
+                    { type: "github", url: "https://github.com/YuzakiKokuban/android_kernel_samsung_sm8650" }
+                ]
+            },
+            {
+                manufacturer: "samsung",
+                device: "Galaxy S23",
+                codename: "S91XX (sm8550)",
+                kernel: "5.15",
+                android: "OneUI",
+                features: ["KernelSU", "MKSU", "SukiSU-Ultra", "LKM mode"],
+                romSupport: "OneUI",
+                links: [
+                    { type: "github", url: "https://github.com/YuzakiKokuban/android_kernel_samsung_sm8550_S23" }
+                ]
+            },
+            {
+                manufacturer: "samsung",
+                device: "Galaxy S20",
+                codename: "x1q/y2q/z3q (sm8250)",
+                kernel: "4.19",
+                android: "OneUI",
+                features: ["KernelSU-Next", "SuSFS v1.5.9"],
+                romSupport: "OneUI",
+                links: [
+                    { type: "github", url: "https://github.com/GoRhanHee/kernel_samsung_sm8250" }
+                ]
+            },
+            {
+                manufacturer: "samsung",
+                device: "Galaxy S10 / Note 10",
+                codename: "Exynos 9820",
+                kernel: "4.14",
+                android: "OneUI",
+                features: ["KernelSU-Next", "SuSFS v1.5.11", "Ramdisk support"],
+                romSupport: "OneUI",
+                links: [
+                    { type: "github", url: "https://github.com/GoRhanHee/exynos9820_samsung_Kernel" }
+                ]
+            },
+            {
+                manufacturer: "samsung",
+                device: "Galaxy A15 4G",
+                codename: "SM-A155F",
+                kernel: "5.10",
+                android: "OneUI",
+                features: ["KernelSU-Next 1.0.9", "SuSFS 1.5.9"],
+                romSupport: "OneUI",
+                links: [
+                    { type: "github", url: "https://github.com/ReeViiS69/sm155f" }
+                ]
+            },
+            {
+                manufacturer: "samsung",
+                device: "Galaxy A12",
+                codename: "SM-A127F",
+                kernel: "4.14",
+                android: "OneUI",
+                features: ["KernelSU-Next", "SUSFS v1.5.7", "Wireguard", "SELinux toggle"],
+                romSupport: "OneUI",
+                links: [
+                    { type: "xda", url: "https://xdaforums.com/t/kernel-a127f-project-xed-kernelsu-next-susfs.4735546/" }
+                ]
+            },
+            {
+                manufacturer: "samsung",
+                device: "Galaxy Tab S10 Series",
+                codename: "SM-X82XX/X92XX (mt6989)",
+                kernel: "6.1",
+                android: "OneUI 8.0",
+                features: ["KernelSU", "MKSU", "SukiSU-Ultra", "LKM variants"],
+                romSupport: "OneUI 8.0",
+                links: [
+                    { type: "github", url: "https://github.com/YuzakiKokuban/android_kernel_samsung_mt6989_TabS10" },
+                    { type: "xda", url: "https://xdaforums.com/t/kernel-root-oneui8-0-tab-s10-series-kernel-with-kernelsu.4739268/" }
+                ]
+            },
+            {
+                manufacturer: "samsung",
+                device: "Galaxy M30s",
+                codename: "M307F",
+                kernel: "4.9",
+                android: "OneUI",
+                features: ["KernelSU 0.9.5", "Non-GKI"],
+                romSupport: "OneUI",
+                links: [
+                    { type: "github", url: "https://github.com/JuiIm/M30s-custom-kernel-M307f---KernelSU-support" }
+                ]
+            },
+            // OnePlus Devices
+            {
+                manufacturer: "oneplus",
+                device: "OnePlus 13",
+                codename: "OP13",
+                kernel: "Latest",
+                android: "OxygenOS",
+                features: ["KernelSU-Next", "SUSFS"],
+                romSupport: "OxygenOS",
+                links: [
+                    { type: "github", url: "https://github.com/FerGus786/OnePlus_13_KernelSU_SUSFS" }
+                ]
+            },
+            {
+                manufacturer: "oneplus",
+                device: "OnePlus 12",
+                codename: "OP12",
+                kernel: "Latest",
+                android: "OxygenOS",
+                features: ["KernelSU LKM mode"],
+                romSupport: "OxygenOS",
+                links: [
+                    { type: "github", url: "https://github.com/snowwolf725/KernelSU_LKM_For_Oneplus12" }
+                ]
+            },
+            {
+                manufacturer: "oneplus",
+                device: "OnePlus 7 Pro",
+                codename: "guacamole",
+                kernel: "Latest",
+                android: "LineageOS 21",
+                features: ["KernelSU v0.9.5", "Full system flash required"],
+                romSupport: "LineageOS 21",
+                links: [
+                    { type: "github", url: "https://github.com/surfaceocean/kernelsu_oneplus_7_pro_lineageos_guacamole" }
+                ]
+            },
+            {
+                manufacturer: "oneplus",
+                device: "OnePlus Nord N200 5G",
+                codename: "dre",
+                kernel: "5.4",
+                android: "LineageOS 22+",
+                features: ["SukiSU Ultra"],
+                romSupport: "LineageOS 22+",
+                links: [
+                    { type: "xda", url: "https://xdaforums.com/t/kernel-aosp-lineageos-kernel-kernelsu-included.4749302/" }
+                ]
+            },
+            // Motorola Devices
+            {
+                manufacturer: "motorola",
+                device: "Moto G20",
+                codename: "java",
+                kernel: "4.14",
+                android: "Stock, AOSP",
+                features: ["KernelSU 0.9.5", "KernelSU-Next", "SukiSU Ultra"],
+                romSupport: "Stock, AOSP",
+                links: [
+                    { type: "xda", url: "https://xdaforums.com/t/kernel-custom-kernels-with-su-kernelsu-kernelsu-next-and-sukisu-ultra-for-motorola-g20-java.4711782/" }
+                ]
+            },
+            // Google Pixel Devices
+            {
+                manufacturer: "google",
+                device: "Pixel 8a",
+                codename: "GKI",
+                kernel: "6.1",
+                android: "Android 14",
+                features: ["KernelSU-Next", "SuSFS", "Hide patches"],
+                romSupport: "Android 14",
+                links: [
+                    { type: "github", url: "https://github.com/TheRetikGM/gki-kernelsunext-susfs" }
+                ]
+            },
+            {
+                manufacturer: "google",
+                device: "Pixel 7 / 7 Pro",
+                codename: "gs201",
+                kernel: "5.10",
+                android: "Custom ROMs",
+                features: ["KernelSU-Next", "SuSFS v1.5.8", "Additional patches"],
+                romSupport: "Custom ROMs",
+                links: [
+                    { type: "github", url: "https://github.com/wspyams/android_kernel_google_gs201" }
+                ]
+            },
+            // Huawei Devices
+            {
+                manufacturer: "huawei",
+                device: "Huawei Nova 2",
+                codename: "nova2",
+                kernel: "4.4",
+                android: "LineageOS",
+                features: ["KernelSU"],
+                romSupport: "LineageOS",
+                links: [
+                    { type: "github", url: "https://github.com/CoolestEnoch/kernel-su-huawei-nova2" }
+                ]
+            },
+            // LG Devices
+            {
+                manufacturer: "lg",
+                device: "LG G7",
+                codename: "judyln",
+                kernel: "4.9",
+                android: "LineageOS 22.1",
+                features: ["KernelSU-Next", "SuSFS"],
+                romSupport: "LineageOS 22.1",
+                links: [
+                    { type: "github", url: "https://github.com/No-22-Github/LG-G7-LineageOS-22.1-KernelSU-Next-SuSFS-Kernel" }
+                ]
+            }
+        ];
+
+        let currentFilter = 'all';
+        let searchTerm = '';
+        let filteredData = [...kernelData];
+
+        const searchInput = document.getElementById('searchInput');
+        const clearBtn = document.getElementById('clearBtn');
+        const themeToggle = document.getElementById('themeToggle');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const kernelGrid = document.getElementById('kernelGrid');
+        const statsText = document.getElementById('statsText');
+
+        // Theme management
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // Search functionality
+        function normalizeString(str) {
+            return str.toLowerCase().trim();
+        }
+
+        function searchKernels(term) {
+            if (!term) return kernelData;
+
+            const normalized = normalizeString(term);
+
+            return kernelData.filter(kernel => {
+                const searchableFields = [
+                    kernel.device,
+                    kernel.codename,
+                    kernel.manufacturer,
+                    kernel.kernel,
+                    kernel.android,
+                    kernel.romSupport,
+                    ...kernel.features
+                ].map(normalizeString);
+
+                return searchableFields.some(field => field.includes(normalized));
+            });
+        }
+
+        function filterByManufacturer(data, manufacturer) {
+            if (manufacturer === 'all') return data;
+            return data.filter(kernel => kernel.manufacturer === manufacturer);
+        }
+
+        function updateDisplay() {
+            let data = searchKernels(searchTerm);
+            data = filterByManufacturer(data, currentFilter);
+            filteredData = data;
+
+            renderKernels(data);
+            updateStats(data.length);
+        }
+
+        function renderKernels(data) {
+            if (data.length === 0) {
+                kernelGrid.innerHTML = `
+                    <div class="empty-state">
+                        <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="M21 21l-4.35-4.35"/>
+                        </svg>
+                        <h3>No kernels found</h3>
+                        <p>Try adjusting your search or filter</p>
+                    </div>
+                `;
+                return;
+            }
+
+            kernelGrid.innerHTML = data.map(kernel => `
+                <div class="card">
+                    <div class="card-header">
+                        <div class="device-name">${kernel.device}</div>
+                        <span class="manufacturer-tag">${kernel.manufacturer}</span>
+                    </div>
+                    <div class="card-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Codename</span>
+                            <span class="detail-value">${kernel.codename}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Kernel</span>
+                            <span class="badge">${kernel.kernel}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Android</span>
+                            <span class="badge">${kernel.android}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">ROM</span>
+                            <span class="detail-value">${kernel.romSupport}</span>
+                        </div>
+                    </div>
+                    <div class="features">
+                        ${kernel.features.map(f => `<span class="feature-tag">${f}</span>`).join('')}
+                    </div>
+                    <div class="card-footer">
+                        ${kernel.links.map(link => `
+                            <a href="${link.url}" class="link-btn ${link.type === 'xda' ? 'secondary' : ''}" target="_blank" rel="noopener">
+                                ${link.type === 'github' ? `
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                                    </svg>
+                                    GitHub
+                                ` : `
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                                    </svg>
+                                    XDA
+                                `}
+                            </a>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateStats(count) {
+            statsText.textContent = `${count} kernel${count !== 1 ? 's' : ''} available`;
+        }
+
+        // Event listeners
+        searchInput.addEventListener('input', (e) => {
+            searchTerm = e.target.value;
+            clearBtn.classList.toggle('visible', searchTerm.length > 0);
+            updateDisplay();
+        });
+
+        clearBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            searchTerm = '';
+            clearBtn.classList.remove('visible');
+            updateDisplay();
+        });
+
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                updateDisplay();
+            });
+        });
+
+        // Initialize
+        initTheme();
+        updateDisplay();
+    </script>
+</body>
+</html>
