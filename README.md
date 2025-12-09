@@ -25,20 +25,28 @@
 
 ## What is KernelSU?
 
-KernelSU is a **kernel-based root solution** for Android that delivers superior security and reliability compared to traditional rooting methods. By operating at the kernel level, it provides enhanced security isolation, maintains system integrity, and offers powerful module management through modern OverlayFS technology.
+KernelSU is a **kernel-based root solution** for Android that delivers superior security and reliability compared to traditional rooting methods. By operating at the kernel level, it provides enhanced security isolation, maintains system integrity, and offers powerful module management with flexible mounting systems.
+
+> [!IMPORTANT]
+> **KernelSU 3.0+ Major Changes**: From version 3.0 onwards, KernelSU has removed built-in module mounting. Fresh installations now **require a metamodule** for modules to function. See [Understanding Metamodules](#understanding-metamodules) for details.
 
 ### Key Features
 
 - **Zero System Modification**: Maintains system integrity and OTA compatibility by operating entirely within kernel space
 - **Advanced Permission Control**: Granular app-level root access management with customizable profiles
 - **Enhanced Security Model**: Kernel-level isolation prevents root detection and tampering
-- **Modern Module System**: Efficient OverlayFS-based modifications with rollback capability
+- **Flexible Module System**: Metamodule architecture supporting multiple mounting strategies (OverlayFS, Magic Mount, Hybrid)
+- **LKM Mode Support**: Load KernelSU as a kernel module without replacing your kernel (preserves manufacturer optimizations)
 - **App Profile System**: Customizable groups, capabilities, and SELinux rules for fine-grained root privilege control
+
+> **Learn More**: [Comprehensive KernelSU Guide](https://awesome-android-root.org/rooting-guides/kernelsu-guide) | [Official Documentation](https://kernelsu.org/)
 
 
 ## Table of Contents
 - [What is KernelSU?](#what-is-kernelsu)
 - [Getting Started](#getting-started)
+- [Installation Modes](#installation-modes)
+- [Understanding Metamodules](#understanding-metamodules)
 - [KernelSU Variants](#kernelsu-variants)
 - [Comparison](#comparison)
 - [Prebuilt Kernels](#prebuilt-kernels)
@@ -61,7 +69,7 @@ Before installing KernelSU, ensure you have:
 - **Compatible device** (check compatibility below)
 
 > [!TIP]
-> **New to bootloader unlocking?** Check out the comprehensive guide at [Awesome-Android-Root](https://awesome-android-root.org/android-root-guides/how-to-unlock-bootloader)
+> **New to bootloader unlocking?** Check out the comprehensive guide at [Awesome-Android-Root](https://awesome-android-root.org/rooting-guides/how-to-unlock-bootloader)
 
 ### New to KernelSU?
 
@@ -70,13 +78,22 @@ Before installing KernelSU, ensure you have:
    - Kernel 4.4-6.6 for KernelSU-Next (Android 9+)
    - Kernel 3.4-5.4+ for SuKiSu-Ultra (Android 7+)
 
-2. **Download Manager**
+2. **Choose Installation Mode**
+   - **GKI Mode**: Replaces device kernel (universal compatibility, works on Samsung Knox)
+   - **LKM Mode**: Loads as kernel module (preserves optimizations, easy updates)
+   - See [Installation Modes](#installation-modes) for detailed comparison
+
+3. **Download Manager**
    - Get the [official KernelSU Manager](https://github.com/tiann/KernelSU/releases/latest) for your variant
 
-3. **Install KernelSU**
-   - Follow the [installation guide](#installation) for your chosen method
+4. **Install KernelSU**
+   - Follow the [installation guide](#-installation) for your chosen method
 
-4. **Verify Installation**
+5. **Install Metamodule**
+   - **CRITICAL**: KernelSU 3.0+ requires a metamodule for modules to work
+   - See [Understanding Metamodules](#understanding-metamodules) section
+
+6. **Verify Installation**
    - Open KernelSU Manager and confirm root status
 
 ### Device Selection Guide
@@ -91,11 +108,143 @@ Before installing KernelSU, ensure you have:
 
 After successful installation:
 
-1. **Configure App Profiles**: Set up [App Profiles](https://kernelsu.org/guide/app-profile.html) for granular root permission management
-2. **Install Module Manager**: Use [MMRL](https://github.com/MMRLApp/MMRL) for easier module management
-3. **Setup Root Hiding**: Install *SuSFS* module for banking/payment app compatibility
-4. **Join Community**: Connect with [Telegram community](https://t.me/KernelSU_group) for support and updates
-5. **Create Backup**: Make a backup of your patched boot image for recovery
+1. **Install Metamodule**: Choose and install a [metamodule](#understanding-metamodules) (meta-overlayfs recommended for most users)
+2. **Configure App Profiles**: Set up [App Profiles](https://kernelsu.org/guide/app-profile.html) for granular root permission management
+3. **Install Module Manager**: Use [MMRL](https://github.com/MMRLApp/MMRL) for easier module management
+4. **Setup Root Hiding**: Install *SuSFS* module for banking/payment app compatibility
+5. **Join Community**: Connect with [Telegram community](https://t.me/KernelSU_group) for support and updates
+6. **Create Backup**: Make a backup of your patched boot image for recovery
+
+<div align="right">
+<a href="#awesome-kernelsu">⬆ Back to Top</a>
+</div><br>
+
+## Installation Modes
+
+KernelSU supports two installation modes on GKI-compatible devices, each with distinct advantages.
+
+### GKI Mode
+
+**How it works:** Replaces device's original kernel with KernelSU Generic Kernel Image.
+
+**Advantages:**
+
+- ✅ Universal GKI device compatibility
+- ✅ Works on Samsung Knox devices
+- ✅ Independent of firmware updates
+- ✅ Better for heavily modified devices
+- ✅ More stable on custom ROMs
+
+**Disadvantages:**
+
+- ❌ Loses manufacturer kernel optimizations
+- ❌ Requires manual fastboot flashing
+- ❌ Must reflash after major updates
+
+**Best for:** Samsung devices, emulators, WSA, custom ROMs, devices without official firmware
+
+---
+
+### LKM Mode (Loadable Kernel Module)
+
+**How it works:** Loads KernelSU as a kernel module without replacing the kernel.
+
+**Advantages:**
+
+- ✅ Preserves original kernel and optimizations
+- ✅ Easy in-app updates
+- ✅ OTA-friendly (install to inactive slot)
+- ✅ No AVB/dm-verity issues
+- ✅ Can disable without reboot
+- ✅ Better performance (keeps manufacturer tuning)
+
+**Disadvantages:**
+
+- ❌ Requires official firmware
+- ❌ May not work on all devices
+- ❌ Less compatible with modified firmwares
+
+**Best for:** Most modern phones with stock/near-stock firmware
+
+---
+
+### Which Mode to Choose?
+
+| Scenario | Recommended Mode | Reason |
+|----------|------------------|--------|
+| Stock firmware phones | **LKM** | Preserves optimizations, easy updates |
+| Samsung devices | **GKI** | Knox compatibility |
+| Custom ROMs | **GKI** | Better modified firmware support |
+| Emulators/WSA | **GKI** | Universal compatibility |
+| Heavily modified | **GKI** | More reliable |
+
+> **Detailed Guide**: See the [complete installation modes comparison](https://awesome-android-root.org/rooting-guides/kernelsu-guide#installation-modes) for more information.
+
+<div align="right">
+<a href="#awesome-kernelsu">⬆ Back to Top</a>
+</div><br>
+
+## Understanding Metamodules
+
+> [!IMPORTANT]
+> **CRITICAL CHANGE IN KERNELSU 3.0+**: KernelSU no longer has built-in module mounting. Fresh installations **REQUIRE** a metamodule for modules to function. Without a metamodule, modules will be installed but **NOT** mounted.
+
+### What is a Metamodule?
+
+A **metamodule** is a special type of KernelSU module that provides core infrastructure for the module system. Unlike regular modules that modify system files, metamodules control **how** regular modules are installed and mounted.
+
+### Why Metamodules?
+
+The metamodule architecture provides several key benefits:
+
+- **🛡️ Reduced Detection Surface**: KernelSU itself doesn't perform mounts, reducing detection vectors for banking apps
+- **🔧 Flexibility**: Users can choose mounting implementation (OverlayFS, Magic Mount, hybrid)
+- **💪 Stability**: Core KernelSU remains stable while mounting implementations can evolve independently
+- **🚀 Innovation**: Community can develop alternative mounting strategies
+
+### Single Metamodule Constraint
+
+> [!WARNING]
+> **Only ONE metamodule can be installed at a time**. To switch metamodules:
+> 1. Uninstall all regular modules
+> 2. Uninstall current metamodule
+> 3. Reboot device
+> 4. Install new metamodule
+> 5. Reinstall regular modules
+
+### Available Metamodules
+
+| Metamodule | Description | Best For |
+|------------|-------------|----------|
+| [**meta-overlayfs**](https://github.com/5ec1cff/meta-overlayfs) | Official reference implementation using OverlayFS | Most users, standard setup, recommended starting point |
+| [**mountify**](https://github.com/HuskyDG/mountify) | OverlayFS with tmpfs/ext4 sparse support, cross-platform (APatch/Magisk) | Reduced detection, multi-root support, advanced users |
+| [**meta-magic_mount**](https://github.com/5ec1cff/meta-magic_mount) | Magic Mount implementation (C-based) | Magisk-style mounting compatibility |
+| [**meta-magic_mount-rs**](https://github.com/backslashxx/meta-magic_mount-rs) | Magic Mount implementation (Rust-based) with WebUI | Magisk-style mounting with web interface |
+| [**meta-hybrid_mount**](https://github.com/dqy168/meta-hybrid_mount) | Hybrid OverlayFS + Magic Mount with auto-fallback | Maximum compatibility, stealth mode |
+
+### Installing Your First Metamodule
+
+**Step-by-Step Installation:**
+
+1. **Download metamodule ZIP** from GitHub releases (meta-overlayfs recommended)
+2. **Open KernelSU Manager** > Modules
+3. **Tap "Install from storage"** (➕ button)
+4. **Select the metamodule ZIP** file
+5. **Reboot device**
+
+The active metamodule will be displayed in your module list with a special designation.
+
+### Metamodule Compatibility
+
+With a metamodule installed:
+
+- ✅ Most Magisk modules work (when using compatible metamodule)
+- ⚠️ Zygisk modules require [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext)
+- ✅ Growing native KernelSU module support
+- ✅ Module metadata stored in `/data/adb/modules/`
+- ✅ Module content stored in `/data/adb/metamodule/mnt/` (with meta-overlayfs)
+
+> **Complete Guide**: For detailed metamodule information, mounting strategies, and troubleshooting, visit the [KernelSU Managing Modules Guide](https://awesome-android-root.org/rooting-guides/kernelsu-guide#managing-modules)
 
 <div align="right">
 <a href="#awesome-kernelsu">⬆ Back to Top</a>
@@ -233,9 +382,10 @@ After successful installation:
 | **Kernel Support** | 5.10+ (GKI 2.0) | 4.4 - 6.6 | 3.4 - 5.4+ |
 | **Android Version** | 12+ | 9+ | 7+ |
 | **Architecture** | arm64, x86_64 | arm64, arm, x86_64 | arm64, arm, x86_64 |
-| **Module System** | OverlayFS | Dual (Magic Mount + OverlayFS) | Magic Mount + OverlayFS |
-| **Auto Updates** | ❌ | ✅ | ❌ |
-| **Root Hiding** | Basic | Advanced | SuSFS Built-in |
+| **Installation Modes** | GKI / LKM | GKI / LKM | GKI |
+| **Module System** | Metamodule (3.0+) | Dual (Magic Mount + OverlayFS) | Magic Mount + OverlayFS |
+| **Auto Updates** | ⚠️ LKM only | ✅ | ❌ |
+| **Root Hiding** | Metamodule-based | Advanced | SuSFS Built-in |
 | **UI/UX** | Standard | Material You | Enhanced |
 | **Legacy Support** | ❌ | ⚠️ Limited | ✅ Extensive |
 | **Update Frequency** | Regular | Very Active | Community Active |
@@ -296,14 +446,16 @@ After successful installation:
 | Feature                 | KernelSU        | KernelSU-Next           | SuKiSu-Ultra            | Magisk      | APatch       |
 | ----------------------- | --------------- | ----------------------- | ----------------------- | ----------- | ------------ |
 | **Architecture**        | Kernel-level    | Kernel-level            | Kernel-level            | Userspace   | Kernel-level |
-| **Module System**       | OverlayFS       | OverlayFS + Magic Mount | Magic Mount + OverlayFS | Magic Mount | OverlayFS    |
+| **Module System**       | Metamodule-based (OverlayFS/Magic Mount) | OverlayFS + Magic Mount | Magic Mount + OverlayFS | Magic Mount | OverlayFS    |
+| **Installation Mode**   | GKI / LKM       | GKI / LKM               | GKI                     | Boot Patch  | Boot Patch   |
 | **Kernel Support**      | 5.10+ (GKI 2.0) | 4.4-6.6                 | 3.4-5.4+                | Any         | 3.18-6.1     |
 | **Architecture**        | arm64, x86_64   | arm64, arm, x86_64      | arm64, arm, x86_64      | Universal   | arm64        |
 | **Security Model**      | App Profile     | App Profile             | App Profile             | Root Toggle | SuperKey     |
-| **Hide Capability**     | Basic           | Advanced                | SuSFS Integrated        | Deprecated  | Kernel-level |
-| **Update Method**       | Manual          | Auto-update             | Manual                  | OTA         | Manual       |
+| **Hide Capability**     | Metamodule-based (Advanced) | Advanced   | SuSFS Integrated        | Deprecated  | Kernel-level |
+| **Update Method**       | Manual / LKM    | Auto-update / LKM       | Manual                  | OTA         | Manual       |
 | **System Modification** | Zero            | Zero                    | Zero                    | Minimal     | Zero         |
 | **OTA Compatibility**   | Excellent       | Excellent               | Good                    | Good        | Excellent    |
+| **Module Mounting**     | Requires Metamodule (3.0+) | Built-in     | Built-in                | Built-in    | Built-in     |
 | **Development Status**  | Active          | Very Active             | Active                  | Active      | Active       |
 | **Learning Curve**      | Medium          | Medium                  | Hard                    | Easy        | Hard         |
 | **Community Size**      | Growing         | Medium                  | Small                   | Large       | Small        |
@@ -695,7 +847,12 @@ fastboot flash boot boot.img
 fastboot reboot
 
 # 5. Install KernelSU Manager APK after boot
+
+# 6. IMPORTANT: Install a metamodule for module support
+# Download meta-overlayfs and install via KernelSU Manager
 ```
+
+> **More Details**: [GKI Installation Guide](https://awesome-android-root.org/rooting-guides/kernelsu-guide#method-1-pre-built-gki-kernel-easiest)
 
 </details>
 
@@ -703,22 +860,49 @@ fastboot reboot
 
 ### Method 2: LKM Mode
 
-**Best for:** Users wanting to keep original kernel intact
+**Best for:** Users wanting to keep original kernel intact and get easy updates
 
 <details>
 <summary><b>📋 View Installation Steps</b></summary>
 
 **Advantages:**
-- ✅ Preserves original kernel
+- ✅ Preserves original kernel and manufacturer optimizations
 - ✅ Less intrusive modification
 - ✅ Easier to revert to stock
+- ✅ OTA-friendly (install to inactive slot)
+- ✅ Easy in-app updates
+- ✅ No AVB/dm-verity issues
+
+**Requirements:**
+- Stock/official firmware
+- Compatible kernel version
 
 **Step-by-Step:**
 
-1. Download LKM package for your kernel version
-2. Install KernelSU Manager APK
-3. In Manager, select "Install" → "LKM Mode"
-4. Reboot device to activate
+1. Install KernelSU Manager APK on device
+2. Grant necessary permissions
+3. In Manager, select "Install" → "Select and Patch a File"
+4. Choose your stock boot.img file
+5. Manager will patch it with KernelSU (LKM mode)
+6. Flash patched boot via fastboot:
+
+```bash
+# Transfer patched boot to PC
+adb pull /sdcard/Download/kernelsu_patched_xxxxx.img
+
+# Boot to fastboot
+adb reboot bootloader
+
+# Flash patched image
+fastboot flash boot kernelsu_patched_xxxxx.img
+
+# Reboot
+fastboot reboot
+```
+
+7. **Install metamodule** after first boot for module support
+
+> **Complete Guide**: [LKM Mode Installation](https://awesome-android-root.org/rooting-guides/kernelsu-guide#method-2-boot-image-patching-lkm-mode)
 
 </details>
 
@@ -726,30 +910,38 @@ fastboot reboot
 
 ### Method 3: Manager Patching
 
-**Best for:** Users preferring one-click solutions
+**Best for:** Users preferring one-click solutions with boot image patching
 
 <details>
 <summary><b>📋 View Installation Steps</b></summary>
 
 **Advantages:**
 - ✅ User-friendly, minimal PC usage
-- ✅ Automatic updates available
+- ✅ Automatic patching process
 - ✅ Simplest for non-technical users
+- ✅ Supports both GKI and LKM modes
 
 **Step-by-Step:**
 
-1. Install KernelSU Manager APK on device
-2. Grant necessary permissions
-3. Select "Install" → Choose boot image or extract from ROM
-4. Manager patches boot image automatically
-5. Flash patched boot via fastboot or custom recovery
+1. Extract boot.img from your device firmware
+2. Install KernelSU Manager APK on device
+3. Grant necessary permissions
+4. Select "Install" → "Select and Patch a File"
+5. Choose your boot.img file
+6. Manager patches boot image automatically
+7. Flash patched boot via fastboot or custom recovery
 
 ```bash
 # Flash patched boot via fastboot
+adb pull /sdcard/Download/kernelsu_patched_*.img
 adb reboot bootloader
-fastboot flash boot patched_boot.img
+fastboot flash boot kernelsu_patched_*.img
 fastboot reboot
 ```
+
+8. **Install metamodule** after first boot for module support
+
+> **Detailed Tutorial**: [Manager Patching Guide](https://awesome-android-root.org/rooting-guides/kernelsu-guide#method-2-boot-image-patching-lkm-mode)
 
 </details>
 
@@ -867,6 +1059,9 @@ su -c "id"
 
 # Check kernel version
 cat /proc/version | grep KernelSU
+
+# Check installation mode
+# Look for LKM or GKI indicators in kernel version
 ```
 
 **2. Install Manager**
@@ -874,23 +1069,32 @@ cat /proc/version | grep KernelSU
 - Grant all required permissions
 - Confirm root access in app
 
-**3. Configure App Profiles**
+**3. Install Metamodule (CRITICAL for KernelSU 3.0+)**
+- Download [meta-overlayfs](https://github.com/5ec1cff/meta-overlayfs) (recommended)
+- Install via KernelSU Manager > Modules
+- Reboot device
+- See [Understanding Metamodules](#understanding-metamodules) for details
+
+**4. Configure App Profiles**
 - Set restrictive defaults
 - Grant root only to trusted apps
 - Configure time-based restrictions
 
-**4. Install Essential Modules**
-- SuSFS for root hiding
+**5. Install Essential Modules**
+- Module manager (MMRL recommended)
+- SuSFS for root hiding (if needed)
 - Performance optimizations (optional)
 
 > [!WARNING]
 > Only install modules from trusted sources
 
-**5. Setup Safety Features**
+**6. Setup Safety Features**
 - Backup patched boot image
 - Configure module backups
 - Test SafetyNet/Play Integrity
 - Document your setup
+
+> **Complete Setup Guide**: [Post-Installation Setup](https://awesome-android-root.org/rooting-guides/kernelsu-guide#post-installation-setup)
 
 
 ---
@@ -985,6 +1189,23 @@ mount | grep overlay
 ## Modules and Tools
 
 **Essential modules and tools to enhance your KernelSU experience.**
+
+> [!IMPORTANT]
+> **KernelSU 3.0+ Requirement**: You must first install a [metamodule](#understanding-metamodules) before regular modules will work. Fresh installations require this step!
+
+### Metamodules (Required for Module Support)
+
+> **First-Time Users**: Start with **meta-overlayfs** for the best balance of compatibility and ease of use.
+
+| Metamodule | Purpose | Download |
+|------------|---------|----------|
+| [**meta-overlayfs**](https://github.com/5ec1cff/meta-overlayfs) | Official OverlayFS implementation - **recommended for most users** | [![Download](https://img.shields.io/badge/Download-Latest-blue?style=flat-square)](https://github.com/5ec1cff/meta-overlayfs/releases) |
+| [**mountify**](https://github.com/HuskyDG/mountify) | Advanced OverlayFS with cross-platform support | [![Download](https://img.shields.io/badge/Download-Latest-blue?style=flat-square)](https://github.com/HuskyDG/mountify/releases) |
+| [**meta-magic_mount**](https://github.com/5ec1cff/meta-magic_mount) | Magisk-style Magic Mount (C-based) | [![Download](https://img.shields.io/badge/Download-Latest-blue?style=flat-square)](https://github.com/5ec1cff/meta-magic_mount/releases) |
+| [**meta-magic_mount-rs**](https://github.com/backslashxx/meta-magic_mount-rs) | Magisk-style Magic Mount with WebUI (Rust-based) | [![Download](https://img.shields.io/badge/Download-Latest-blue?style=flat-square)](https://github.com/backslashxx/meta-magic_mount-rs/releases) |
+| [**meta-hybrid_mount**](https://github.com/dqy168/meta-hybrid_mount) | Hybrid OverlayFS + Magic Mount with auto-fallback | [![Download](https://img.shields.io/badge/Download-Latest-blue?style=flat-square)](https://github.com/dqy168/meta-hybrid_mount/releases) |
+
+---
 
 ### Root Management & Hiding
 
@@ -1524,6 +1745,26 @@ echo "Logs collected in: $LOGDIR"
 ### General Questions
 
 <details open>
+<summary><b>What is a Metamodule and why do I need one?</b></summary>
+
+**From KernelSU 3.0+**, the built-in module mounting system was removed. A **metamodule** is now required to provide module mounting infrastructure.
+
+**Why this change?**
+- **Reduced detection**: KernelSU itself doesn't mount modules, making it harder to detect
+- **Flexibility**: Choose your preferred mounting method (OverlayFS, Magic Mount, Hybrid)
+- **Stability**: Core KernelSU remains stable while mounting systems evolve
+
+**Quick Start:**
+1. Download [meta-overlayfs](https://github.com/5ec1cff/meta-overlayfs) (recommended for beginners)
+2. Install via KernelSU Manager > Modules
+3. Reboot device
+4. Now you can install regular modules
+
+See [Understanding Metamodules](#understanding-metamodules) for complete details.
+
+</details>
+
+<details>
 <summary><b>What is KernelSU and how does it differ from Magisk?</b></summary>
 
 KernelSU is a **kernel-based root solution** operating in kernel space, while Magisk operates in userspace.
@@ -1534,9 +1775,33 @@ KernelSU is a **kernel-based root solution** operating in kernel space, while Ma
 |--------|----------|--------|
 | **Architecture** | Kernel-level | Userspace |
 | **Security** | Superior isolation | Good but less isolated |
-| **Module System** | OverlayFS | Magic Mount |
+| **Module System** | Metamodule-based (3.0+) | Magic Mount (built-in) |
+| **Installation** | GKI / LKM modes | Boot patching |
 | **Compatibility** | Requires compatible kernel | Universal |
 | **Future-proof** | Built for modern Android | Legacy support focus |
+
+</details>
+
+<details>
+<summary><b>Which installation mode should I use: GKI or LKM?</b></summary>
+
+**Choose based on your device and needs:**
+
+**LKM Mode (Recommended for most):**
+- ✅ Keeps manufacturer kernel optimizations
+- ✅ Easy updates via app
+- ✅ OTA-friendly
+- ✅ Works with stock firmware
+- ⚠️ Requires official firmware
+
+**GKI Mode:**
+- ✅ Universal compatibility
+- ✅ Works on Samsung Knox devices
+- ✅ Better for custom ROMs
+- ⚠️ Loses manufacturer optimizations
+- ⚠️ Manual updates required
+
+See [Installation Modes](#installation-modes) for detailed comparison.
 
 </details>
 
@@ -1549,7 +1814,7 @@ KernelSU is a **kernel-based root solution** operating in kernel space, while Ma
 - **Mid-range devices** (Android 9-11, kernel 4.4-6.6) → **KernelSU-Next**
 - **Legacy devices** (Android 7-8, kernel 3.4-5.4) → **SuKiSu-Ultra**
 
-See [KernelSU Variants](#-kernelsu-variants) for detailed comparison.
+See [KernelSU Variants](#kernelsu-variants) for detailed comparison.
 
 </details>
 
@@ -1562,7 +1827,7 @@ See [KernelSU Variants](#-kernelsu-variants) for detailed comparison.
 - ✅ App Profile system for granular permission control
 - ✅ Zero system modification maintains integrity
 - ✅ Hardware security integration (ARM TrustZone)
-- ✅ Advanced kernel-level hiding
+- ✅ Metamodule architecture reduces detection surface
 
 However, both are safe when properly configured.
 
@@ -1575,10 +1840,12 @@ However, both are safe when properly configured.
 
 | Module Type | Compatibility |
 |-------------|---------------|
-| **Simple modules** | ✅ Most work without changes |
-| **Complex modules** | ⚠️ May need OverlayFS adaptation |
+| **Simple modules** | ✅ Most work without changes (with metamodule) |
+| **Complex modules** | ⚠️ May need adaptation for metamodule system |
 | **Zygisk modules** | ⚠️ Require ZygiskNext or ReZygisk |
 | **Hardware-specific** | ✅ Usually compatible |
+
+**Remember**: You must install a [metamodule](#understanding-metamodules) first for any modules to work on KernelSU 3.0+.
 
 </details>
 
@@ -1589,7 +1856,7 @@ However, both are safe when properly configured.
 
 - ✅ System partition remains unmodified
 - ⚠️ Boot partition may need re-patching after OTA
-- ✅ Some variants have OTA survival features
+- ✅ LKM mode has OTA survival features
 - ⚠️ Manual re-installation may be required for major updates
 
 Always keep your patched boot image backup!
@@ -1599,6 +1866,27 @@ Always keep your patched boot image backup!
 ---
 
 ### Installation & Setup
+
+<details>
+<summary><b>What changed in KernelSU 3.0 and how does it affect me?</b></summary>
+
+**Major Changes in KernelSU 3.0+:**
+
+1. **⚠️ Module mounting removed from core**: Fresh installations now require a [metamodule](#understanding-metamodules) for modules to work
+2. **✅ LKM mode improvements**: Better stability and OTA support
+3. **🛡️ Reduced detection surface**: Harder for banking apps to detect
+4. **🔧 Flexible mounting**: Choose between OverlayFS, Magic Mount, or hybrid approaches
+
+**What you need to do:**
+- **Fresh installations**: Must install a metamodule before modules will work
+- **Existing installations**: Continue to work normally (no action needed)
+- **Upgrading**: May need to install a metamodule if modules stop working
+
+**Recommended metamodule**: [meta-overlayfs](https://github.com/5ec1cff/meta-overlayfs) for most users
+
+See [Understanding Metamodules](#understanding-metamodules) for complete details.
+
+</details>
 
 <details>
 <summary><b>How do I check if my device is compatible?</b></summary>
@@ -1613,7 +1901,7 @@ adb shell uname -r
 uname -r
 ```
 
-Then refer to the [Compatibility Matrix](#-comparison-matrix) to find the right variant.
+Then refer to the [Compatibility Matrix](#compatibility-matrix) to find the right variant.
 
 </details>
 
@@ -1666,6 +1954,47 @@ They will conflict if installed together.
 - **Telegram** - Community-shared modules
 - **XDA Forums** - Device-specific modules
 
+**⚠️ Remember**: For KernelSU 3.0+ fresh installations, you must first install a [metamodule](#understanding-metamodules) before regular modules will work!
+
+</details>
+
+<details>
+<summary><b>My modules aren't working after installing KernelSU 3.0+, why?</b></summary>
+
+**You need a metamodule!**
+
+KernelSU 3.0+ removed built-in module mounting. Fresh installations require a metamodule to provide mounting infrastructure.
+
+**Solution:**
+1. Download [meta-overlayfs](https://github.com/5ec1cff/meta-overlayfs) (recommended)
+2. Install via KernelSU Manager > Modules
+3. Reboot device
+4. Now regular modules will work
+
+See [Understanding Metamodules](#understanding-metamodules) for details and alternatives.
+
+</details>
+
+<details>
+<summary><b>Can I switch between different metamodules?</b></summary>
+
+**Yes, but with caution:**
+
+⚠️ Only ONE metamodule can be active at a time.
+
+**To switch:**
+1. Uninstall all regular modules
+2. Uninstall current metamodule
+3. Reboot device
+4. Install new metamodule
+5. Reboot again
+6. Reinstall regular modules
+
+**Popular choices:**
+- **meta-overlayfs**: Official, recommended for most
+- **mountify**: Advanced, cross-platform support
+- **meta-hybrid_mount**: Maximum compatibility with auto-fallback
+
 </details>
 
 <details>
@@ -1680,6 +2009,8 @@ They will conflict if installed together.
 - 🔐 Namespace isolation
 
 Configure in KernelSU Manager under each app's settings.
+
+Learn more: [App Profile System Guide](https://awesome-android-root.org/rooting-guides/kernelsu-guide#app-profile-system)
 
 </details>
 
@@ -1743,12 +2074,22 @@ su -c "id"
 
 **Common causes:**
 
+- ❌ **No metamodule installed** (KernelSU 3.0+)
 - ❌ Incompatible module version
 - ❌ Insufficient permissions
 - ❌ Module conflicts
-- ❌ OverlayFS not supported
+- ❌ Mounting system not supported
 
-**Check logs:** `/data/adb/modules/[module]/install.log`
+**Solutions:**
+
+1. **Check if metamodule is installed** (KernelSU 3.0+ requirement)
+   - Open KernelSU Manager > Modules
+   - Look for active metamodule (e.g., meta-overlayfs)
+   - If missing, install one from [Understanding Metamodules](#understanding-metamodules)
+
+2. **Check module logs**: `/data/adb/modules/[module]/install.log`
+
+3. **Verify module compatibility** with your KernelSU version
 
 </details>
 
@@ -1790,10 +2131,11 @@ See [Building from Source](#️-building-from-source) for detailed guide.
 
 ### 💡 More Questions?
 
-- 📚 [Official FAQ](https://kernelsu.org/guide/faq.html)
-- 💬 [Telegram Community](https://t.me/KernelSU_group)
-- 🐙 [GitHub Discussions](https://github.com/tiann/KernelSU/discussions)
-- 🌐 [XDA Forums](https://forum.xda-developers.com/t/kernelsu-a-kernel-based-root-solution-for-android.4511259/)
+- 📚 [**Complete KernelSU Installation Guide**](https://awesome-android-root.org/rooting-guides/kernelsu-guide) - Comprehensive tutorial with detailed explanations
+- 📖 [Official FAQ](https://kernelsu.org/guide/faq.html) - Official documentation
+- 💬 [Telegram Community](https://t.me/KernelSU_group) - Real-time support
+- 🐙 [GitHub Discussions](https://github.com/tiann/KernelSU/discussions) - Technical discussions
+- 🌐 [XDA Forums](https://forum.xda-developers.com/t/kernelsu-a-kernel-based-root-solution-for-android.4511259/) - Community forum
 
 <div align="right">
 
@@ -1964,7 +2306,7 @@ Contributors and maintainers are **NOT liable** for:
 
 **Made with ❤️ by the KernelSU Community**
 
-<sub>Last Updated: October 2025 | Maintained by [Fynks](https://github.com/fynks)</sub>
+<sub>Last Updated: December 2025 | Maintained by [Fynks](https://github.com/fynks)</sub>
 
 <br>
 
