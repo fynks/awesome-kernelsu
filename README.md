@@ -1277,11 +1277,11 @@ mount | grep overlay
 
 | Metamodule | Purpose | Download |
 |------------|---------|----------|
-| [**meta-overlayfs**](https://github.com/5ec1cff/meta-overlayfs) | Official OverlayFS implementation - **recommended for most users** | [![Download](https://img.shields.io/badge/Download-Latest-blue?style=flat-square)](https://github.com/5ec1cff/meta-overlayfs/releases) |
-| [**mountify**](https://github.com/HuskyDG/mountify) | Advanced OverlayFS with cross-platform support | [![Download](https://img.shields.io/badge/Download-Latest-blue?style=flat-square)](https://github.com/HuskyDG/mountify/releases) |
-| [**meta-magic_mount**](https://github.com/5ec1cff/meta-magic_mount) | Magisk-style Magic Mount (C-based) | [![Download](https://img.shields.io/badge/Download-Latest-blue?style=flat-square)](https://github.com/5ec1cff/meta-magic_mount/releases) |
-| [**meta-magic_mount-rs**](https://github.com/backslashxx/meta-magic_mount-rs) | Magisk-style Magic Mount with WebUI (Rust-based) | [![Download](https://img.shields.io/badge/Download-Latest-blue?style=flat-square)](https://github.com/backslashxx/meta-magic_mount-rs/releases) |
-| [**meta-hybrid_mount**](https://github.com/dqy168/meta-hybrid_mount) | Hybrid OverlayFS + Magic Mount with auto-fallback | [![Download](https://img.shields.io/badge/Download-Latest-blue?style=flat-square)](https://github.com/dqy168/meta-hybrid_mount/releases) |
+| [**meta-overlayfs**](https://github.com/KernelSU-Modules-Repo/meta-overlayfs) | Official reference implementation using OverlayFS - **recommended for most users** | [![Download](https://img.shields.io/badge/Download-Latest-blue?style=flat-square)](https://github.com/KernelSU-Modules-Repo/meta-overlayfs/releases) |
+| [**mountify**](https://github.com/backslashxx/mountify) | OverlayFS with tmpfs/ext4 sparse support, works on APatch/Magisk too | [![Download](https://img.shields.io/badge/Download-Latest-blue?style=flat-square)](https://github.com/backslashxx/mountify/releases) |
+| [**meta-magic_mount**](https://github.com/7a72/meta-magic_mount) ([Mirror](https://codeberg.org/ovo/meta-magic_mount)) | Magic Mount implementation in C with WebUI support - Magisk-style mounting, official KSU branch support | [![Download](https://img.shields.io/badge/Download-Latest-blue?style=flat-square)](https://github.com/7a72/meta-magic_mount/releases) |
+| [**meta-magic_mount (Rust)**](https://github.com/Tools-cx-app/meta-magic_mount) | Rust-based Magic Mount with WebUI and active development | [![Download](https://img.shields.io/badge/Download-Latest-blue?style=flat-square)](https://github.com/Tools-cx-app/meta-magic_mount/releases) |
+| [**meta-hybrid_mount**](https://github.com/YuzakiKokuban/meta-hybrid_mount) | Dual engine (OverlayFS + Magic Mount) with conflict monitor, diagnostics & auto-fallback | [![Download](https://img.shields.io/badge/Download-Latest-blue?style=flat-square)](https://github.com/YuzakiKokuban/meta-hybrid_mount/releases) |
 
 ---
 
