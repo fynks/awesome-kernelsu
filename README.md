@@ -15,7 +15,7 @@
 
 <br>
 
-[Intro](#what-is-kernelsu) &nbsp; • &nbsp; [Prebuilt Kernels](#prebuilt-kernels) &nbsp; • &nbsp; [Docs](#-documentation) &nbsp; • &nbsp; [Community](#-community)
+- [Intro](#what-is-kernelsu) &nbsp; • &nbsp; [Prebuilt Kernels](#prebuilt-kernels) &nbsp; • &nbsp; [Variants](#kernelsu-variants) &nbsp; • &nbsp; [Docs](#-documentation) &nbsp; • &nbsp; [Community](#-community)
 
 
 <br>
@@ -28,7 +28,7 @@
 KernelSU is a **kernel-based root solution** for Android that delivers superior security and reliability compared to traditional rooting methods. By operating at the kernel level, it provides enhanced security isolation, maintains system integrity, and offers powerful module management with flexible mounting systems.
 
 > [!IMPORTANT]
-> **KernelSU 3.0+ Major Changes**: From version 3.0 onwards, KernelSU has removed built-in module mounting. Fresh installations now **require a metamodule** for modules to function. See [Understanding Metamodules](#understanding-metamodules) for details.
+> **KernelSU 3.0+ Major Changes**: From version 3.0 onwards, KernelSU and its forks (KernelSU-Next, Wild KSU) have removed built-in module mounting. Fresh installations now **require a metamodule** for modules to function. See [Understanding Metamodules](#understanding-metamodules) for details.
 
 ### Key Features
 
@@ -76,6 +76,7 @@ Before installing KernelSU, ensure you have:
 1. **Check Compatibility**
    - Kernel 5.10+ for official KernelSU (Android 12+)
    - Kernel 4.4-6.6 for KernelSU-Next (Android 9+)
+   - Kernel 4.4-6.6 for Wild KSU (Android 9+) — root hiding focused
    - Kernel 3.4-5.4+ for SuKiSu-Ultra (Android 7+)
 
 2. **Choose Installation Mode**
@@ -102,6 +103,7 @@ Before installing KernelSU, ensure you have:
 | ---------- | --------------- | --------------------- | -------------------------------------- |
 | 2021+      | 5.10+ (GKI 2.0) | **KernelSU Official** | Maximum stability, official support    |
 | 2018-2021  | 4.4-6.6         | **KernelSU-Next**     | Enhanced features, broad compatibility |
+| 2018-2021  | 4.4-6.6         | **Wild KSU**          | Customization & root hiding focus      |
 | Pre-2018   | 3.4-5.4+        | **SuKiSu-Ultra**      | Legacy support, advanced hiding        |
 
 ### Essential First Steps
@@ -306,13 +308,14 @@ With a metamodule installed:
 
 **✨ Enhanced Features:**
 - Extended kernel support (4.4-6.6, GKI & non-GKI)
-- Dual module system (Magic Mount + OverlayFS with seamless toggle)
+- Metamodule support (3.0+) with dual module system (Magic Mount + OverlayFS)
 - Beautiful Material You UI with dynamic theming
 - Advanced module management (backup/restore, bulk ops, dependencies)
 - **Automatic update system** with rollback capability
 - WebUI X framework for advanced module interfaces
 - Built-in developer tools (logcat, performance monitor)
 - Configurable OverlayFS options
+- Active development (latest: v3.0.1)
 
 **Technical Specs:**
 - **Kernel Support:** 4.4 - 6.6 (Non-GKI & GKI)
@@ -325,6 +328,44 @@ With a metamodule installed:
 - [📖 Official Website](https://kernelsu-next.github.io/webpage/)
 - [💬 Telegram Community](https://t.me/KernelSU_Next)
 - [🐛 Report Issues](https://github.com/KernelSU-Next/KernelSU-Next/issues)
+
+</details>
+
+---
+
+### Wild KSU
+
+[![GitHub](https://img.shields.io/badge/GitHub-Wild__KSU-blue?logo=github&style=flat-square)](https://github.com/WildKernels/Wild_KSU)
+[![Release](https://img.shields.io/github/v/release/WildKernels/Wild_KSU?style=flat-square)](https://github.com/WildKernels/Wild_KSU/releases)
+
+> Customization and root hiding focused fork built on KernelSU-Next.
+
+<details>
+<summary><b>📋 View Details</b></summary>
+
+**Best For:** Users wanting enhanced customization, root hiding, and SUSFS v2.0 integration
+
+**✨ Key Features:**
+- Fork of KernelSU-Next with customization and root hiding focus
+- Built-in SUSFS v2.0.0 for superior root hiding
+- Extended kernel support (4.4-6.6, GKI & non-GKI)
+- Multi-architecture support (arm64, arm, x86_64)
+- GKI and LKM mode support
+- Active development with nightly builds
+- Crowdin translation support
+
+**Technical Specs:**
+- **Kernel Support:** 4.4 - 6.6 (Non-GKI & GKI)
+- **Android Version:** 9+
+- **Architecture:** arm64-v8a, armeabi-v7a, x86_64
+- **Latest Stable:** v3.0.0
+- **Status:** Testing/development phase - use with caution
+
+**🔗 Resources:**
+- [📥 Download Manager APK](https://github.com/WildKernels/Wild_KSU/releases/latest)
+- [🌙 Nightly Builds](https://nightly.link/WildKernels/Wild_KSU/workflows/build-manager-ci/wild/Manager)
+- [📖 Documentation](https://kernelsu.org/guide/what-is-kernelsu.html)
+- [🐛 Report Issues](https://github.com/WildKernels/Wild_KSU/issues)
 
 </details>
 
@@ -395,7 +436,7 @@ With a metamodule installed:
 
 <table>
 <tr>
-<td width="33%" valign="top">
+<td width="25%" valign="top">
 
 **Choose Official KernelSU if:**
 
@@ -406,7 +447,7 @@ With a metamodule installed:
 ✅ OTA compatibility priority
 
 </td>
-<td width="33%" valign="top">
+<td width="25%" valign="top">
 
 **Choose KernelSU-Next if:**
 
@@ -417,7 +458,18 @@ With a metamodule installed:
 ✅ Advanced module mgmt
 
 </td>
-<td width="33%" valign="top">
+<td width="25%" valign="top">
+
+**Choose Wild KSU if:**
+
+✅ Kernel 4.4-6.6<br>
+✅ Root hiding priority<br>
+✅ Want SUSFS v2.0 built-in<br>
+✅ Customization focused<br>
+✅ Nightly build access
+
+</td>
+<td width="25%" valign="top">
 
 **Choose SuKiSu-Ultra if:**
 
@@ -443,22 +495,22 @@ With a metamodule installed:
 
 ### KernelSU vs Alternative Root Solutions
 
-| Feature                 | KernelSU        | KernelSU-Next           | SuKiSu-Ultra            | Magisk      | APatch       |
-| ----------------------- | --------------- | ----------------------- | ----------------------- | ----------- | ------------ |
-| **Architecture**        | Kernel-level    | Kernel-level            | Kernel-level            | Userspace   | Kernel-level |
-| **Module System**       | Metamodule-based (OverlayFS/Magic Mount) | OverlayFS + Magic Mount | Magic Mount + OverlayFS | Magic Mount | OverlayFS    |
-| **Installation Mode**   | GKI / LKM       | GKI / LKM               | GKI                     | Boot Patch  | Boot Patch   |
-| **Kernel Support**      | 5.10+ (GKI 2.0) | 4.4-6.6                 | 3.4-5.4+                | Any         | 3.18-6.1     |
-| **Architecture**        | arm64, x86_64   | arm64, arm, x86_64      | arm64, arm, x86_64      | Universal   | arm64        |
-| **Security Model**      | App Profile     | App Profile             | App Profile             | Root Toggle | SuperKey     |
-| **Hide Capability**     | Metamodule-based (Advanced) | Advanced   | SuSFS Integrated        | Deprecated  | Kernel-level |
-| **Update Method**       | Manual / LKM    | Auto-update / LKM       | Manual                  | OTA         | Manual       |
-| **System Modification** | Zero            | Zero                    | Zero                    | Minimal     | Zero         |
-| **OTA Compatibility**   | Excellent       | Excellent               | Good                    | Good        | Excellent    |
-| **Module Mounting**     | Requires Metamodule (3.0+) | Built-in     | Built-in                | Built-in    | Built-in     |
-| **Development Status**  | Active          | Very Active             | Active                  | Active      | Active       |
-| **Learning Curve**      | Medium          | Medium                  | Hard                    | Easy        | Hard         |
-| **Community Size**      | Growing         | Medium                  | Small                   | Large       | Small        |
+| Feature                 | KernelSU        | KernelSU-Next           | Wild KSU                | SuKiSu-Ultra            | Magisk      | APatch       |
+| ----------------------- | --------------- | ----------------------- | ----------------------- | ----------------------- | ----------- | ------------ |
+| **Architecture**        | Kernel-level    | Kernel-level            | Kernel-level            | Kernel-level            | Userspace   | Kernel-level |
+| **Module System**       | Metamodule-based (OverlayFS/Magic Mount) | Metamodule-based (3.0+) | Metamodule-based (3.0+) | Magic Mount + OverlayFS | Magic Mount | OverlayFS    |
+| **Installation Mode**   | GKI / LKM       | GKI / LKM               | GKI / LKM               | GKI                     | Boot Patch  | Boot Patch   |
+| **Kernel Support**      | 5.10+ (GKI 2.0) | 4.4-6.6                 | 4.4-6.6                 | 3.4-5.4+                | Any         | 3.18-6.1     |
+| **Architecture**        | arm64, x86_64   | arm64, arm, x86_64      | arm64, arm, x86_64      | arm64, arm, x86_64      | Universal   | arm64        |
+| **Security Model**      | App Profile     | App Profile             | App Profile             | App Profile             | Root Toggle | SuperKey     |
+| **Hide Capability**     | Metamodule-based (Advanced) | Advanced   | SUSFS v2.0 Integrated   | SuSFS Integrated        | Deprecated  | Kernel-level |
+| **Update Method**       | Manual / LKM    | Auto-update / LKM       | Auto / Nightly           | Manual                  | OTA         | Manual       |
+| **System Modification** | Zero            | Zero                    | Zero                    | Zero                    | Minimal     | Zero         |
+| **OTA Compatibility**   | Excellent       | Excellent               | Excellent               | Good                    | Good        | Excellent    |
+| **Module Mounting**     | Requires Metamodule (3.0+) | Requires Metamodule (3.0+) | Requires Metamodule (3.0+) | Built-in    | Built-in    | Built-in     |
+| **Development Status**  | Active          | Very Active             | Active (Testing)        | Active                  | Active      | Active       |
+| **Learning Curve**      | Medium          | Medium                  | Medium                  | Hard                    | Easy        | Hard         |
+| **Community Size**      | Growing         | Medium                  | Small                   | Small                   | Large       | Small        |
 
 ### Advantages of KernelSU Ecosystem
 
@@ -599,6 +651,32 @@ Enhanced builds with extended kernel support and extra features
 
 </td>
 </tr>
+<tr>
+<td width="50%">
+
+**Wild KSU**
+
+![Kernel](https://img.shields.io/badge/Kernel-4.4--6.6-blue?style=flat-square)
+![Android](https://img.shields.io/badge/Android-9+-green?style=flat-square)
+
+Customization and root hiding focused builds with SUSFS v2.0
+
+**📥 Download:** [Wild KSU Releases](https://github.com/WildKernels/Wild_KSU/releases)
+
+</td>
+<td width="50%">
+
+**SuKiSu-Ultra**
+
+![Kernel](https://img.shields.io/badge/Kernel-3.4--5.4+-blue?style=flat-square)
+![Android](https://img.shields.io/badge/Android-7+-green?style=flat-square)
+
+Legacy device support with SuSFS built-in for advanced root hiding
+
+**📥 Download:** [SuKiSu-Ultra Releases](https://github.com/SukiSU-Ultra/SukiSU-Ultra/releases)
+
+</td>
+</tr>
 </table>
 
 ---
@@ -609,6 +687,7 @@ Premium quality kernels with KernelSU and SUSFS integration for multiple device 
 
 | Kernel Series | Target Devices | Features | Repository |
 |---------------|----------------|----------|------------|
+| **Wild KSU** | All supported devices | Wild KSU + SUSFS v2.0 + Customization | [![GitHub](https://img.shields.io/badge/View-Repository-blue?style=flat-square&logo=github)](https://github.com/WildKernels/Wild_KSU) |
 | **GKI Series** | Modern GKI Devices | KernelSU + SUSFS + GKI 2.0 | [![GitHub](https://img.shields.io/badge/View-Repository-blue?style=flat-square&logo=github)](https://github.com/WildKernels/GKI_KernelSU_SUSFS) |
 | **Sultan Series** | Google Pixel Devices | KernelSU + SUSFS + Pixel Optimizations | [![GitHub](https://img.shields.io/badge/View-Repository-blue?style=flat-square&logo=github)](https://github.com/WildKernels/Sultan_KernelSU_SUSFS) |
 | **OnePlus Series** | OnePlus Devices | KernelSU + SUSFS + OxygenOS Tuned | [![GitHub](https://img.shields.io/badge/View-Repository-blue?style=flat-square&logo=github)](https://github.com/WildKernels/OnePlus_KernelSU_SUSFS) |
@@ -1034,12 +1113,12 @@ uname -r
 
 **Compatibility Matrix:**
 
-| Kernel Version | Official KernelSU | KernelSU-Next | SuKiSu-Ultra | Recommended Method |
-|----------------|-------------------|---------------|--------------|-------------------|
-| 5.10+ (GKI 2.0) | ✅ Full Support | ✅ Full Support | ❌ Not Needed | GKI Mode / Manager Patching |
-| 4.14 - 5.9 | ⚠️ Manual Build Only | ✅ Full Support | ✅ Full Support | Custom Kernel / LKM |
-| 4.4 - 4.13 | ❌ Not Supported | ✅ Full Support | ✅ Full Support | Custom Kernel |
-| 3.4 - 4.3 | ❌ Not Supported | ❌ Not Supported | ✅ Full Support | Custom Kernel |
+| Kernel Version | Official KernelSU | KernelSU-Next | Wild KSU | SuKiSu-Ultra | Recommended Method |
+|----------------|-------------------|---------------|----------|--------------|-------------------|
+| 5.10+ (GKI 2.0) | ✅ Full Support | ✅ Full Support | ✅ Full Support | ❌ Not Needed | GKI Mode / Manager Patching |
+| 4.14 - 5.9 | ⚠️ Manual Build Only | ✅ Full Support | ✅ Full Support | ✅ Full Support | Custom Kernel / LKM |
+| 4.4 - 4.13 | ❌ Not Supported | ✅ Full Support | ✅ Full Support | ✅ Full Support | Custom Kernel |
+| 3.4 - 4.3 | ❌ Not Supported | ❌ Not Supported | ❌ Not Supported | ✅ Full Support | Custom Kernel |
 
 ---
 
@@ -1264,6 +1343,8 @@ The all-in-one solution for KernelSU module management.
 | App | Purpose | Download |
 |-----|---------|----------|
 | [**KernelSU Manager**](https://github.com/tiann/KernelSU/releases) | Official manager for KernelSU | [![Download](https://img.shields.io/badge/Download-Latest-blue?style=flat-square)](https://github.com/tiann/KernelSU/releases/latest) |
+| [**KernelSU-Next Manager**](https://github.com/KernelSU-Next/KernelSU-Next/releases) | Manager for KernelSU-Next | [![Download](https://img.shields.io/badge/Download-Latest-blue?style=flat-square)](https://github.com/KernelSU-Next/KernelSU-Next/releases/latest) |
+| [**Wild KSU Manager**](https://github.com/WildKernels/Wild_KSU/releases) | Manager for Wild KSU | [![Download](https://img.shields.io/badge/Download-Latest-blue?style=flat-square)](https://github.com/WildKernels/Wild_KSU/releases/latest) |
 | [**SukiSU Manager**](https://github.com/SukiSU-Ultra/SukiSU-Ultra/releases) | Manager for SuKiSu-Ultra | [![Download](https://img.shields.io/badge/Download-Latest-blue?style=flat-square)](https://github.com/SukiSU-Ultra/SukiSU-Ultra/releases/latest) |
 | [**Franco Kernel Manager**](https://play.google.com/store/apps/details?id=com.franco.kernel) | Kernel tweaking & monitoring | [![Play Store](https://img.shields.io/badge/Get-Play_Store-green?style=flat-square)](https://play.google.com/store/apps/details?id=com.franco.kernel) |
 | [**SmartPack-Kernel Manager**](https://github.com/SmartPack/SmartPack-Kernel-Manager) | Open-source kernel management | [![Download](https://img.shields.io/badge/Download-Latest-blue?style=flat-square)](https://github.com/SmartPack/SmartPack-Kernel-Manager/releases) |
@@ -1295,6 +1376,8 @@ The all-in-one solution for KernelSU module management.
 
 - [**KernelSU Source**](https://github.com/tiann/KernelSU) - Official KernelSU source code for integration
 - [**KernelSU-Next Source**](https://github.com/KernelSU-Next/KernelSU-Next) - Enhanced fork with extended support
+- [**Wild KSU Source**](https://github.com/WildKernels/Wild_KSU) - Customization and root hiding focused fork
+- [**SuKiSu-Ultra Source**](https://github.com/SukiSU-Ultra/SukiSU-Ultra) - Legacy device support fork
 - [**Kernel Build Action**](https://github.com/dabao1955/kernel_build_action) - Automated building via GitHub Actions
 
 ### Device-Specific Kernel Sources
@@ -1349,6 +1432,12 @@ git clone <kernel_source_url> kernel
 # 2. Apply KernelSU patches
 cd kernel
 curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
+
+# For KernelSU-Next:
+# curl -LSs "https://raw.githubusercontent.com/KernelSU-Next/KernelSU-Next/next/kernel/setup.sh" | bash -
+
+# For Wild KSU:
+# curl -LSs "https://raw.githubusercontent.com/WildKernels/Wild_KSU/wild/kernel/setup.sh" | bash -s wild
 
 # 3. Configure kernel
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- <defconfig>
@@ -1416,6 +1505,7 @@ jobs:
 | **KernelSU Channel** | Official announcements | [![Telegram](https://img.shields.io/badge/Join-Channel-blue?style=flat-square&logo=telegram)](https://t.me/KernelSU) |
 | **KernelSU Group** | Community support | [![Telegram](https://img.shields.io/badge/Join-Group-blue?style=flat-square&logo=telegram)](https://t.me/KernelSU_group) |
 | **KernelSU-Next** | Enhanced variant | [![Telegram](https://img.shields.io/badge/Join-Group-blue?style=flat-square&logo=telegram)](https://t.me/KernelSU_Next) |
+| **Wild KSU** | Customization & root hiding fork | [![Telegram](https://img.shields.io/badge/Join-Group-blue?style=flat-square&logo=telegram)](https://t.me/WildKSU) |
 | **SuKiSu** | Legacy devices | [![Telegram](https://img.shields.io/badge/Join-Group-blue?style=flat-square&logo=telegram)](https://t.me/Sukiksu) |
 
 **GitHub**
@@ -1425,6 +1515,7 @@ jobs:
 | **Discussions** | Technical Q&A | [![GitHub](https://img.shields.io/badge/Join-Discussions-black?style=flat-square&logo=github)](https://github.com/tiann/KernelSU/discussions) |
 | **Issues** | Bug reports | [![GitHub](https://img.shields.io/badge/Report-Issues-black?style=flat-square&logo=github)](https://github.com/tiann/KernelSU/issues) |
 | **KSU-Next Discussions** | Enhanced fork | [![GitHub](https://img.shields.io/badge/Join-Discussions-black?style=flat-square&logo=github)](https://github.com/KernelSU-Next/KernelSU-Next/discussions) |
+| **Wild KSU Issues** | Customization fork | [![GitHub](https://img.shields.io/badge/View-Issues-black?style=flat-square&logo=github)](https://github.com/WildKernels/Wild_KSU/issues) |
 
 
 ---
@@ -1812,6 +1903,7 @@ See [Installation Modes](#installation-modes) for detailed comparison.
 
 - **Modern devices** (Android 12+, kernel 5.10+) → **Official KernelSU**
 - **Mid-range devices** (Android 9-11, kernel 4.4-6.6) → **KernelSU-Next**
+- **Root hiding focus** (Android 9+, kernel 4.4-6.6) → **Wild KSU**
 - **Legacy devices** (Android 7-8, kernel 3.4-5.4) → **SuKiSu-Ultra**
 
 See [KernelSU Variants](#kernelsu-variants) for detailed comparison.
@@ -2276,6 +2368,7 @@ Contributors and maintainers are **NOT liable** for:
 **Derivative Maintainers**
 
 - **KernelSU-Next Team** - Enhanced fork development and innovation
+- **Wild KSU Team (WildKernels)** - Customization and root hiding focused fork
 - **SuKiSu-Ultra Team** - Legacy device support and compatibility
 
 
@@ -2306,7 +2399,7 @@ Contributors and maintainers are **NOT liable** for:
 
 **Made with ❤️ by the KernelSU Community**
 
-<sub>Last Updated: December 2025 | Maintained by [Fynks](https://github.com/fynks)</sub>
+<sub>Last Updated: February 2026 | Maintained by [Fynks](https://github.com/fynks)</sub>
 
 <br>
 
