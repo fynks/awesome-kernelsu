@@ -1254,8 +1254,7 @@ mount | grep overlay
 ### 🆘 Recovery & Troubleshooting
 
 - [**FAQ**](https://kernelsu.org/guide/faq.html) - Frequently asked questions
-- [**Bootloop Recovery**](https://kernelsu.org/guide/rescue.html) - Emergency recovery procedures
-- [**Log Analysis**](https://kernelsu.org/guide/logs.html) - Understanding system logs
+- [**Bootloop Recovery**](https://kernelsu.org/guide/rescue-from-bootloop.html) - Emergency recovery procedures
 
 <div align="right">
 
@@ -1392,7 +1391,7 @@ The all-in-one solution for KernelSU module management.
 
 ### Building Tools & Scripts
 
-- [**Universal Patcher**](https://github.com/KernelSU-Next/KernelSU-Next/tree/next/scripts) - Automated kernel patching scripts
+- [**Universal Patcher**](https://github.com/KernelSU-Next/KernelSU-Next/tree/dev/scripts) - Automated kernel patching scripts
 - [**KernelSU Builder**](https://github.com/dabao1955/kernel_build_action) - CI/CD building system with GitHub Actions
 - [**⭐ AnyKernel3**](https://github.com/osm0sis/AnyKernel3) - Universal kernel flasher and packaging tool
 - [**Manual Build Guide**](https://kernelsu.org/guide/how-to-build.html) - Step-by-step building instructions
@@ -1514,7 +1513,6 @@ jobs:
 |----------|---------|------|
 | **Discussions** | Technical Q&A | [![GitHub](https://img.shields.io/badge/Join-Discussions-black?style=flat-square&logo=github)](https://github.com/tiann/KernelSU/discussions) |
 | **Issues** | Bug reports | [![GitHub](https://img.shields.io/badge/Report-Issues-black?style=flat-square&logo=github)](https://github.com/tiann/KernelSU/issues) |
-| **KSU-Next Discussions** | Enhanced fork | [![GitHub](https://img.shields.io/badge/Join-Discussions-black?style=flat-square&logo=github)](https://github.com/KernelSU-Next/KernelSU-Next/discussions) |
 | **Wild KSU Issues** | Customization fork | [![GitHub](https://img.shields.io/badge/View-Issues-black?style=flat-square&logo=github)](https://github.com/WildKernels/Wild_KSU/issues) |
 
 
