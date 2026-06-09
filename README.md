@@ -15,8 +15,7 @@
 
 <br>
 
-- [Intro](#what-is-kernelsu) &nbsp; • &nbsp; [Prebuilt Kernels](#prebuilt-kernels) &nbsp; • &nbsp; [Variants](#kernelsu-variants) &nbsp; • &nbsp; [Docs](#-documentation) &nbsp; • &nbsp; [Community](#-community)
-
+[**Intro**](#what-is-kernelsu) &nbsp; • &nbsp; [**Prebuilt Kernels**](#prebuilt-kernels) &nbsp; • &nbsp; [**Variants**](#kernelsu-variants) &nbsp; • &nbsp; [**Docs**](#-documentation) &nbsp; • &nbsp; [**Community**](#-community)
 
 <br>
 
@@ -25,18 +24,17 @@
 
 ## What is KernelSU?
 
-KernelSU is a **kernel-based root solution** for Android that delivers superior security and reliability compared to traditional rooting methods. By operating at the kernel level, it provides enhanced security isolation, maintains system integrity, and offers powerful module management with flexible mounting systems.
+**KernelSU is a kernel-based root solution for Android** that operates inside the Linux kernel, providing more control over userspace apps than traditional rooting methods.
 
-> [!IMPORTANT]
+> [!IMPORTANT] Critical Notice - KernelSU 3.0+ Changes
 > **KernelSU 3.0+ Major Changes**: From version 3.0 onwards, KernelSU and its forks (KernelSU-Next, Wild KSU) have removed built-in module mounting. Fresh installations now **require a metamodule** for modules to function. See [Understanding Metamodules](#understanding-metamodules) for details.
 
 ### Key Features
 
-- **Zero System Modification**: Maintains system integrity and OTA compatibility by operating entirely within kernel space
+- **Root Access Control** - Only permitted apps can access or see su; all other apps remain unaware of it
+- **Kernel-Level Isolation** - Root access operates in kernel space, preventing userspace tampering and detection
+- **Metamodule System** - Pluggable module infrastructure for systemless /system modifications
 - **Advanced Permission Control**: Granular app-level root access management with customizable profiles
-- **Enhanced Security Model**: Kernel-level isolation prevents root detection and tampering
-- **Flexible Module System**: Metamodule architecture supporting multiple mounting strategies (OverlayFS, Magic Mount, Hybrid)
-- **LKM Mode Support**: Load KernelSU as a kernel module without replacing your kernel (preserves manufacturer optimizations)
 - **App Profile System**: Customizable groups, capabilities, and SELinux rules for fine-grained root privilege control
 
 > **Learn More**: [Comprehensive KernelSU Guide](https://awesome-android-root.org/rooting-guides/kernelsu-guide) | [Official Documentation](https://kernelsu.org/)
@@ -69,7 +67,7 @@ Before installing KernelSU, ensure you have:
 - **Compatible device** (check compatibility below)
 
 > [!TIP]
-> **New to bootloader unlocking?** Check out the comprehensive guide at [Awesome-Android-Root](https://awesome-android-root.org/rooting-guides/how-to-unlock-bootloader)
+> **New to bootloader unlocking?** Check out the comprehensive guide at [Awesome-Android-Root](https://awesome-android-root.pages.dev/rooting-guides/how-to-unlock-bootloader)
 
 ### New to KernelSU?
 
