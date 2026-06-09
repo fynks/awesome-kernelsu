@@ -379,7 +379,6 @@ With a metamodule installed:
 
 **🔗 Resources:**
 - [📥 Download Manager APK](https://github.com/WildKernels/Wild_KSU/releases/latest)
-- [🌙 Nightly Builds](https://nightly.link/WildKernels/Wild_KSU/workflows/build-manager-ci/wild/Manager)
 - [📖 Documentation](https://kernelsu.org/guide/what-is-kernelsu.html)
 - [🐛 Report Issues](https://github.com/WildKernels/Wild_KSU/issues)
 
@@ -1302,17 +1301,10 @@ mount | grep overlay
 - [Official Module Repository](https://modules.kernelsu.org)
 - [API Documentation](https://kernelsu.org/guide/module.html#kernelsu-modules)
 
-**Advanced Topics**
-- [Security Model](https://kernelsu.org/guide/security.html)
-- [OverlayFS System](https://kernelsu.org/guide/overlayfs.html)
-- [SELinux Configuration](https://kernelsu.org/guide/selinux.html)
-- [Debugging Guide](https://kernelsu.org/guide/debug.html)
-- [Migration from Magisk](https://kernelsu.org/guide/migration.html)
 
 ### 🔨 Integration & Building
 
 - [**Non-GKI Integration**](https://kernelsu.org/guide/how-to-integrate-for-non-gki.html) - For custom kernels 4.14 and earlier
-- [**GKI Integration**](https://kernelsu.org/guide/how-to-integrate-for-gki.html) - Generic Kernel Image integration
 - [**Building from Source**](https://kernelsu.org/guide/how-to-build.html) - Complete compilation guide
 - [**Kernel Requirements**](https://kernelsu.org/guide/installation.html#requirements) - Prerequisites and compatibility
 - [**Unofficially Supported Devices**](https://kernelsu.org/guide/unofficially-support-devices.html) - Manual compilation for older kernels
