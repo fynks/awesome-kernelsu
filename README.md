@@ -26,7 +26,7 @@
 
 **KernelSU is a kernel-based root solution for Android** that operates inside the Linux kernel, providing more control over userspace apps than traditional rooting methods.
 
-> [!IMPORTANT] Critical Notice - KernelSU 3.0+ Changes
+> [!IMPORTANT]
 > **KernelSU 3.0+ Major Changes**: From version 3.0 onwards, KernelSU and its forks (KernelSU-Next, Wild KSU, and now SukiSU-Ultra / ReSukiSU) have removed built-in module mounting. Fresh installations now **require a metamodule** for modules to function. See [Understanding Metamodules](#understanding-metamodules) for details.
 >
 > **GKI image mode deprecated (official):** Since v3.0, official KernelSU has dropped GKI *image* mode for faster iteration - the GKI build guide is now archival. **LKM mode** (built with [Ylarod/ddk](https://github.com/Ylarod/ddk)) is the recommended path. Forks still ship GKI builds.
