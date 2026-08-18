@@ -1357,6 +1357,12 @@ mount | grep overlay
 > [!TIP]
 > **Discover More Modules:** Explore the extensive collection at **[Awesome Android Root - KernelSU Modules](https://awesome-android-root.pages.dev/android-root-apps/?filters=%5BK%5D)**
 
+### Device-Specific Mods
+
+| Module | Purpose | Key Features |
+|--------|---------|--------------|
+| [**Flash in Ultra-Wide Fix**](https://github.com/TullioTera/s24-ultrawide-flash-ksu) | Enables flash toggle in ultra-wide camera mode on Samsung Galaxy S24 Ultra | Single-file `camera-feature.xml` patch, no APK modification, fully reversible |
+
 ### Framework Modifications
 
 | Framework | Purpose | Features |
