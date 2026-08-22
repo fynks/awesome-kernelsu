@@ -1,35 +1,38 @@
 <div align="center">
 
-<img src="./media/kernelsu-logo.svg" alt="KernelSU Logo" width="200"/>
-<br>
+<img src="./media/kernelsu-logo.svg" alt="KernelSU Logo" width="128"/>
 
 # Awesome KernelSU
 
-**A comprehensive curated list of KernelSU resources, tools, modules, and documentation**
+**A curated list of KernelSU resources: official documentation, variants, modules, tools, and device kernels.**
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 [![GitHub stars](https://img.shields.io/github/stars/fynks/awesome-kernelsu?style=flat-square&logo=github)](https://github.com/fynks/awesome-kernelsu/stargazers)
-[![Browse Kernels](https://img.shields.io/badge/🔍_Browse-Prebuilt_Kernels-2563eb?style=flat-square)](#prebuilt-kernels)
 [![License](https://img.shields.io/github/license/fynks/awesome-kernelsu?style=flat-square)](LICENSE)
 
-
-<br>
-
-[**Intro**](#what-is-kernelsu) &nbsp; • &nbsp; [**Prebuilt Kernels**](#prebuilt-kernels) &nbsp; • &nbsp; [**Variants**](#kernelsu-variants) &nbsp; • &nbsp; [**Docs**](#-documentation) &nbsp; • &nbsp; [**Community**](#-community)
-
-<br>
-
 </div>
+
+## Contents
+
+- [What is KernelSU?](#what-is-kernelsu)
+- [Getting Started](#getting-started)
+- [Installation Modes](#installation-modes)
+- [Metamodules](#metamodules)
+- [KernelSU Variants](#kernelsu-variants)
+- [Modules \& Tools](#modules--tools)
+- [Device Kernels](#device-kernels)
+- [Building from Source](#building-from-source)
+- [Documentation](#documentation)
+- [Community](#community)
+- [Troubleshooting](#troubleshooting)
+- [FAQs](#faqs)  
+- [License](#license)
+- [Acknowledgments](#acknowledgments)
 
 
 ## What is KernelSU?
 
-**KernelSU is a kernel-based root solution for Android** that operates inside the Linux kernel, providing more control over userspace apps than traditional rooting methods.
-
-> [!IMPORTANT]
-> **KernelSU 3.0+ Major Changes**: From version 3.0 onwards, KernelSU and its forks (KernelSU-Next, Wild KSU, and now SukiSU-Ultra / ReSukiSU) have removed built-in module mounting. Fresh installations now **require a metamodule** for modules to function. See [Understanding Metamodules](#understanding-metamodules) for details.
->
-> **GKI image mode deprecated (official):** Since v3.0, official KernelSU has dropped GKI *image* mode for faster iteration - the GKI build guide is now archival. **LKM mode** (built with [Ylarod/ddk](https://github.com/Ylarod/ddk)) is the recommended path. Forks still ship GKI builds.
+**KernelSU** is a kernel-based root solution for Android. Unlike userspace tools such as Magisk, it runs inside the Linux kernel and grants root access to apps directly in kernel space.
 
 ### Key Features
 
@@ -40,26 +43,14 @@
 - **App Profile System**: Customizable groups, capabilities, and SELinux rules for fine-grained root privilege control
 - **Module Configuration System**: Built-in key-value store for modules to save persistent or temporary settings
 
+> [!NOTE]
+> Official KernelSU targets Android **GKI 2.0** devices (kernel 5.10+). Compatibility ultimately depends on the device's **KMI**, not just the kernel version- see the [installation guide](https://kernelsu.org/guide/installation.html).
+
+
 <br>
 
-> **Learn More**: [Comprehensive KernelSU Guide](https://awesome-android-root.pages.dev/rooting-guides/kernelsu-guide) | [Official Documentation](https://kernelsu.org/) | [Official Module Repo](https://modules.kernelsu.org)
+> **Learn More**: [Comprehensive KernelSU Guide](https://awesome-android-root.zhoe.org/rooting-guides/kernelsu-guide) | [Official Documentation](https://kernelsu.org/) | [Official Module Repo](https://modules.kernelsu.org)
 
-
-## Table of Contents
-- [What is KernelSU?](#what-is-kernelsu)
-- [Getting Started](#getting-started)
-- [Installation Modes](#installation-modes)
-- [Understanding Metamodules](#understanding-metamodules)
-- [KernelSU Variants](#kernelsu-variants)
-- [Comparison](#comparison)
-- [Prebuilt Kernels](#prebuilt-kernels)
-- [Installation](#-installation)
-- [Documentation](#-documentation)
-- [Modules and Tools](#modules-and-tools)
-- [Building from Source](#️-building-from-source)
-- [Community](#-community)
-- [Troubleshooting](#-troubleshooting) • [FAQ](#-faq) • [Contributing](#-contributing)
-- [Disclaimer](#disclaimer) • [License](#license)
 
 ## Getting Started
 
@@ -72,20 +63,19 @@ Before installing KernelSU, ensure you have:
 - **Compatible device** (check compatibility below)
 
 > [!TIP]
-> **New to bootloader unlocking?** Check out the comprehensive guide at [Awesome-Android-Root](https://awesome-android-root.pages.dev/rooting-guides/how-to-unlock-bootloader)
+> **New to bootloader unlocking?** Check out the comprehensive guide at [Awesome-Android-Root](https://awesome-android-root.zhoe.org/rooting-guides/how-to-unlock-bootloader)
 
 ### New to KernelSU?
 
 1. **Check Compatibility**
-   - Kernel 5.10+ for official KernelSU (Android 12+)
-   - Kernel 4.4–6.6 for KernelSU-Next (Android 9+)
-   - Kernel 4.4–6.6 for Wild KSU (Android 9+) - root hiding focused
-   - Kernel 3.4+ (GKI and non-GKI) for SukiSU-Ultra (Android 7+; 3.x experimental)
+   -Install the [KernelSU Manager](https://github.com/tiann/KernelSU/releases/latest) and open it:
+      - `Not installed` → officially supported.
+      - `Unsupported` → you must build a kernel yourself (see [Unofficially supported devices](https://kernelsu.org/guide/unofficially-support-devices.html) and [Device Kernels](#device-kernels)).
 
 2. **Choose Installation Mode**
    - **GKI Mode**: Replaces device kernel (universal compatibility, works on Samsung Knox)
    - **LKM Mode**: Loads as kernel module (preserves optimizations, easy updates)
-   - See [Installation Modes](#installation-modes) for detailed comparison
+   > See [Installation Modes](#installation-modes)
 
 3. **Download Manager**
    - Get the official Manager APK for your chosen variant (links in [Variants](#kernelsu-variants) section)
@@ -94,142 +84,75 @@ Before installing KernelSU, ensure you have:
    - Follow the [installation guide](#-installation) for your chosen method
 
 5. **Install Metamodule**
-   - **CRITICAL**: KernelSU 3.0+ requires a metamodule for modules to work
-   - See [Understanding Metamodules](#understanding-metamodules) section
+   - Required only if you use modules that modify `/system` files (e.g. `meta-overlayfs`). See [Metamodules](#metamodules).
 
 6. **Verify Installation**
    - Open KernelSU Manager and confirm root status
 
-### Device Selection Guide
-
-| Device Age | Kernel Version  | Recommended Variant   | Primary Benefits                       |
-| ---------- | --------------- | --------------------- | -------------------------------------- |
-| 2021+      | 5.10+ (GKI 2.0) | **KernelSU Official** | Maximum stability, official support    |
-| 2018–2021  | 4.4–6.6         | **KernelSU-Next**     | Enhanced features, broad compatibility |
-| 2018–2021+  | 4.4–6.6         | **Wild KSU**          | Customization & root hiding focus      |
-| Pre-2018   | 3.4+ (non-GKI)  | **SukiSU-Ultra**      | Legacy support, KPM, built-in SUSFS    |
-
-### Essential First Steps
-
-After successful installation:
-
-1. **Install Metamodule**: Choose and install a [metamodule](#understanding-metamodules) (meta-overlayfs recommended for most users)
-2. **Configure App Profiles**: Set up [App Profiles](https://kernelsu.org/guide/app-profile.html) for granular root permission management
-3. **Install Module Manager**: Use [MMRL](https://github.com/MMRLApp/MMRL) for easier module management
-4. **Setup Root Hiding**: Install SuSFS module for banking/payment app compatibility
-5. **Join Community**: Connect with [Telegram community](https://t.me/KernelSU_group) for support and updates
-6. **Create Backup**: Make a backup of your patched boot image for recovery
-
-<div align="right">
-<a href="#awesome-kernelsu">⬆ Back to Top</a>
-</div><br>
-
 ## Installation Modes
 
-KernelSU supports two installation modes on GKI-compatible devices, each with distinct advantages.
+On GKI devices KernelSU historically supports two modes. The official guide recommends:
 
-### GKI Mode
+- **LKM**- for phones.
+- **GKI**- for emulators, WSA, and Waydroid.
 
-**How it works:** Replaces device's original kernel with KernelSU Generic Kernel Image.
+### LKM (Loadable Kernel Module)
+
+Loads KernelSU as a kernel module without replacing the original kernel.
+
+- Keeps the stock kernel and manufacturer optimizations.
+- Updates and OTA can be done in-app (including "install to inactive slot").
+- Does not replace the boot partition, so it does not trigger AVB.
+- Can be temporarily uninstalled without a reboot.
+- Patches the **ramdisk**- on Android 13+ devices this means the **`init_boot`** partition, not `boot`.
+
+### GKI (Generic Kernel Image)
+
+Replaces the original kernel with a GKI image.
+
+- Works without official firmware, as long as the **KMI** matches.
+- Useful for devices where LKM cannot work (e.g. Samsung devices with KNOX enabled).
 
 > [!NOTE]
-> **Official KernelSU dropped GKI *image* mode support in v3.0** (the build guide is now archival) and recommends LKM via [Ylarod/ddk](https://github.com/Ylarod/ddk). Forks (KernelSU-Next, Wild KSU, SukiSU-Ultra) still actively ship GKI builds. Note: if both GKI and LKM are present, GKI takes priority and LKM is ignored.
+> Since v3.0, official KernelSU has **dropped GKI image builds** (the [build guide](https://kernelsu.org/guide/how-to-build.html) is now archival) and recommends building the LKM with [Ylarod/ddk](https://github.com/Ylarod/ddk). Official releases ship LKM modules and the Manager, not `boot.img` files. Forks (KernelSU-Next, SukiSU-Ultra, etc.) still provide GKI builds.
 
-**Advantages:**
+<details>
+<summary>Click here for quick comparison</summary>
 
-- ✅ Universal GKI device compatibility
-- ✅ Works on Samsung Knox devices
-- ✅ Independent of firmware updates
-- ✅ Better for heavily modified devices
-- ✅ More stable on custom ROMs
+| **GKI Mode**                            | **LKM Mode**                                |
+| --------------------------------------- | ------------------------------------------- |
+| Universal GKI device compatibility      | Preserves original kernel and optimizations |
+| Works on Samsung Knox devices           | Easy in-app updates                         |
+| Independent of firmware updates         | OTA-friendly                                |
+| Better for heavily modified devices     | No AVB/dm-verity issues                     |
+| More stable on custom ROMs              | Can disable without reboot                  |
+| Loses manufacturer kernel optimizations | Preserves manufacturer tuning               |
+| Requires manual fastboot flashing       | Requires official firmware                  |
+| Must reflash after major updates        | May not work on all devices                 |
+|                                         | Less compatible with modified firmware      |
 
-**Disadvantages:**
+</details><br>
 
-- ❌ Loses manufacturer kernel optimizations
-- ❌ Requires manual fastboot flashing
-- ❌ Must reflash after major updates
+> [!TIP]
+> **Full instructions:** [Official installation guide](https://kernelsu.org/guide/installation.html)- including KMI and security-patch-level explanations.
 
-**Best for:** Samsung devices, emulators, WSA, custom ROMs, devices without official firmware
+## Metamodules
 
----
-
-### LKM Mode (Loadable Kernel Module)
-
-**How it works:** Loads KernelSU as a kernel module without replacing the kernel.
-
-**Advantages:**
-
-- ✅ Preserves original kernel and optimizations
-- ✅ Easy in-app updates
-- ✅ OTA-friendly (install to inactive slot)
-- ✅ No AVB/dm-verity issues
-- ✅ Can disable without reboot
-- ✅ Better performance (keeps manufacturer tuning)
-
-**Disadvantages:**
-
-- ❌ Requires official firmware
-- ❌ May not work on all devices
-- ❌ Less compatible with modified firmwares
-
-**Best for:** Most modern phones with stock/near-stock firmware
-
----
-
-### Which Mode to Choose?
-
-| Scenario | Recommended Mode | Reason |
-|----------|------------------|--------|
-| Stock firmware phones | **LKM** | Preserves optimizations, easy updates |
-| Samsung devices | **GKI** | Knox compatibility |
-| Custom ROMs | **GKI** | Better modified firmware support |
-| Emulators/WSA | **GKI** | Universal compatibility |
-| Heavily modified | **GKI** | More reliable |
-
-> **Detailed Guide**: See the [complete installation modes comparison](https://awesome-android-root.pages.dev/rooting-guides/kernelsu-guide#installation-modes) for more information.
-
-<div align="right">
-<a href="#awesome-kernelsu">⬆ Back to Top</a>
-</div><br>
-
-## Understanding Metamodules
+A **metamodule** is a special module that provides the module *mounting* infrastructure. Since v3.0, official KernelSU no longer mounts modules itself- it delegates mounting to a metamodule.
 
 > [!IMPORTANT]
-> **CRITICAL CHANGE IN KERNELSU 3.0+**: KernelSU no longer has built-in module mounting. Fresh installations **REQUIRE** a metamodule for modules that modify `/system` files to function - without one, such modules install but are **NOT** mounted. Modules that only use scripts, `sepolicy`, or `system.prop` still work without a metamodule.
+> A metamodule is needed **only for modules that modify `/system` files** (the `system` directory). Modules that only use scripts, `sepolicy`, or `system.prop` work without one. Only **one** metamodule can be installed at a time.
 
-### What is a Metamodule?
+Note the scope: metamodule-based mounting applies to **official KernelSU** (v3.0+) and **ReSukiSU**. **KernelSU-Next** and **SukiSU-Ultra** still ship built-in mounting (Magic Mount / OverlayFS).
 
-A **metamodule** is a special type of KernelSU module that provides core infrastructure for the module system. Unlike regular modules that modify system files, metamodules control **how** regular modules are installed and mounted.
+### Available metamodules
 
-> [!NOTE]
-> This now applies across the ecosystem: official KernelSU, KernelSU-Next, Wild KSU, **and** SukiSU-Ultra / ReSukiSU all delegate module mounting to the installed metamodule. Browse verified metamodules and modules at the **[Official Module Repository](https://modules.kernelsu.org)**.
+| Metamodule | Mounting | Notes |
+|------------|----------|-------|
+| [**meta-overlayfs**](https://github.com/KernelSU-Modules-Repo/meta-overlayfs) | OverlayFS | **Official reference implementation**- recommended starting point. Also on the [official module repository](https://modules.kernelsu.org/module/meta-overlayfs). |
+| [**mountify**](https://github.com/backslashxx/mountify) | OverlayFS | Third-party; supports APatch/Magisk too. |
+| [**meta-hybrid_mount**](https://github.com/Hybrid-Mount/meta-hybrid_mount) | OverlayFS + Magic Mount | Third-party; dual-engine with auto-fallback ("Hybrid Mount"). |
 
-### Why Metamodules?
-
-The metamodule architecture provides several key benefits:
-
-- **🛡️ Reduced Detection Surface**: KernelSU itself doesn't perform mounts, reducing detection vectors for banking apps
-- **🔧 Flexibility**: Users can choose mounting implementation (OverlayFS, Magic Mount, hybrid)
-- **💪 Stability**: Core KernelSU remains stable while mounting implementations can evolve independently
-- **🚀 Innovation**: Community can develop alternative mounting strategies
-
-### Single Metamodule Constraint
-
-> [!WARNING]
-> **Only ONE metamodule can be installed at a time**. To switch metamodules:
-> 1. Uninstall all regular modules
-> 2. Uninstall current metamodule
-> 3. Reboot device
-> 4. Install new metamodule
-> 5. Reinstall regular modules
-
-### Available Metamodules
-
-| Metamodule | Description | Best For |
-|------------|-------------|----------|
-| [**meta-overlayfs**](https://github.com/KernelSU-Modules-Repo/meta-overlayfs) | Official reference implementation using OverlayFS | Most users, standard setup, recommended starting point |
-| [**mountify**](https://github.com/backslashxx/mountify) | OverlayFS with tmpfs/ext4 sparse support, cross-platform (APatch/Magisk) | Reduced detection, multi-root support, advanced users |
-| [**meta-hybrid_mount**](https://github.com/YuzakiKokuban/meta-hybrid_mount) | Dual engine (OverlayFS + Magic Mount) with conflict monitor, diagnostics & auto-fallback | Maximum compatibility, stealth mode |
 
 ### Installing Your First Metamodule
 
@@ -243,23 +166,18 @@ The metamodule architecture provides several key benefits:
 
 The active metamodule will be displayed in your module list with a special designation.
 
-### Metamodule Compatibility
+> [!TIP]
+> Browse the full, current list of metamodules and modules at the **[official module repository](https://modules.kernelsu.org/)**.
 
-With a metamodule installed:
+**Details & switching procedure:** [Official metamodule guide](https://kernelsu.org/guide/metamodule.html)
 
-- ✅ Most Magisk modules work (when using a compatible metamodule)
-- ⚠️ Zygisk modules require [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext) or [ReZygisk](https://github.com/PerformanC/ReZygisk)
-- ✅ Growing native KernelSU module support
-- ✅ Module metadata stored in `/data/adb/modules/`
-- ✅ Module content stored in `/data/adb/metamodule/mnt/` (with meta-overlayfs)
 
-> **Complete Guide**: For detailed metamodule information, mounting strategies, and troubleshooting, visit the [KernelSU Managing Modules Guide](https://awesome-android-root.pages.dev/rooting-guides/kernelsu-guide#managing-modules)
-
-<div align="right">
-<a href="#awesome-kernelsu">⬆ Back to Top</a>
-</div><br>
 
 ## KernelSU Variants
+
+> [!WARNING]
+> Everything below **Official KernelSU** is a **community fork/derivative**, not an official project. Features of one variant do not apply to the others.
+
 
 ### Official KernelSU
 
@@ -273,35 +191,27 @@ With a metamodule installed:
 <details open>
 <summary><b>📋 View Details</b></summary>
 
-**Best For:** Modern flagship devices (2021+) prioritizing stability and official support
+- **Target:** GKI 2.0 devices (kernel 5.10+). WSA, ChromeOS, and container-based Android are supported.
+- **Architectures:** `arm64-v8a` and `x86_64`.
+- **Module mounting:** metamodule-based (v3.0+).
+- **Non-GKI:** dropped since v1.0 (last version `v0.9.5`); the [integration guide](https://kernelsu.org/guide/how-to-integrate-for-non-gki.html) is archival.
+- **Notable changes:** seccomp+ioctl supercall (v2.0), `selinux hide` (v3.2.x), optional "jailbreak" mode via Magica (v3.2+).
 
-**✨ Key Features:**
-- Official GKI 2.0 support (kernel 5.10+) via **LKM mode** (GKI *image* mode deprecated since v3.0 - build LKM with [Ylarod/ddk](https://github.com/Ylarod/ddk))
-- Older kernels (4.14+) supported with manual compilation (archival, unmaintained)
-- **seccomp + ioctl** hooks (v2.0+) reduce side-channel detection
-- **Magica** jailbreak mode (v3.2+) for deeper system access
-- Official curated [module repository](https://modules.kernelsu.org) with security review
-- Battle-tested stability, regular updates by the original author
-- Translations now handled via LLM (no longer Weblate)
+> [!CAUTION]
+> Recent kernel versions introduced a breaking change that can make KernelSU fail or **kernel-panic on `x86_64`**. Check the [official repository](https://github.com/tiann/KernelSU) for current status.
 
-**Technical Specs:**
-- **Kernel Support:** 5.10+ (GKI 2.0 official); 4.14+ with manual build (archival)
-- **Android Version:** 12+ (official GKI); 10+ (community builds)
-- **Architecture:** arm64-v8a, x86_64 ⚠️ *(x86_64 support is being dropped - check website)*
-- **Special Support:** WSA, ChromeOS, container-based Android
-
-**🔗 Resources:**
-- [📥 Download Manager APK](https://github.com/tiann/KernelSU/releases/latest)
-- [📖 Official Documentation](https://kernelsu.org/)
-- [📦 Official Module Repository](https://modules.kernelsu.org)
-- [💬 Telegram Channel](https://t.me/KernelSU)
-- [🐛 Report Issues](https://github.com/tiann/KernelSU/issues)
+**Resources:**
+- [Download Manager APK](https://github.com/tiann/KernelSU/releases/latest)
+- [Official Documentation](https://kernelsu.org/)
+- [Official Module Repository](https://modules.kernelsu.org)
+- [Telegram Channel](https://t.me/KernelSU)
+- [Report Issues](https://github.com/tiann/KernelSU/issues)
 
 </details>
 
----
 
 ### KernelSU-Next
+
 
 [![GitHub](https://img.shields.io/badge/GitHub-KernelSU--Next-blue?logo=github&style=flat-square)](https://github.com/KernelSU-Next/KernelSU-Next)
 [![Documentation](https://img.shields.io/badge/Docs-kernelsu--next.github.io-green?style=flat-square)](https://kernelsu-next.github.io/webpage/)
@@ -313,78 +223,20 @@ With a metamodule installed:
 <details>
 <summary><b>📋 View Details</b></summary>
 
-**Best For:** Power users wanting cutting-edge features and broader device compatibility
+- **Kernel support:** 4.4–6.6 (non-GKI 4.x–5.4 LTS; GKI 5.10–6.6; 6.6+ experimental).
+- **Module mounting:** built-in **Magic Mount + OverlayFS**, switchable from settings.
+- **Features:** module backup & restore, auto-updates, bulk install, hide hosts (unmount), SuSFS controls, SU-allowlist backup.
+- **Architectures:** `arm64-v8a`, `armeabi-v7a`, `x86_64` (same `x86_64` panic caveat as upstream).
+- **Community device list:** [Unofficially supported devices](https://kernelsu-next.github.io/webpage/pages/devices.html)
 
-**✨ Enhanced Features:**
-- Extended kernel support (4.4–6.6, GKI & non-GKI; 6.6+ experimental)
-- **Dynamic module mount** - switch between Magic Mount and OverlayFS with a single toggle
-- **Module backup & restore** - recover accidentally uninstalled modules
-- **Auto-updates** - Manager app updates itself; **bulk install** multiple modules at once
-- **Hide hosts** - block adblock detection via app-profile unmount
-- Material You UI with dynamic theming
-- Configurable OverlayFS (adjustable sparse image size, default 6GB)
-- SuSFS controls (KPROBES hooks hiding mode)
-- WebUI X framework for advanced module interfaces
-- Crowdin translation support; very active development
-
-> [!WARNING]
-> **x86_64 Known Issue**: Recent kernel versions cause KernelSU-Next to fail and potentially trigger a kernel panic on x86_64. Check the [official website](https://kernelsu-next.github.io/webpage/) for current status.
-
-**Technical Specs:**
-- **Kernel Support:** 4.4–6.6 (Non-GKI 4.4–5.4 LTS, 3.x experimental; GKI 5.10–6.6, 6.6+ experimental)
-- **Android Version:** 9+
-- **Architecture:** arm64-v8a, armeabi-v7a, x86_64 ⚠️
-- **Update Frequency:** Very active development
-
-**🔗 Resources:**
-- [📥 Download Manager APK](https://github.com/KernelSU-Next/KernelSU-Next/releases)
-- [📖 Official Website](https://kernelsu-next.github.io/webpage/)
-- [📱 Supported Devices](https://kernelsu-next.github.io/webpage/pages/devices.html)
-- [💬 Telegram Community](https://t.me/KernelSU_Next)
-- [🐛 Report Issues](https://github.com/KernelSU-Next/KernelSU-Next/issues)
+**Resources:**
+- [Download Manager APK](https://github.com/KernelSU-Next/KernelSU-Next/releases)
+- [Official Website](https://kernelsu-next.github.io/webpage/)
+- [Supported Devices](https://kernelsu-next.github.io/webpage/pages/devices.html)
+- [Telegram Community](https://t.me/KernelSU_Next)
+- [Report Issues](https://github.com/KernelSU-Next/KernelSU-Next/issues)
 
 </details>
-
----
-
-### Wild KSU
-
-[![GitHub](https://img.shields.io/badge/GitHub-Wild__KSU-blue?logo=github&style=flat-square)](https://github.com/WildKernels/Wild_KSU)
-[![Release](https://img.shields.io/github/v/release/WildKernels/Wild_KSU?style=flat-square)](https://github.com/WildKernels/Wild_KSU/releases)
-
-> Customization and root hiding focused fork built on KernelSU-Next.
-
-<details>
-<summary><b>📋 View Details</b></summary>
-
-**Best For:** Users wanting enhanced customization, root hiding, and SUSFS integration
-
-**✨ Key Features:**
-- Fork of KernelSU-Next with customization and root hiding focus
-- Integrated SUSFS support (latest: v1.5.12 in GKI builds)
-- Multi-manager support (WKSU, KernelSU-Next compatible)
-- Scope-minimized manual hooks (v1.4)
-- Extended kernel support (4.4–6.6, GKI & non-GKI)
-- Multi-architecture support (arm64, arm, x86_64)
-- GKI and LKM mode support
-- Active development with nightly builds
-- Crowdin translation support
-- Baseband-guard (BBG) support in GKI builds
-
-**Technical Specs:**
-- **Kernel Support:** 4.4–6.6 (Non-GKI & GKI)
-- **Android Version:** 9+
-- **Architecture:** arm64-v8a, armeabi-v7a, x86_64
-- **Status:** Active development - test before daily driving
-
-**🔗 Resources:**
-- [📥 Download Manager APK](https://github.com/WildKernels/Wild_KSU/releases/latest)
-- [📖 Documentation](https://kernelsu.org/guide/what-is-kernelsu.html)
-- [🐛 Report Issues](https://github.com/WildKernels/Wild_KSU/issues)
-
-</details>
-
----
 
 ### SukiSU-Ultra
 
@@ -399,38 +251,20 @@ With a metamodule installed:
 <details>
 <summary><b>📋 View Details</b></summary>
 
-**Best For:** Users requiring KPM support, built-in root hiding, and wide device compatibility including legacy non-GKI devices
 
-**✨ Unique Features:**
-- GKI 2.0 support (5.10+) and non-GKI support (4.4+); 3.4–3.18 with backports
-- **KPM (Kernel Patch Module)** - run code in kernel space, inline-hook & syscall-table-hook (based on KernelPatch, KPM-only after removing KSU-redundant features)
-- Built-in SUSFS for root hiding (manageable without an extra module)
-- **Metamodule-based mounting** - like upstream, SukiSU now delegates module mounting to the installed metamodule (core no longer mounts)
-- LKM mode support on GKI devices
-- Enhanced Manager with SUSFS management panel, custom background, DPI adjustment
-- Next-gen WebUI via MMRL
-- Multi-architecture incl. **armeabi-v7a (bare)** - broader 32-bit ARM support than other variants
-- Crowdin translation support; actively maintained
+- **Kernel support:** non-GKI 4.4+; GKI 5.10+; 3.x (3.4–3.18) experimental.
+- **Module mounting:** built-in **Magic Mount**.
+- **KPM** (Kernel Patch Module) support- run code in kernel space (based on KernelPatch).
+- **SUSFS** management built into the Manager (the kernel still needs SUSFS patches).
+- **Architectures:** `arm64-v8a`, `armeabi-v7a` (bare), `x86_64` (some).
 
-**Technical Specs:**
-- **Latest:** v4.1.x (2026)
-- **Kernel Support:** 5.10+ (GKI official); 4.4+ (manual build); 3.4–3.18 (experimental backports)
-- **Android Version:** 7+ (non-GKI); 12+ (GKI official)
-- **Architecture:** arm64-v8a, armeabi-v7a (bare), x86_64 (some)
-- **Update Frequency:** Active community-driven development
-
-> [!NOTE]
-> GKI method is recommended for Xiaomi, Redmi, and Samsung. It is **not suitable** for Meizu, OnePlus, Realme, and Oppo (these require custom builds).
-
-**🔗 Resources:**
-- [📥 Download Manager APK](https://github.com/SukiSU-Ultra/SukiSU-Ultra/releases)
-- [📖 Official Website](https://sukisu.org/)
-- [📚 Installation Guide](https://sukisu.org/guide/installation)
-- [💬 Telegram Group](https://t.me/Sukiksu)
+**Resources:**
+- [Download Manager APK](https://github.com/SukiSU-Ultra/SukiSU-Ultra/releases)
+- [Official Website](https://sukisu.org/)
+- [Installation Guide](https://sukisu.org/guide/installation)
+- [Telegram Group](https://t.me/Sukiksu)
 
 </details>
-
----
 
 ### ReSukiSU
 
@@ -442,51 +276,47 @@ With a metamodule installed:
 <details>
 <summary><b>📋 View Details</b></summary>
 
-**Best For:** Users in the SukiSU ecosystem wanting multi-manager flexibility
+- **Module mounting:** metamodule-based.
+- **Multi-manager:** works with the KernelSU, MKSU, RKSU, and SukiSU managers.
+- **Kernel support:** GKI 2.0 (5.10+); 3.4+ with manual build.
+- **Releases:** pre-release/CI builds so far (latest tag `v4.2.0-rc1`)- check the repository.
 
-**✨ Key Features:**
-- **Multi-manager support** - works with Official KernelSU, RKSU, MKSU, and SukiSU managers
-- **Metamodule-based** module system (pluggable, systemless)
-- KPM support (inherited from SukiSU-Ultra)
-- Built-in SUSFS management
-- Expanding APatch compatibility (work in progress)
-
-**Technical Specs:**
-- **Kernel Support:** 5.10+ (GKI 2.0); 4.4+/3.4+ with manual build & backports
-- **Architecture:** arm64-v8a, armeabi-v7a, x86_64
-- **Status:** Active development - test before daily driving
-
-**🔗 Resources:**
-- [📥 Releases](https://github.com/ReSukiSU/ReSukiSU/releases)
-- [🐛 Report Issues](https://github.com/ReSukiSU/ReSukiSU/issues)
+**Resources:**
+- [Download Manager APK](https://github.com/SukiSU-Ultra/SukiSU-Ultra/releases)
+- [Official Website](https://sukisu.org/)
+- [Installation Guide](https://sukisu.org/guide/installation)
+- [Telegram Group](https://t.me/Sukiksu)
 
 </details>
 
-<div align="right">
-<a href="#awesome-kernelsu">⬆ Back to Top</a>
-</div><br>
+### Wild KSU- archived
 
----
+> [!NOTE]
+> The **Wild KSU** fork ([WildKernels/Wild_KSU](https://github.com/WildKernels/Wild_KSU)) is **archived** (last release v3.1.2). It is no longer maintained as a root variant. The **WildKernels** team still ships KernelSU/SUSFS device kernels- see [Device Kernels](#device-kernels).
 
-### Compatibility Matrix
+### Comparison
 
-| Feature | Official KernelSU | KernelSU-Next | Wild KSU | SukiSU-Ultra | ReSukiSU |
-|---------|-------------------|---------------|----------|--------------|----------|
-| **Kernel Support** | 5.10+ (GKI 2.0); 4.14+ manual | 4.4–6.6 | 4.4–6.6 | 5.10+ GKI; 4.4+ manual; 3.x exp. | 5.10+ GKI; 3.4+ manual |
-| **Android Version** | 12+ (GKI); 10+ community | 9+ | 9+ | 7+ | 7+ |
-| **Architecture** | arm64, x86_64 ⚠️ | arm64, arm, x86_64 ⚠️ | arm64, arm, x86_64 | arm64, arm (bare), x86_64 (partial) | arm64, arm, x86_64 |
-| **Installation Modes** | LKM (GKI image deprecated) | GKI / LKM | GKI / LKM | GKI / LKM | GKI / LKM |
-| **Module System** | Metamodule (3.0+) | Metamodule + dual mount toggle | Metamodule (3.0+) | Metamodule | Metamodule |
-| **Module Backup/Restore** | ❌ | ✅ | ❌ | ❌ | ❌ |
-| **Auto Updates** | ⚠️ LKM only | ✅ | ✅ Nightly | ⚠️ Manual | ⚠️ Manual |
-| **Root Hiding** | Metamodule-based | Advanced (unmount) | SUSFS integrated | SuSFS built-in | SuSFS built-in |
-| **KPM Support** | ❌ | ❌ | ❌ | ✅ | ✅ |
-| **Multi-Manager** | ❌ | ❌ | ✅ (WKSU/Next) | ❌ | ✅ (KSU/RKSU/MKSU/Suki) |
-| **UI/UX** | Material 3 + Magica | Material You | Material You | Enhanced + WebUI | Enhanced |
-| **Legacy Support** | ❌ | ⚠️ Limited | ⚠️ Limited | ✅ Extensive | ✅ Extensive |
-| **Best For** | Modern devices | Power users | Root hiding | KPM / legacy / hiding | Multi-manager setups |
+| Feature                   | Official KernelSU             | KernelSU-Next                  | SukiSU-Ultra                                     | ReSukiSU               |
+| ------------------------- | ----------------------------- | ------------------------------ | ------------------------------------------------ | ---------------------- |
+| **Status**                | Official, active              | Active fork                    | Active fork                                      | Active fork            |
+| **Kernel support**        | GKI 2.0 (5.10+); 4.14+ manual | 4.4–6.6                        | 5.10+ GKI; 4.4+ non-GKI/manual; 3.x experimental | 5.10+ GKI; 3.4+ manual |
+| **Android version**       | 12+ (GKI); 10+ community      | 9+                             | 7+                                               | 7+                     |
+| **Module mounting**       | Metamodule (3.0+)             | Metamodule + dual mount toggle | Magic Mount / Metamodule                         | Metamodule             |
+| **KPM**                   | ❌                             | ❌                              | ✅                                                | ✅                      |
+| **SUSFS**                 | Via kernel patch              | Via kernel patch               | Built-in management                              | Built-in management    |
+| **Multi-manager**         | ❌                             | ❌                              | ❌                                                | ✅ (KSU/RKSU/MKSU/Suki) |
+| **Architectures**         | arm64, x86_64                 | arm64, arm, x86_64             | arm64, arm, x86_64 (some/partial)                | arm64, arm, x86_64     |
+| **Installation modes**    | LKM (GKI image deprecated)    | GKI / LKM                      | GKI / LKM                                        | GKI / LKM              |
+| **Module backup/restore** | ❌                             | ✅                              | ❌                                                | ❌                      |
+| **Auto updates**          | ⚠️ LKM only                   | ✅                              | ⚠️ Manual                                        | ⚠️ Manual              |
+| **Root hiding**           | Metamodule-based              | Advanced (unmount)             | SUSFS built-in                                   | SUSFS built-in         |
+| **UI/UX**                 | Material 3 + Magica           | Material You                   | Enhanced + WebUI                                 | Enhanced               |
+| **Legacy support**        | ❌                             | ⚠️ Limited                     | ✅ Extensive                                      | ✅ Extensive            |
+| **Best for**              | Modern devices                | Power users                    | KPM / legacy / hiding                            | Multi-manager setups   |
 
-> ⚠️ x86_64: Both KernelSU and KernelSU-Next have known breaking changes on recent x86_64 kernels (official is dropping x86_64 support). Check the respective project websites for current status.
+> [!NOTE]
+> SUSFS is a **separate** kernel-patch addon ([gitlab.com/simonpunk/susfs4ksu](https://gitlab.com/simonpunk/susfs4ksu))- it is not part of KernelSU itself. "Built-in management" means the Manager can control SUSFS on a SUSFS-patched kernel; it does not bundle the kernel patches.
+
 
 ### Which Variant Should You Choose?
 
@@ -539,1062 +369,83 @@ With a metamodule installed:
 </tr>
 </table>
 
-<div align="right">
+## Modules & Tools
 
-[⬆ Back to Top](#awesome-kernelsu)
+> The primary source for modules is the **[official module repository](https://modules.kernelsu.org/)**.
 
-</div>
+### Zygisk & frameworks
 
----
+KernelSU has no built-in Zygisk; use a standalone implementation for Zygisk modules.
 
-## Comparison
+- [**ZygiskNext**](https://github.com/Dr-TSNG/ZygiskNext)- standalone Zygisk implementation.
+- [**ReZygisk**](https://github.com/PerformanC/ReZygisk)- open-source, transparent Zygisk implementation.
+- [**LSPosed**](https://github.com/LSPosed/LSPosed)- Xposed framework (requires Zygisk).
 
-### KernelSU vs Alternative Root Solutions
+### Module managers
 
-| Feature | KernelSU | Magisk | APatch |
-| :--- | :--- | :--- | :--- |
-| **Architecture** | Kernel-level | Userspace | Kernel-level |
-| **Module System** | Metamodule (3.0+) | Magic Mount | OverlayFS |
-| **Installation Mode** | LKM (GKI image deprecated) | Boot Patch | Boot Patch |
-| **Kernel Support** | 5.10+ (GKI 2.0); 4.14+ manual | Any | 3.18–6.1 |
-| **arch Support** | arm64, x86_64 ⚠️ | Universal | arm64 |
-| **Security Model** | App Profile | Root Toggle | SuperKey |
-| **Root Hiding** | Metamodule-based | Deprecated | Kernel-level |
-| **KPM Support** | ❌ | ❌ | ✅ |
-| **Update Method** | Manual / LKM | OTA | Manual |
-| **System Modification** | Zero | Minimal | Zero |
-| **OTA Compatibility** | Excellent | Good | Excellent |
-| **Module Mounting** | Requires Metamodule | Built-in | Built-in |
-| **Development Status** | Active | Active | Active |
-| **Learning Curve** | Medium | Easy | Hard |
-| **Community Size** | Large | Very Large | Small |
+- [**MMRL**](https://github.com/MMRLApp/MMRL)- modern module manager with a built-in repository, updates, backup/restore, and WebUI support.
 
-### Advantages of KernelSU Ecosystem
+### Root hiding
 
-<details>
-<summary><b>✨ Click to expand: Detailed Advantages & Benefits</b></summary>
-
-#### Security Benefits
-
-1. **Kernel-Level Isolation**: Root access operates in kernel space, preventing userspace tampering
-2. **App Profile System**: Granular per-application permission control with temporal restrictions
-3. **Hardware-Level Protection**: Utilizes ARM TrustZone and hardware security features
-4. **Verified Boot Compatible**: Maintains system integrity verification where possible
-5. **Advanced Hiding**: Kernel-level hiding is harder to detect than userspace methods
-
-#### Technical Advantages
-
-1. **Zero System Modification**: No changes to system partitions, preserving OTA capabilities
-2. **OverlayFS Efficiency**: More efficient than bind mounting with better performance
-3. **Future-Proof Design**: Built for modern Android security models and requirements
-4. **Developer-Friendly**: Clean APIs and comprehensive documentation
-5. **Modular Architecture**: Easy to extend and customize
-
-#### Ecosystem Maturity
-
-1. **Multiple Derivatives**: Options for different use cases and device compatibility
-2. **Active Development**: Regular updates and feature additions across all variants
-3. **Growing Module Repository**: Expanding collection of high-quality modules
-4. **Community Support**: Knowledgeable community with expert developers
-5. **Documentation**: Comprehensive guides in multiple languages
-
-</details>
-
-### Migration Considerations
-
-<details>
-<summary><b>🔄 Click to expand: Migration from Magisk or Legacy Solutions</b></summary>
-
-#### From Magisk to KernelSU
-
-**Advantages:**
-- Enhanced security and hiding capabilities
-- Better performance with OverlayFS
-- Future-proof architecture for modern Android
-- Maintained OTA compatibility
-
-**Considerations:**
-- Module compatibility may require updates
-- Different app profile management approach
-- Learning curve for new concepts (especially metamodules)
-- Some Magisk-specific features unavailable
-
-**Migration Steps:**
-1. Backup all data and current setup
-2. Document installed modules and configurations
-3. Uninstall Magisk completely
-4. Flash stock boot image
-5. Install KernelSU using preferred method
-6. Install a metamodule (required for KernelSU 3.0+)
-7. Reinstall compatible modules
-8. Configure app profiles
-
-#### From SuperSU/Legacy Solutions
-
-**Essential Steps:**
-- Complete system restoration recommended
-- Fresh start with modern practices
-- Understanding of new security model
-- Backup and data migration planning
-
-**Benefits:**
-- Dramatically improved security
-- Modern Android compatibility
-- Systemless approach
-- Active development and support
-
-</details>
-
-
-<div align="right">
-<a href="#awesome-kernelsu">⬆ Back to Top</a>
-</div><br>
-
-
----
-
-## Prebuilt Kernels
-
-Pre-built kernels save you from manual compilation and come optimized for specific devices. Browse by device manufacturer to find your perfect match.
-
-> [!IMPORTANT]
-> **Safety First:** Always verify kernel compatibility with your exact device model and Android version before flashing. Wrong kernels can cause bootloops or device damage.
-
-> [!TIP]
-> **Pro Tip:** Check each kernel's release page for device-specific builds, changelogs, and installation instructions. Many provide AnyKernel3 flashable zips for hassle-free installation.
-
-### Brand GKI Compatibility at a Glance
-
-| Brand | Generic GKI | Notes |
-|-------|-------------|-------|
-| **Samsung** | ✅ (GKI mode) | Knox tripped, but KernelSU works |
-| **Xiaomi / Redmi / POCO** | ✅ | GKI or custom builds |
-| **Google Pixel** | ✅ | Also see Sultan kernels |
-| **Motorola** | ✅ | GKI-compatible models |
-| **OnePlus / Oppo / Realme** | ⚠️ Custom kernel | Generic GKI generally not supported |
-| **Meizu** | ❌ Avoid GKI | Requires custom builds |
-
-### Quick Navigation
-
-Jump to your device manufacturer:
-- [Official GKI](#-official-gki-builds)
-- [WildKernels](#wildkernels-multi-device)
-- [Xiaomi](#xiaomi-devices)
-- [Samsung](#samsung-devices)
-- [OnePlus](#oneplus-devices)
-- [Motorola](#motorola-devices)
-- [Google Pixel](#google-pixel-devices)
-- [Huawei](#huawei-devices)
-- [LG](#lg-devices)
-
----
-
-### 🏆 Official GKI Builds
-
-Official kernels from KernelSU project maintainers.
-
-<table>
-<tr>
-<td width="50%">
-
-**KernelSU Official GKI**
-
-![Kernel](https://img.shields.io/badge/Kernel-5.10+-blue?style=flat-square)
-![Android](https://img.shields.io/badge/Android-12+-green?style=flat-square)
-
-Official GKI builds for modern devices with GKI 2.0 support. Latest: v3.2.2
-
-**📥 Download:** [KernelSU Releases](https://github.com/tiann/KernelSU/releases)
-
-</td>
-<td width="50%">
-
-**KernelSU-Next**
-
-![Kernel](https://img.shields.io/badge/Kernel-4.4--6.6-blue?style=flat-square)
-![Android](https://img.shields.io/badge/Android-9+-green?style=flat-square)
-
-Enhanced builds with extended kernel support and extra features
-
-**📥 Download:** [KernelSU-Next Releases](https://github.com/KernelSU-Next/KernelSU-Next/releases)
-
-</td>
-</tr>
-<tr>
-<td width="50%">
-
-**Wild KSU**
-
-![Kernel](https://img.shields.io/badge/Kernel-4.4--6.6-blue?style=flat-square)
-![Android](https://img.shields.io/badge/Android-9+-green?style=flat-square)
-
-Customization and root hiding focused builds with SUSFS integration
-
-**📥 Download:** [Wild KSU Releases](https://github.com/WildKernels/Wild_KSU/releases)
-
-</td>
-<td width="50%">
-
-**SukiSU-Ultra**
-
-![Kernel](https://img.shields.io/badge/Kernel-3.4--6.6+-blue?style=flat-square)
-![Android](https://img.shields.io/badge/Android-7+-green?style=flat-square)
-
-GKI + non-GKI support with KPM and built-in SUSFS
-
-**📥 Download:** [SukiSU-Ultra Releases](https://github.com/SukiSU-Ultra/SukiSU-Ultra/releases)
-
-</td>
-</tr>
-</table>
-
----
-
-### WildKernels (Multi-Device)
-
-Premium quality kernels with KernelSU and SUSFS integration for multiple device families.
-
-| Kernel Series | Target Devices | Features | Repository |
-|---------------|----------------|----------|------------|
-| **Wild KSU** | All supported devices | Wild KSU + SUSFS + multi-manager support | [![GitHub](https://img.shields.io/badge/View-Repository-blue?style=flat-square&logo=github)](https://github.com/WildKernels/Wild_KSU) |
-| **GKI Series** | Modern GKI Devices | Wild KSU + SUSFS v1.5.12 + GKI 2.0 + BBG | [![GitHub](https://img.shields.io/badge/View-Repository-blue?style=flat-square&logo=github)](https://github.com/WildKernels/GKI_KernelSU_SUSFS) |
-| **Sultan Series** | Google Pixel Devices | KernelSU + SUSFS + Pixel Optimizations | [![GitHub](https://img.shields.io/badge/View-Repository-blue?style=flat-square&logo=github)](https://github.com/WildKernels/Sultan_KernelSU_SUSFS) |
-| **OnePlus Series** | OnePlus Devices | KernelSU + SUSFS + OxygenOS Tuned | [![GitHub](https://img.shields.io/badge/View-Repository-blue?style=flat-square&logo=github)](https://github.com/WildKernels/OnePlus_KernelSU_SUSFS) |
-
----
-
-### Xiaomi Devices
-
-<details>
-<summary><b>🔽 Click to expand Xiaomi device kernels</b></summary>
-
-<br>
-
-#### Redmi Series
-
-| Device Model | Codename | Kernel | Features | Links |
-|--------------|----------|---------|----------|-------|
-| **Redmi 9** | lancelot | 4.14 | KernelSU Next, SukiSU Ultra, SUSFS, MT6768 | [![GitHub](https://img.shields.io/badge/Download-blue?style=flat-square&logo=github)](https://github.com/Edhic1/kernel_KSu_Next_Lancelot) |
-| **Redmi Note 12 4G** | topaz/tapas | 5.15 | Smooth optimization, Custom ROM support | [![GitHub](https://img.shields.io/badge/Download-blue?style=flat-square&logo=github)](https://github.com/chickendrop89/device_xiaomi_gemstones-kernel) |
-| **Redmi Note 13 4G** | sapphire/sapphiren | 5.15 | Smooth optimization, Custom ROM support | [![GitHub](https://img.shields.io/badge/Download-blue?style=flat-square&logo=github)](https://github.com/chickendrop89/device_xiaomi_gemstones-kernel) |
-| **Redmi Note 12/13 4G** | topaz/sapphire | 5.15 | SukiSU Ultra, KPM, SUSFS v1.5.11, Baseband-guard | [![GitHub](https://img.shields.io/badge/Download-ZEPHARO-blue?style=flat-square&logo=github)](https://github.com/topnotchfreaks/kernel_msm-5.15/releases/tag/ZEPHARO) |
-| **Redmi Note 12/13 4G** | topaz/sapphire | 5.15 | SukiSU Ultra, KPM, SUSFS, LTO | [![GitHub](https://img.shields.io/badge/Download-YASK-blue?style=flat-square&logo=github)](https://github.com/topnotchfreaks/kernel_msm-5.15/releases/tag/YASK) |
-| **Redmi Pad SE** | xun | 5.15 | SukiSU Ultra, KPM, SUSFS, LTO | [![GitHub](https://img.shields.io/badge/Download-YASK-blue?style=flat-square&logo=github)](https://github.com/topnotchfreaks/kernel_msm-5.15/releases/tag/YASK) |
-| **Redmi 15 / POCO M7 4G** | creek | 5.15 | SukiSU Ultra, KPM, SUSFS, LTO | [![GitHub](https://img.shields.io/badge/Download-YASK-blue?style=flat-square&logo=github)](https://github.com/topnotchfreaks/kernel_msm-5.15/releases/tag/YASK) |
-| **Redmi 4X** | santoni | 4.9 | KernelSU, AOSP Compatible | [![GitHub](https://img.shields.io/badge/Download-blue?style=flat-square&logo=github)](https://github.com/zeta96/L_soul_santoni_msm4.9) |
-| **Redmi Note 12 5G / POCO X5** | stone | 5.4 | KernelSU, APatch compatible | [![GitHub](https://img.shields.io/badge/Download-blue?style=flat-square&logo=github)](https://github.com/gawasvedraj/KernelOwO) |
-
-</details>
-
----
-
-### Samsung Devices
-
-<details>
-<summary><b>🔽 Click to expand Samsung device kernels</b></summary>
-
-<br>
-
-#### Galaxy S Series
-
-| Device Model | Codename | Kernel | Features | Links |
-|--------------|----------|---------|----------|-------|
-| **Galaxy S25** | S93XX (sm8750) | 6.6 | KernelSU, MKSU, SukiSU-Ultra, LKM mode | [![GitHub](https://img.shields.io/badge/Download-Kokuban-blue?style=flat-square&logo=github)](https://github.com/YuzakiKokuban/android_kernel_samsung_sm8750) |
-| **Galaxy S25** | S93XX (sm8750) | 6.6 | KernelSU LKM compatible | [![GitHub](https://img.shields.io/badge/Download-GKI-blue?style=flat-square&logo=github)](https://github.com/fei-ke/android_kernel_samsung_sm8750) |
-| **Galaxy S24** | S92XX (sm8650) | 6.1 | KernelSU, MKSU, SukiSU-Ultra, LKM mode | [![GitHub](https://img.shields.io/badge/Download-blue?style=flat-square&logo=github)](https://github.com/YuzakiKokuban/android_kernel_samsung_sm8650) |
-| **Galaxy S23** | S91XX (sm8550) | 5.15 | KernelSU, MKSU, SukiSU-Ultra, LKM mode | [![GitHub](https://img.shields.io/badge/Download-blue?style=flat-square&logo=github)](https://github.com/YuzakiKokuban/android_kernel_samsung_sm8550_S23) |
-| **Galaxy S20** | x1q/y2q/z3q (sm8250) | 4.19 | KernelSU-Next, SuSFS v1.5.9 | [![GitHub](https://img.shields.io/badge/Download-blue?style=flat-square&logo=github)](https://github.com/GoRhanHee/kernel_samsung_sm8250) |
-| **Galaxy S10 / Note 10** | Exynos 9820 | 4.14 | KernelSU-Next v3.0.0, SuSFS v1.5.11, Ramdisk support | [![GitHub](https://img.shields.io/badge/Download-blue?style=flat-square&logo=github)](https://github.com/GoRhanHee/exynos9820_samsung_Kernel) |
-
-#### Galaxy A Series
-
-| Device Model | Codename | Kernel | Features | Links |
-|--------------|----------|---------|----------|-------|
-| **Galaxy A32 4G** | A325F | 4.14 | SukiSU-Ultra v3.1.8, SuSFS v1.5.5, Android 15/16, OneUI 7 | [![XDA](https://img.shields.io/badge/Download-XDA-orange?style=flat-square&logo=xda-developers)](https://xdaforums.com/t/closed-kernel-sukisu-ultra-for-galaxy-a32-4g-a325x-unofficial.4754691/) |
-| **Galaxy A15 4G** | SM-A155F | 5.10 | KernelSU-Next, SuSFS 1.5.9 | [![GitHub](https://img.shields.io/badge/Download-blue?style=flat-square&logo=github)](https://github.com/ReeViiS69/sm155f) |
-| **Galaxy A12** | SM-A127F | 4.14 | KernelSU-Next, SUSFS v1.5.7, Wireguard, SELinux toggle | [![XDA](https://img.shields.io/badge/Download-XDA-orange?style=flat-square&logo=xda-developers)](https://xdaforums.com/t/kernel-a127f-project-xed-kernelsu-next-susfs.4735546/) |
-
-#### Galaxy M Series & Tablets
-
-| Device Model | Codename | Kernel | Features | Links |
-|--------------|----------|---------|----------|-------|
-| **Galaxy Tab S10 Series** | SM-X82XX/X92XX (mt6989) | 6.1 | KernelSU, MKSU, SukiSU-Ultra, LKM variants | [![GitHub](https://img.shields.io/badge/Download-blue?style=flat-square&logo=github)](https://github.com/YuzakiKokuban/android_kernel_samsung_mt6989_TabS10) [![XDA](https://img.shields.io/badge/XDA-Thread-orange?style=flat-square&logo=xda-developers)](https://xdaforums.com/t/kernel-root-oneui8-0-tab-s10-series-kernel-with-kernelsu.4739268/) |
-| **Galaxy M30s** | M307F | 4.9 | KernelSU 0.9.5 (Non-GKI) | [![GitHub](https://img.shields.io/badge/Download-blue?style=flat-square&logo=github)](https://github.com/JuiIm/M30s-custom-kernel-M307f---KernelSU-support) |
-
-</details>
-
----
-
-### OnePlus Devices
-
-<details>
-<summary><b>🔽 Click to expand OnePlus device kernels</b></summary>
-
-<br>
-
-| Device Model | Codename | Kernel | Features | ROM Support | Links |
-|--------------|----------|---------|----------|-------------|-------|
-| **OnePlus 13** | - | Latest | KernelSU-Next, SUSFS | OxygenOS | [![GitHub](https://img.shields.io/badge/Download-blue?style=flat-square&logo=github)](https://github.com/FerGus786/OnePlus_13_KernelSU_SUSFS) |
-| **OnePlus 12** | - | 6.1 | KernelSU LKM mode, SukiSU Ultra + SUSFS | OxygenOS/ColorOS 14 | [![GitHub](https://img.shields.io/badge/Download-LKM-blue?style=flat-square&logo=github)](https://github.com/snowwolf725/KernelSU_LKM_For_Oneplus12) |
-| **OnePlus 7 Pro** | guacamole | Latest | KernelSU v0.9.5, Full system flash required | LineageOS 21 | [![GitHub](https://img.shields.io/badge/Download-blue?style=flat-square&logo=github)](https://github.com/surfaceocean/kernelsu_oneplus_7_pro_lineageos_guacamole) |
-| **OnePlus Nord N200 5G** | dre | 5.4 | SukiSU Ultra | LineageOS 22+ | [![XDA](https://img.shields.io/badge/Download-XDA-orange?style=flat-square&logo=xda-developers)](https://xdaforums.com/t/kernel-aosp-lineageos-kernel-kernelsu-included.4749302/) |
-
-> [!NOTE]
-> OnePlus devices generally do not support the generic GKI build and require custom kernel builds. Use [WildKernels/OnePlus_KernelSU_SUSFS](https://github.com/WildKernels/OnePlus_KernelSU_SUSFS) or manufacturer-specific builds.
-
-</details>
-
----
-
-### Motorola Devices
-
-<details>
-<summary><b>🔽 Click to expand Motorola device kernels</b></summary>
-
-<br>
-
-| Device Model | Codename | Kernel | Features | ROM Support | Links |
-|--------------|----------|---------|----------|-------------|-------|
-| **Moto G20** | java | 4.14 | KernelSU 0.9.5, KernelSU-Next, SukiSU Ultra | Stock, AOSP | [![XDA](https://img.shields.io/badge/Download-XDA-orange?style=flat-square&logo=xda-developers)](https://xdaforums.com/t/kernel-custom-kernels-with-su-kernelsu-kernelsu-next-and-sukisu-ultra-for-motorola-g20-java.4711782/) |
-
-</details>
-
----
-
-### Google Pixel Devices
-
-<details>
-<summary><b>🔽 Click to expand Google Pixel device kernels</b></summary>
-
-<br>
-
-| Device Model | Codename | Kernel | Features | ROM Support | Links |
-|--------------|----------|---------|----------|-------------|-------|
-| **Pixel 8a** | GKI | 6.1 | KernelSU-Next, SuSFS, Hide patches | Android 14 | [![GitHub](https://img.shields.io/badge/Download-blue?style=flat-square&logo=github)](https://github.com/TheRetikGM/gki-kernelsunext-susfs) |
-| **Pixel 7 / 7 Pro** | gs201 | 5.10 | KernelSU-Next, SuSFS v1.5.8, Additional patches | Custom ROMs | [![GitHub](https://img.shields.io/badge/Download-blue?style=flat-square&logo=github)](https://github.com/wspyams/android_kernel_google_gs201) |
-
-> [!TIP]
-> For Pixel devices, also check [WildKernels/Sultan_KernelSU_SUSFS](https://github.com/WildKernels/Sultan_KernelSU_SUSFS) for Sultan kernel builds with SUSFS integration.
-
-</details>
-
----
-
-### Huawei Devices
-
-<details>
-<summary><b>🔽 Click to expand Huawei device kernels</b></summary>
-
-<br>
-
-| Device Model | Codename | Kernel | Features | ROM Support | Links |
-|--------------|----------|---------|----------|-------------|-------|
-| **Huawei Nova 2** | - | 4.4 | KernelSU | LineageOS | [![GitHub](https://img.shields.io/badge/Download-blue?style=flat-square&logo=github)](https://github.com/CoolestEnoch/kernel-su-huawei-nova2) |
-
-</details>
-
----
-
-### LG Devices
-
-<details>
-<summary><b>🔽 Click to expand LG device kernels</b></summary>
-
-<br>
-
-| Device Model | Codename | Kernel | Features | ROM Support | Links |
-|--------------|----------|---------|----------|-------------|-------|
-| **LG G7** | judyln | 4.9 | KernelSU-Next, SuSFS | LineageOS 22.1 | [![GitHub](https://img.shields.io/badge/Download-blue?style=flat-square&logo=github)](https://github.com/No-22-Github/LG-G7-LineageOS-22.1-KernelSU-Next-SuSFS-Kernel) |
-
-</details>
-
----
-
-### Kernel Selection Guide
-
-**Consider these factors when choosing a kernel:**
-
-| Factor | What to Check |
-|--------|---------------|
-| **Device Match** | Exact device model and variant (not just similar models) |
-| **Android Version** | Kernel must match your current Android version |
-| **Security Patch** | Anti-rollback protection - never flash a kernel older than your current security patch level |
-| **Features** | KernelSU version, SUSFS support, additional optimizations |
-| **Maintenance** | Regular updates and active development |
-| **Community** | User feedback on XDA, GitHub issues, Telegram |
-| **Documentation** | Clear installation instructions and support |
+- [**SUSFS**](https://gitlab.com/simonpunk/susfs4ksu)- kernel patches + userspace addon providing root-hiding mechanisms (experimental; requires a SUSFS-patched kernel).
+- [**SuSFS4KSU**](https://github.com/sidex15/susfs4ksu-module)- addon root-hiding service for KernelSU.
 
 > [!WARNING]
-> **Before Flashing:** Always backup your current boot image. Keep a copy of stock boot.img for emergency recovery. Test with `fastboot boot kernel.img` first if possible. On devices with anti-rollback protection (e.g., Xiaomi, OnePlus), flashing a kernel with an older security patch level can permanently brick your device.
+> These provide *root-hiding mechanisms* and **may improve** compatibility with apps that perform root checks. They do **not** guarantee passing Play Integrity or bypassing any given banking app, and often require additional configuration.
 
-### Need Help?
+## Device Kernels
 
-- **Build your own:** See [Building from Source](#️-building-from-source) section
+Prebuilt kernels save you from compiling. **Always verify the exact device model, Android version, kernel version, and security-patch level before flashing.**
 
+> For anything not listed here, check the maintained community list of [KernelSU-Next unofficially supported devices](https://kernelsu-next.github.io/webpage/pages/devices.html), the [XDA KernelSU tag](https://xdaforums.com/tags/ksu/), or GitHub topic/search results.
 
-<div align="right">
+| Project | Devices | Notes |
+|---------|---------|-------|
+| [WildKernels- GKI](https://github.com/WildKernels/GKI_KernelSU_SUSFS) | GKI 2.0 (5.10+) devices | KernelSU + SUSFS; active |
+| [WildKernels- Sultan](https://github.com/WildKernels/Sultan_KernelSU_SUSFS) | Google Pixel | Sultan base + SUSFS; active |
+| [WildKernels- OnePlus](https://github.com/WildKernels/OnePlus_KernelSU_SUSFS) | OnePlus devices | KernelSU + SUSFS; active |
+| [WildKernels- Samsung](https://github.com/WildKernels/Samsung_KernelSU_SUSFS) | Samsung devices | KernelSU + SUSFS; active |
+| [YuzakiKokuban- Samsung](https://github.com/YuzakiKokuban) | Galaxy S23/S24/S25, Tab S10 | KernelSU kernel sources (`sm8550`, `sm8650`, `sm8750`, `mt6989`); active |
+| [KernelSU LKM- OnePlus 12](https://github.com/snowwolf725/KernelSU_LKM_For_Oneplus12) | OnePlus 12 | LKM for OxygenOS/ColorOS; active |
+| [topnotchfreaks- msm-5.15](https://github.com/topnotchfreaks/kernel_msm-5.15) | Redmi Note 12/13 4G, Redmi Pad SE, Redmi 15/POCO M7 | SukiSU-Ultra + KPM + SUSFS variants; active |
 
-[⬆ Back to Top](#awesome-kernelsu)
+**Kernel selection checklist:** exact device match · matching Android/kernel version · security-patch level (anti-rollback can brick on older patches) · active maintenance · a copy of your stock `boot.img` for recovery.
 
-</div>
+## Building from Source
 
----
+- **Official KernelSU:** build the LKM with [Ylarod/ddk](https://github.com/Ylarod/ddk) (recommended since v3.0). The GKI and non-GKI build guides are archival- [How to build](https://kernelsu.org/guide/how-to-build.html) · [Integrate for non-GKI](https://kernelsu.org/guide/how-to-integrate-for-non-gki.html).
+- **Forks** (KernelSU-Next, SukiSU-Ultra, ReSukiSU) still support direct kernel integration- see each repository's `kernel/setup.sh`.
+- **Tools:** [AnyKernel3](https://github.com/osm0sis/AnyKernel3) (packaging/flashing) · [kernel_build_action](https://github.com/dabao1955/kernel_build_action) (GitHub Actions builds).
+- **Vendor kernel sources:** [Google](https://android.googlesource.com/kernel/) · [Xiaomi](https://github.com/MiCode/Xiaomi_Kernel_OpenSource) · [OnePlus](https://github.com/OnePlusOSS) · [Samsung](https://opensource.samsung.com).
 
-## 🔧 Installation
+## Documentation
 
-**Multiple installation methods to suit your needs and technical comfort level.**
-
-### ✅ Pre-Installation Checklist
-
-Before proceeding, ensure you have:
-
-- [x] **Unlocked bootloader** (essential!)
-- [x] **Complete device backup**
-- [x] **ADB & Fastboot** installed ([Download Platform Tools](https://developer.android.com/studio/releases/platform-tools))
-- [x] **USB Debugging** enabled (Settings → Developer Options)
-- [x] **Stock boot image** backup (for emergency recovery)
-- [x] **Charged device** (at least 50% battery)
-
-> [!WARNING]
-> **Backup First!** Installation errors can cause data loss or bootloops. Always have a recovery plan.
-
-> [!TIP]
-> **Need help unlocking your bootloader?** Visit [Awesome-Android-Root Guide](https://awesome-android-root.pages.dev/android-root-guides/how-to-unlock-bootloader)
-
----
-
-### 🚀 Installation Methods Overview
-
-| Method | Difficulty | Best For | Requirements | Time |
-|--------|-----------|----------|--------------|------|
-| [**GKI Mode**](#method-1-gki-mode) | Easy | Modern devices (5.10+) | Fastboot, unlocked bootloader | 5–10 min |
-| [**LKM Mode**](#method-2-lkm-mode) | Easy | Preserving stock kernel | Unlocked bootloader | 5–10 min |
-| [**Manager Patching**](#method-3-manager-patching) | Easy | One-click solution | Unlocked bootloader | 10–15 min |
-| [**Custom Kernel**](#method-4-custom-kernels) | Medium | Device-specific optimization | TWRP or fastboot | 10–20 min |
-| [**Manual Building**](#method-5-manual-building) | Hard | Full customization | Build environment, expertise | 1–3 hours |
-
----
-
-### Method 1: GKI Mode
-
-**Best for:** Modern devices with GKI 2.0 support (kernel 5.10+)
-
-<details open>
-<summary><b>📋 View Installation Steps</b></summary>
-
-**Advantages:**
-- ✅ Strong universality for modern devices
-- ✅ Official support and regular updates
-- ✅ Clean installation with minimal configuration
-
-**Step-by-Step:**
-
-```bash
-# 1. Download boot.img from releases
-# Visit: https://github.com/tiann/KernelSU/releases/latest
-
-# 2. Boot device to fastboot mode
-adb reboot bootloader
-
-# 3. Flash the kernel
-fastboot flash boot boot.img
-
-# 4. Reboot device
-fastboot reboot
-
-# 5. Install KernelSU Manager APK after boot
-
-# 6. IMPORTANT: Install a metamodule for module support
-# Download meta-overlayfs and install via KernelSU Manager
-```
-
-> **More Details**: [GKI Installation Guide](https://awesome-android-root.pages.dev/rooting-guides/kernelsu-guide#method-1-pre-built-gki-kernel-easiest)
-
-</details>
-
----
-
-### Method 2: LKM Mode
-
-**Best for:** Users wanting to keep original kernel intact and get easy updates
-
-<details>
-<summary><b>📋 View Installation Steps</b></summary>
-
-**Advantages:**
-- ✅ Preserves original kernel and manufacturer optimizations
-- ✅ Less intrusive modification
-- ✅ Easier to revert to stock
-- ✅ OTA-friendly (install to inactive slot)
-- ✅ Easy in-app updates
-- ✅ No AVB/dm-verity issues
-
-**Requirements:**
-- Stock/official firmware
-- Compatible kernel version
-
-**Step-by-Step:**
-
-1. Install KernelSU Manager APK on device
-2. Grant necessary permissions
-3. In Manager, select "Install" → "Select and Patch a File"
-4. Choose your stock boot.img file
-5. Manager will patch it with KernelSU (LKM mode)
-6. Flash patched boot via fastboot:
-
-```bash
-# Transfer patched boot to PC
-adb pull /sdcard/Download/kernelsu_patched_xxxxx.img
-
-# Boot to fastboot
-adb reboot bootloader
-
-# Flash patched image
-fastboot flash boot kernelsu_patched_xxxxx.img
-
-# Reboot
-fastboot reboot
-```
-
-7. **Install metamodule** after first boot for module support
-
-> **Complete Guide**: [LKM Mode Installation](https://awesome-android-root.pages.dev/rooting-guides/kernelsu-guide#method-2-boot-image-patching-lkm-mode)
-
-</details>
-
----
-
-### Method 3: Manager Patching
-
-**Best for:** Users preferring one-click solutions with boot image patching
-
-<details>
-<summary><b>📋 View Installation Steps</b></summary>
-
-**Advantages:**
-- ✅ User-friendly, minimal PC usage
-- ✅ Automatic patching process
-- ✅ Simplest for non-technical users
-- ✅ Supports both GKI and LKM modes
-
-**Step-by-Step:**
-
-1. Extract boot.img from your device firmware
-2. Install KernelSU Manager APK on device
-3. Grant necessary permissions
-4. Select "Install" → "Select and Patch a File"
-5. Choose your boot.img file
-6. Manager patches boot image automatically
-7. Flash patched boot via fastboot or custom recovery
-
-```bash
-# Flash patched boot via fastboot
-adb pull /sdcard/Download/kernelsu_patched_*.img
-adb reboot bootloader
-fastboot flash boot kernelsu_patched_*.img
-fastboot reboot
-```
-
-8. **Install metamodule** after first boot for module support
-
-> **Detailed Tutorial**: [Manager Patching Guide](https://awesome-android-root.pages.dev/rooting-guides/kernelsu-guide#method-2-boot-image-patching-lkm-mode)
-
-</details>
-
----
-
-### Method 4: Custom Kernels
-
-**Best for:** Device-specific optimization and features
-
-<details>
-<summary><b>📋 View Installation Steps</b></summary>
-
-**Advantages:**
-- ✅ Device-optimized performance
-- ✅ Pre-tested stability
-- ✅ Additional features (SUSFS, optimizations)
-- ✅ No compilation required
-
-**Step-by-Step:**
-
-1. Find your device in [Prebuilt Kernels](#prebuilt-kernels) section
-2. Download appropriate kernel zip
-3. Flash via TWRP or fastboot:
-
-**Via TWRP:**
-```
-1. Boot to TWRP recovery
-2. Install → Select kernel zip
-3. Swipe to flash
-4. Reboot system
-```
-
-**Via Fastboot:**
-```bash
-adb reboot bootloader
-fastboot flash boot kernel.img
-fastboot reboot
-```
-
-4. Install KernelSU Manager APK
-5. Verify installation in Manager
-
-</details>
-
----
-
-### Method 5: Manual Building
-
-**Best for:** Developers and advanced users
-
-<details>
-<summary><b>📋 View Installation Steps</b></summary>
-
-**Advantages:**
-- ✅ Full customization control
-- ✅ Latest features and patches
-- ✅ Learn kernel development
-
-**Requirements:**
-- Linux build environment (Ubuntu 20.04+ recommended)
-- Kernel source code for your device
-- Cross-compiler toolchain
-- Build dependencies (see [Building from Source](#️-building-from-source))
-
-**Quick Overview:**
-1. Setup Linux build environment
-2. Clone kernel source and KernelSU repository
-3. Apply KernelSU patches
-4. Configure kernel (enable CONFIG_KSU)
-5. Compile kernel
-6. Package with AnyKernel3
-7. Flash to device
-
-**Full guide:** See [Building from Source](#️-building-from-source) section
-
-</details>
-
----
-
-### Compatibility Check
-
-**Check your kernel version:**
-```bash
-# Via ADB
-adb shell uname -r
-
-# Or on device terminal
-uname -r
-```
-
-**Compatibility Matrix:**
-
-| Kernel Version | Official KernelSU | KernelSU-Next | Wild KSU | SukiSU-Ultra | Recommended Method |
-|----------------|-------------------|---------------|----------|--------------|-------------------|
-| 5.10+ (GKI 2.0) | ✅ Full Support | ✅ Full Support | ✅ Full Support | ✅ Full Support | GKI Mode / Manager Patching |
-| 4.14–5.9 | ⚠️ Manual Build Only | ✅ Full Support | ✅ Full Support | ✅ Full Support | Custom Kernel / LKM |
-| 4.4–4.13 | ❌ Not Supported | ✅ Full Support | ✅ Full Support | ✅ Full Support | Custom Kernel |
-| 3.4–4.3 | ❌ Not Supported | ❌ Not Supported | ❌ Not Supported | ⚠️ Experimental | Custom Kernel |
-
----
-
-### ✨ Post-Installation Setup
-
-> [!IMPORTANT]
-> Complete these essential steps to ensure proper functionality and security.
-
-**1. Verify Installation**
-
-```bash
-# Check KernelSU version
-su -c "kernelsu --version"
-
-# Verify root access
-su -c "id"
-
-# Check kernel version
-cat /proc/version | grep KernelSU
-
-# Check installation mode
-# Look for LKM or GKI indicators in kernel version
-```
-
-**2. Install Manager**
-- Download appropriate Manager APK
-- Grant all required permissions
-- Confirm root access in app
-
-**3. Install Metamodule (CRITICAL for KernelSU 3.0+)**
-- Download [meta-overlayfs](https://github.com/KernelSU-Modules-Repo/meta-overlayfs) (recommended)
-- Install via KernelSU Manager > Modules
-- Reboot device
-- See [Understanding Metamodules](#understanding-metamodules) for details
-
-**4. Configure App Profiles**
-- Set restrictive defaults
-- Grant root only to trusted apps
-- Configure time-based restrictions
-
-**5. Install Essential Modules**
-- Module manager (MMRL recommended)
-- SuSFS for root hiding (if needed)
-- Performance optimizations (optional)
-
-> [!WARNING]
-> Only install modules from trusted sources
-
-**6. Setup Safety Features**
-- Backup patched boot image
-- Configure module backups
-- Test Play Integrity
-- Document your setup
-
-> **Complete Setup Guide**: [Post-Installation Setup](https://awesome-android-root.pages.dev/rooting-guides/kernelsu-guide#post-installation-setup)
-
-
----
-
-### Verification Commands
-
-```bash
-# Comprehensive verification script
-# Check if KernelSU is loaded
-cat /proc/version | grep KernelSU
-
-# Test root access
-su -c "whoami"
-su -c "id"
-
-# Check module directory
-ls -la /data/adb/modules/
-
-# View KernelSU logs
-dmesg | grep kernelsu
-
-# Check SELinux status
-getenforce
-
-# Verify module mounting
-mount | grep overlay
-```
-
-<div align="right">
-
-[⬆ Back to Top](#awesome-kernelsu)
-
-</div>
-
----
-
-## 📚 Documentation
-
-**Comprehensive guides and resources to master KernelSU.**
-
-### 📖 Core Documentation
-
-**Getting Started**
 - [What is KernelSU?](https://kernelsu.org/guide/what-is-kernelsu.html)
-- [Installation Guide](https://kernelsu.org/guide/installation.html)
-- [App Profile System](https://kernelsu.org/guide/app-profile.html)
-- [Module System](https://kernelsu.org/guide/module.html)
-- [Official Module Repository](https://modules.kernelsu.org)
-- [API Documentation](https://kernelsu.org/guide/module.html#kernelsu-modules)
-
-
-### 🔨 Integration & Building
-
-- [**Non-GKI Integration**](https://kernelsu.org/guide/how-to-integrate-for-non-gki.html) - For custom kernels 4.14 and earlier
-- [**Building from Source**](https://kernelsu.org/guide/how-to-build.html) - Complete compilation guide
-- [**Kernel Requirements**](https://kernelsu.org/guide/installation.html#requirements) - Prerequisites and compatibility
-- [**Unofficially Supported Devices**](https://kernelsu.org/guide/unofficially-support-devices.html) - Manual compilation for older kernels
-
-### 📦 Module Development
-
-- [**Module Development Guide**](https://kernelsu.org/guide/module.html) - Creating KernelSU modules
-- [**Module WebUI Guide**](https://kernelsu.org/guide/module-webui.html) - Building web interfaces
-- [**Module Examples**](https://github.com/topics/kernelsu-module) - Community examples on GitHub
-
-### 🆘 Recovery & Troubleshooting
-
-- [**FAQ**](https://kernelsu.org/guide/faq.html) - Frequently asked questions
-- [**Bootloop Recovery**](https://kernelsu.org/guide/rescue-from-bootloop.html) - Emergency recovery procedures
-
-<div align="right">
-
-[⬆ Back to Top](#awesome-kernelsu)
-
-</div>
-
----
-
-## Modules and Tools
-
-**Essential modules and tools to enhance your KernelSU experience.**
-
-> [!IMPORTANT]
-> **KernelSU 3.0+ Requirement**: You must first install a [metamodule](#understanding-metamodules) before regular modules will work. Fresh installations require this step!
-
-### Metamodules (Required for Module Support)
-
-> **First-Time Users**: Start with **meta-overlayfs** for the best balance of compatibility and ease of use.
-
-| Metamodule | Purpose | Download |
-|------------|---------|----------|
-| [**meta-overlayfs**](https://github.com/KernelSU-Modules-Repo/meta-overlayfs) | Official reference implementation using OverlayFS - **recommended for most users** | [![Download](https://img.shields.io/badge/Download-Latest-blue?style=flat-square)](https://github.com/KernelSU-Modules-Repo/meta-overlayfs/releases) |
-| [**mountify**](https://github.com/backslashxx/mountify) | OverlayFS with tmpfs/ext4 sparse support, works on APatch/Magisk too | [![Download](https://img.shields.io/badge/Download-Latest-blue?style=flat-square)](https://github.com/backslashxx/mountify/releases) |
-| [**meta-hybrid_mount**](https://github.com/YuzakiKokuban/meta-hybrid_mount) | Dual engine (OverlayFS + Magic Mount) with conflict monitor, diagnostics & auto-fallback | [![Download](https://img.shields.io/badge/Download-Latest-blue?style=flat-square)](https://github.com/YuzakiKokuban/meta-hybrid_mount/releases) |
-
----
-
-### Root Management & Hiding
-
-| Module | Purpose | Key Features |
-|--------|---------|--------------|
-| [**SuSFS4KSU**](https://github.com/sidex15/susfs4ksu-module) | Advanced root hiding | Customizable profiles, filesystem manipulation, banking app support |
-
-
-> [!TIP]
-> **Discover More Modules:** Explore the extensive collection at **[Awesome Android Root - KernelSU Modules](https://awesome-android-root.pages.dev/android-root-apps/?filters=%5BK%5D)**
-
-### Framework Modifications
-
-| Framework | Purpose | Features |
-|-----------|---------|----------|
-| [**LSPosed**](https://github.com/LSPosed/LSPosed) | Xposed framework | Module support via Zygisk integration |
-| [**ZygiskNext**](https://github.com/Dr-TSNG/ZygiskNext) | Standalone Zygisk | Independent Zygisk implementation for KernelSU |
-| [**ReZygisk**](https://github.com/PerformanC/ReZygisk) | Transparent Zygisk | Improved open-source Zygisk implementation |
-
----
-
-### 📦 Module Managers
-
-**[MMRL (Modern Module Manager)](https://github.com/MMRLApp/MMRL)**
-
-The all-in-one solution for KernelSU module management.
-
-<details>
-<summary><b>🔽 View MMRL Features</b></summary>
-
-**✨ Key Features:**
-- ✅ Built-in module repository with 100+ modules
-- ✅ Automatic module updates
-- ✅ Module backup/restore functionality
-- ✅ Dependency management
-- ✅ Next-gen WebUI support for advanced modules
-- ✅ Material You design language
-- ✅ Dark/Light theme support
-- ✅ Detailed module information and changelogs
-
-**📥 Download:** [MMRL Latest Release](https://github.com/MMRLApp/MMRL/releases)
-
-</details>
-
----
-
-### Management Apps
-
-| App | Purpose | Download |
-|-----|---------|----------|
-| [**KernelSU Manager**](https://github.com/tiann/KernelSU/releases) | Official manager for KernelSU | [![Download](https://img.shields.io/badge/Download-Latest-blue?style=flat-square)](https://github.com/tiann/KernelSU/releases/latest) |
-| [**KernelSU-Next Manager**](https://github.com/KernelSU-Next/KernelSU-Next/releases) | Manager for KernelSU-Next | [![Download](https://img.shields.io/badge/Download-Latest-blue?style=flat-square)](https://github.com/KernelSU-Next/KernelSU-Next/releases/latest) |
-| [**Wild KSU Manager**](https://github.com/WildKernels/Wild_KSU/releases) | Manager for Wild KSU | [![Download](https://img.shields.io/badge/Download-Latest-blue?style=flat-square)](https://github.com/WildKernels/Wild_KSU/releases/latest) |
-| [**SukiSU Manager**](https://github.com/SukiSU-Ultra/SukiSU-Ultra/releases) | Manager for SukiSU-Ultra | [![Download](https://img.shields.io/badge/Download-Latest-blue?style=flat-square)](https://github.com/SukiSU-Ultra/SukiSU-Ultra/releases/latest) |
-| [**ReSukiSU Manager**](https://github.com/ReSukiSU/ReSukiSU/releases) | Manager for ReSukiSU (multi-manager) | [![Download](https://img.shields.io/badge/Download-Latest-blue?style=flat-square)](https://github.com/ReSukiSU/ReSukiSU/releases/latest) |
-| [**Franco Kernel Manager**](https://play.google.com/store/apps/details?id=com.franco.kernel) | Kernel tweaking & monitoring | [![Play Store](https://img.shields.io/badge/Get-Play_Store-green?style=flat-square)](https://play.google.com/store/apps/details?id=com.franco.kernel) |
-
-
----
-
-### 🛠️ Development & Debugging
-
-| Tool | Purpose | Use Case |
-|------|---------|----------|
-| [**Root Checker**](https://play.google.com/store/apps/details?id=com.joeykrim.rootcheck) | Verify root status | Confirm successful installation |
-| [**Logcat Reader**](https://github.com/darshanparajuli/LogcatReader) | System log viewer | Debugging and troubleshooting |
-| [**Termux**](https://github.com/termux/termux-app) | Terminal emulator | Full Linux environment on Android |
-
-
----
-
-## 🛠️ Building from Source
-
-> [!NOTE]
-> This section covers building KernelSU from source. For ready-to-use kernels, see the [Prebuilt Kernels](#prebuilt-kernels) section.
-
-### Kernel Source Repositories
-
-- [**KernelSU Source**](https://github.com/tiann/KernelSU) - Official KernelSU source code for integration
-- [**KernelSU-Next Source**](https://github.com/KernelSU-Next/KernelSU-Next) - Enhanced fork with extended support
-- [**Wild KSU Source**](https://github.com/WildKernels/Wild_KSU) - Customization and root hiding focused fork
-- [**SukiSU-Ultra Source**](https://github.com/SukiSU-Ultra/SukiSU-Ultra) - KPM + broad compatibility fork
-- [**ReSukiSU Source**](https://github.com/ReSukiSU/ReSukiSU) - SukiSU-Ultra fork with multi-manager support
-- [**Ylarod/ddk**](https://github.com/Ylarod/ddk) - Official recommended toolchain for building KernelSU LKM
-- [**Kernel Build Action**](https://github.com/dabao1955/kernel_build_action) - Automated building via GitHub Actions
-
-> [!NOTE]
-> Since v3.0, official KernelSU **only supports the DDK build environment** and no longer maintains direct kernel integration ("built-in"/GKI image mode) or non-GKI/x86_64 kernels. Third-party kernel maintainers should target the **KernelSU LKM ABI** instead of integrating KernelSU directly. Forks (Next, Wild, SukiSU, ReSukiSU) continue to support direct integration via their own `setup.sh`.
-
-### Device-Specific Kernel Sources
-
-> [!TIP]
-> Always use official kernel sources from your device manufacturer for best compatibility.
-
-- [**OnePlus Kernel Sources**](https://github.com/OnePlusOSS) - Official OnePlus kernel sources
-- [**Xiaomi Kernel Sources**](https://github.com/MiCode/Xiaomi_Kernel_OpenSource) - Official Xiaomi kernel sources
-- [**Google AOSP Kernels**](https://android.googlesource.com/kernel/) - Android Open Source Project kernels
-- [**Samsung Opensource**](https://opensource.samsung.com) - Samsung kernel sources
-
-### Building Tools & Scripts
-
-- [**Universal Patcher**](https://github.com/KernelSU-Next/KernelSU-Next/tree/dev/scripts) - Automated kernel patching scripts
-- [**KernelSU Builder**](https://github.com/dabao1955/kernel_build_action) - CI/CD building system with GitHub Actions
-- [**⭐ AnyKernel3**](https://github.com/osm0sis/AnyKernel3) - Universal kernel flasher and packaging tool
-- [**Manual Build Guide**](https://kernelsu.org/guide/how-to-build.html) - Step-by-step building instructions
-
-### Build Environment Setup
-
-<details>
-<summary><b>Click to expand: Detailed Build Instructions</b></summary>
-
-> [!IMPORTANT]
-> Building kernels requires significant disk space (50GB+) and time. Ensure you have a proper Linux environment.
-
-#### Linux Build Environment
-
-```bash
-# Install dependencies (Ubuntu/Debian)
-sudo apt update
-sudo apt install -y git build-essential kernel-package fakeroot libncurses5-dev \
-  libssl-dev ccache bison flex libelf-dev bc python3
-
-# Install cross-compiler
-sudo apt install -y gcc-aarch64-linux-gnu gcc-arm-linux-gnueabihf
-
-# Clone KernelSU
-git clone https://github.com/tiann/KernelSU
-```
-
-> [!TIP]
-> Use `ccache` to speed up subsequent builds. Enable it with `export USE_CCACHE=1` and `export CCACHE_DIR=~/.ccache`.
-
-#### Building Process
-
-```bash
-# 1. Clone your device kernel source
-git clone <kernel_source_url> kernel
-
-# 2. Apply KernelSU patches
-cd kernel
-curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
-
-# For KernelSU-Next:
-# curl -LSs "https://raw.githubusercontent.com/KernelSU-Next/KernelSU-Next/next/kernel/setup.sh" | bash -
-
-# For Wild KSU:
-# curl -LSs "https://raw.githubusercontent.com/WildKernels/Wild_KSU/wild/kernel/setup.sh" | bash -s wild
-
-# For SukiSU-Ultra:
-# curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s main      # GKI
-# curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s builtin   # non-GKI
-
-# For ReSukiSU:
-# curl -LSs "https://raw.githubusercontent.com/ReSukiSU/ReSukiSU/main/kernel/setup.sh" | bash
-
-# 3. Configure kernel
-make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- <defconfig>
-
-# 4. Enable KernelSU in config
-./scripts/config --file .config -e CONFIG_KSU
-
-# For SukiSU-Ultra KPM support:
-# ./scripts/config --file .config -e CONFIG_KPM
-
-# 5. Build kernel
-make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)
-
-# 6. Package with AnyKernel3
-# Copy Image.gz-dtb or Image to AnyKernel3 directory
-# Zip and flash
-```
-
-> [!WARNING]
-> Building with wrong toolchain or configuration can produce non-bootable kernels. Always test on non-critical devices first.
-
-#### Supported Architectures
-
-- **arm64-v8a**: Primary support (64-bit ARM) - most modern devices
-- **x86_64**: Intel/AMD 64-bit (emulators, some tablets) ⚠️ *Known breaking change on recent kernels for KernelSU/KernelSU-Next*
-- **armeabi-v7a**: 32-bit ARM (legacy devices, SukiSU-Ultra only)
-
-#### Continuous Integration
-
-```yaml
-name: Build Kernel
-on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Build Kernel with KernelSU
-        uses: dabao1955/kernel_build_action@main
-        with:
-          kernel-url: <your_kernel_repo>
-          branch: <branch_name>
-          config: <defconfig_name>
-          arch: arm64
-```
-
-</details>
-
-<div align="right">
-<a href="#awesome-kernelsu">⬆ Back to Top</a>
-</div><br>
-
----
-
-## 💬 Community
-
-**Connect with thousands of KernelSU users worldwide for support, discussion, and latest updates.**
-
-### Official Communities
+- [Installation](https://kernelsu.org/guide/installation.html)
+- [Metamodules](https://kernelsu.org/guide/metamodule.html)
+- [Module guide](https://kernelsu.org/guide/module.html) · [Module WebUI](https://kernelsu.org/guide/module-webui.html) · [Module configuration](https://kernelsu.org/guide/module-config.html)
+- [App Profile](https://kernelsu.org/guide/app-profile.html)
+- [Difference with Magisk](https://kernelsu.org/guide/difference-with-magisk.html)
+- [Unofficially supported devices](https://kernelsu.org/guide/unofficially-support-devices.html)
+- [FAQ](https://kernelsu.org/guide/faq.html) · [Rescue from bootloop](https://kernelsu.org/guide/rescue-from-bootloop.html)
+
+## Community
 
 **Telegram**
 
-| Channel | Purpose | Link |
-|---------|---------|------|
-| **KernelSU Channel** | Official announcements | [![Telegram](https://img.shields.io/badge/Join-Channel-blue?style=flat-square&logo=telegram)](https://t.me/KernelSU) |
-| **KernelSU Group** | Community support | [![Telegram](https://img.shields.io/badge/Join-Group-blue?style=flat-square&logo=telegram)](https://t.me/KernelSU_group) |
-| **KernelSU-Next** | Enhanced variant | [![Telegram](https://img.shields.io/badge/Join-Group-blue?style=flat-square&logo=telegram)](https://t.me/KernelSU_Next) |
-| **Wild KSU** | Customization & root hiding fork | [![Telegram](https://img.shields.io/badge/Join-Group-blue?style=flat-square&logo=telegram)](https://t.me/WildKSU) |
-| **SukiSU** | KPM & legacy devices | [![Telegram](https://img.shields.io/badge/Join-Group-blue?style=flat-square&logo=telegram)](https://t.me/Sukiksu) |
+- [@KernelSU](https://t.me/KernelSU)- official announcements channel.
+- [@KernelSU_group](https://t.me/KernelSU_group)- official community group.
+- [@Sukiksu](https://t.me/Sukiksu)- SukiSU community.
+- [@ReSukiSU](https://t.me/ReSukiSU)- ReSukiSU community.
 
-**GitHub**
+**Other**
 
-| Platform | Purpose | Link |
-|----------|---------|------|
-| **Discussions** | Technical Q&A | [![GitHub](https://img.shields.io/badge/Join-Discussions-black?style=flat-square&logo=github)](https://github.com/tiann/KernelSU/discussions) |
-| **Issues** | Bug reports | [![GitHub](https://img.shields.io/badge/Report-Issues-black?style=flat-square&logo=github)](https://github.com/tiann/KernelSU/issues) |
-| **Wild KSU Issues** | Customization fork | [![GitHub](https://img.shields.io/badge/View-Issues-black?style=flat-square&logo=github)](https://github.com/WildKernels/Wild_KSU/issues) |
+- [GitHub Discussions](https://github.com/tiann/KernelSU/discussions) · [Issue tracker](https://github.com/tiann/KernelSU/issues)
+- [r/KernelSU](https://www.reddit.com/r/KernelSU/) on Reddit
+- [XDA Developers- KernelSU tag](https://xdaforums.com/tags/ksu/)
 
 
----
-
-### 🌐 Forums & Platforms
-
-| Platform | Description | Members | Link |
-|----------|-------------|---------|------|
-| **XDA Developers** | Main discussion & device-specific threads | 10,000+ | [![XDA](https://img.shields.io/badge/Visit-XDA-orange?style=flat-square&logo=xda-developers)](https://forum.xda-developers.com/t/kernelsu-a-kernel-based-root-solution-for-android.4511259/) |
-| **Reddit r/KernelSU** | Community discussions & support | Growing | [![Reddit](https://img.shields.io/badge/Join-r%2FKernelSU-red?style=flat-square&logo=reddit)](https://www.reddit.com/r/KernelSU/) |
-| **4PDA Forum** | Russian-language community | Active | [![4PDA](https://img.shields.io/badge/Visit-4PDA-blue?style=flat-square)](https://4pda.to/forum/index.php?showtopic=1020374) |
-
----
-
-## 🔧 Troubleshooting
+## Troubleshooting
 
 > [!NOTE]
 > Before troubleshooting, ensure you have a backup of your stock boot image. This is crucial for recovery.
@@ -1888,7 +739,7 @@ echo "Logs collected in: $LOGDIR"
 
 ---
 
-## ❓ FAQ
+## FAQs
 
 **Frequently asked questions about KernelSU - Quick answers to common queries.**
 
@@ -2233,108 +1084,19 @@ su -c "id"
 
 </details>
 
----
 
-### Development
+## Contributing
 
-<details>
-<summary><b>How do I build KernelSU for my device?</b></summary>
-
-**Quick steps:**
-
-1. Setup Linux build environment
-2. Clone kernel source
-3. Apply KernelSU patches (use the setup.sh for your chosen variant)
-4. Configure kernel (enable CONFIG_KSU; CONFIG_KPM for SukiSU-Ultra)
-5. Compile kernel
-6. Package with AnyKernel3
-
-See [Building from Source](#️-building-from-source) for detailed guide.
-
-</details>
-
-<details>
-<summary><b>Can I contribute to KernelSU?</b></summary>
-
-**Absolutely! Contributions welcome:**
-
-- 🐛 Report bugs on GitHub
-- 💻 Submit pull requests
-- 📦 Create and share modules
-- 📚 Improve documentation
-- 💬 Help in community support
-- 🧪 Test beta versions
-
-</details>
-
----
-
-### 💡 More Questions?
-
-- 📚 [**Complete KernelSU Installation Guide**](https://awesome-android-root.pages.dev/rooting-guides/kernelsu-guide) - Comprehensive tutorial with detailed explanations
-- 📖 [Official FAQ](https://kernelsu.org/guide/faq.html) - Official documentation
-- 💬 [Telegram Community](https://t.me/KernelSU_group) - Real-time support
-- 🐙 [GitHub Discussions](https://github.com/tiann/KernelSU/discussions) - Technical discussions
-- 🌐 [XDA Forums](https://forum.xda-developers.com/t/kernelsu-a-kernel-based-root-solution-for-android.4511259/) - Community forum
-
-<div align="right">
-
-[⬆ Back to Top](#awesome-kernelsu)
-
-</div>
-
----
-
-## 🤝 Contributing
-
-**Help make this the most comprehensive KernelSU resource! All contributions are welcome.**
-
-### Quick Start
-
-**How to Contribute:**
-
-1. Fork this repository
-2. Add or update resources
-3. Follow formatting standards
-4. Test all links
-5. Submit pull request
-
-**What We Need:**
-
-- New tools & modules
-- Device-specific kernels
-- Documentation improvements
-- Translations
-- Bug fixes & updates
-- Tutorials & guides
-
-**📖 See [CONTRIBUTING.md](CONTRIBUTING.md)**
-
----
-
-### Need Help?
-
-- Check existing [issues](https://github.com/fynks/awesome-kernelsu/issues) and [PRs](https://github.com/fynks/awesome-kernelsu/pulls)
-- Open a [discussion](https://github.com/fynks/awesome-kernelsu/discussions)
-
-<div align="right">
-
-[⬆ Back to Top](#awesome-kernelsu)
-
-</div>
-
----
+Contributions are welcome- new tools, modules, maintained device kernels, and documentation fixes. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Disclaimer
 
-**Important legal information - Please read carefully before proceeding.**
+Rooting and kernel modification can void warranties, brick devices, and expose security vulnerabilities. This list is provided for **educational and informational purposes only**- you assume all risks.
 
-> [!CAUTION]
-> **Proceed at Your Own Risk:** Rooting and kernel modification can void warranties, brick devices, and expose security vulnerabilities. Users assume all risks and responsibilities.
+KernelSU and its derivatives are independent, community-driven projects. They are not affiliated with or endorsed by Google, Android, or any device manufacturer.
 
----
 
-### ⚠️ Legal & Safety Information
+### Legal & Safety Information
 
 **Educational Purpose Only**
 
@@ -2349,15 +1111,15 @@ This documentation is provided for **educational and informational purposes only
 
 Contributors and maintainers are **NOT liable** for:
 
-- ❌ Device damage or bricking
-- ❌ Data loss or corruption
-- ❌ Warranty violations
-- ❌ Legal consequences
-- ❌ Security vulnerabilities
+- Device damage or bricking
+- Data loss or corruption
+- Warranty violations
+- Legal consequences
+- Security vulnerabilities
 
 ---
 
-### ✅ Safety Best Practices
+### Safety Best Practices
 
 <details>
 <summary><b>🛡️ Click to expand: Essential Safety Guidelines</b></summary>
@@ -2396,12 +1158,6 @@ Contributors and maintainers are **NOT liable** for:
 
 **This project is licensed under the [MIT License](LICENSE).**
 
-<div align="right">
-
-[⬆ Back to Top](#awesome-kernelsu)
-
-</div>
-
 ---
 
 ## Acknowledgments
@@ -2435,15 +1191,9 @@ Contributors and maintainers are **NOT liable** for:
 
 ---
 
-<div align="center">
-
-[![Star History Chart](https://api.star-history.com/svg?repos=fynks/awesome-kernelsu&type=Date)](https://star-history.com/#fynks/awesome-kernelsu&Date)
-
----
-
 **Made with ❤️ by the KernelSU Community**
 
-<sub>Last Updated: June 2026 | Maintained by [Fynks](https://github.com/fynks)</sub>
+<sub>Last Updated: August 2026 | Maintained by [Fynks](https://github.com/fynks)</sub>
 
 <br>
 
