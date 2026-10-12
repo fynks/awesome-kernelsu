@@ -49,7 +49,7 @@
 
 <br>
 
-> **Learn More**: [Comprehensive KernelSU Guide](https://awesome-android-root.zhoe.org/rooting-guides/kernelsu-guide) | [Official Documentation](https://kernelsu.org/) | [Official Module Repo](https://modules.kernelsu.org)
+> **Learn More**: [Comprehensive KernelSU Guide](https://awesome-android-root.xyz/rooting-guides/kernelsu-guide) | [Official Documentation](https://kernelsu.org/) | [Official Module Repo](https://modules.kernelsu.org)
 
 
 ## Getting Started
@@ -63,7 +63,7 @@ Before installing KernelSU, ensure you have:
 - **Compatible device** (check compatibility below)
 
 > [!TIP]
-> **New to bootloader unlocking?** Check out the comprehensive guide at [Awesome-Android-Root](https://awesome-android-root.zhoe.org/rooting-guides/how-to-unlock-bootloader)
+> **New to bootloader unlocking?** Check out the comprehensive guide at [Awesome-Android-Root](https://awesome-android-root.xyz/rooting-guides/how-to-unlock-bootloader)
 
 ### New to KernelSU?
 
