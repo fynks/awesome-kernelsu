@@ -408,6 +408,7 @@ Prebuilt kernels save you from compiling. **Always verify the exact device model
 | [YuzakiKokuban- Samsung](https://github.com/YuzakiKokuban) | Galaxy S23/S24/S25, Tab S10 | KernelSU kernel sources (`sm8550`, `sm8650`, `sm8750`, `mt6989`); active |
 | [KernelSU LKM- OnePlus 12](https://github.com/snowwolf725/KernelSU_LKM_For_Oneplus12) | OnePlus 12 | LKM for OxygenOS/ColorOS; active |
 | [topnotchfreaks- msm-5.15](https://github.com/topnotchfreaks/kernel_msm-5.15) | Redmi Note 12/13 4G, Redmi Pad SE, Redmi 15/POCO M7 | SukiSU-Ultra + KPM + SUSFS variants; active |
+| [tingao- Droidspaces kernels](https://github.com/tingao) | Galaxy S10+ Snapdragon (SM-G9750), moto g(50) 5G (XT2149-1), Galaxy S21 5G (SM-G9910) | KernelSU-Next compiled into the image, manual hooks on 4.14 and the legacy branch on 5.4, with container support for Droidspaces; non-GKI; active |
 
 **Kernel selection checklist:** exact device match · matching Android/kernel version · security-patch level (anti-rollback can brick on older patches) · active maintenance · a copy of your stock `boot.img` for recovery.
 
