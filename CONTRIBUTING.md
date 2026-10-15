@@ -15,7 +15,8 @@ Thank you for your interest in contributing to Awesome KernelSU! This guide will
 ### What Can You Contribute?
 
 - **Official Resources**: New official KernelSU tools, documentation, or announcements
-- **KernelSU Derivatives**: Forks like KernelSU-Next, SuKiSu-Ultra, or new derivatives
+- **KernelSU Derivatives**: Forks like KernelSU-Next, SukiSU-Ultra, BakaSU, or new derivatives
+- **Metamodules**: Mounting implementations for the metamodule system
 - **Modules**: High-quality KernelSU modules that provide useful functionality
 - **Tools**: Development tools, builders, or utilities related to KernelSU
 - **Documentation**: Tutorials, guides, or educational content
@@ -30,6 +31,7 @@ Thank you for your interest in contributing to Awesome KernelSU! This guide will
 - **Duplicate Entries**: Resources already listed in the same section
 - **Broken Links**: Non-functional or redirecting links
 - **Low-Quality Resources**: Poorly documented or unreliable projects
+- **Mirrored Releases**: Modules that are already listed in the [KernelSU Modules registry](https://modules.kernelsu.org/) — link the registry entry instead of duplicating it
 
 ## Resource Quality Standards
 
@@ -48,6 +50,16 @@ Each entry should include:
 ```markdown
 - [**Resource Name**](https://github.com/user/repo) - Clear description of what it does
 ```
+
+#### Versions
+
+Do not hardcode a version number in prose. A version badge from [shields.io](https://shields.io) tracks the release on its own:
+
+```markdown
+[![Release](https://img.shields.io/github/v/release/user/repo?style=flat-square)](https://github.com/user/repo/releases)
+```
+
+Use `github/v/pre-release` for projects that only tag pre-releases, and `github/last-commit` for projects that publish no releases at all. Historical references such as "since the 3.0 line" are fine, because they describe when something changed rather than what is current.
 
 ### Link Preferences
 
@@ -133,6 +145,8 @@ We regularly review all resources for:
 - **Project Activity**: Removing abandoned or outdated resources
 - **Information Accuracy**: Updating descriptions and metrics
 - **New Categories**: Adding sections for emerging trends
+
+Version numbers are handled by the badges, so a release does not require an edit. What does need an edit is a change in status: a project that is renamed, archived, or replaced by a successor.
 
 ### Reporting Issues
 
