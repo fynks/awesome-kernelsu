@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" width="760" height="300" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" role="img" aria-label="How a metamodule handles a module's system directory at boot">
+  <title>Metamodule mount flow</title>
+  <desc>A module's system directory is read by the metamodule at boot, which decides the engine, then applies it to the live filesystem.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--rule)"/>
+    </marker>
+    <style>
+      :root {
+        --bg:        #ffffff;
+        --fg:        #231815;
+        --muted:     #4a4a4a;
+        --faint:     #6a6a6a;
+        --rule:      #5a5a5a;
+        --panel:     #f6f5f2;
+        --panel-br:  #231815;
+        --sys-fill:  #e8f0fb;
+        --sys-br:    #2f5d9e;
+        --live-fill: #eaf6ec;
+        --live-br:   #2f7d43;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg:        #0d1117;
+          --fg:        #e6edf3;
+          --muted:     #b0b8c0;
+          --faint:     #9198a1;
+          --rule:      #9198a1;
+          --panel:     #1c2128;
+          --panel-br:  #7d8590;
+          --sys-fill:  #16233a;
+          --sys-br:    #6f9fd8;
+          --live-fill: #132b1c;
+          --live-br:   #6fbf85;
+        }
+      }
+      .box   { fill: var(--panel); stroke: var(--panel-br); stroke-width: 1.5; rx: 6; }
+      .sys   { fill: var(--sys-fill); stroke: var(--sys-br); stroke-width: 1.5; rx: 6; }
+      .live  { fill: var(--live-fill); stroke: var(--live-br); stroke-width: 1.5; rx: 6; }
+      .ttl   { font-size: 14px; font-weight: 600; fill: var(--fg); }
+      .lbl   { font-size: 11px; fill: var(--muted); }
+      .flow  { font-size: 11px; fill: var(--faint); }
+      .line  { stroke: var(--rule); stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect class="bg" width="760" height="300" fill="var(--bg)"/>
+
+  <!-- module -->
+  <rect class="sys" x="20" y="40" width="180" height="90"/>
+  <text class="ttl" x="36" y="66">Module</text>
+  <text class="lbl" x="36" y="86">system/  ← the only part</text>
+  <text class="lbl" x="36" y="102">a metamodule handles</text>
+  <text class="lbl" x="36" y="118">scripts / sepolicy / prop</text>
+
+  <!-- metamodule -->
+  <rect class="box" x="290" y="40" width="180" height="90"/>
+  <text class="ttl" x="306" y="66">Metamodule</text>
+  <text class="lbl" x="306" y="86">at boot: read, route,</text>
+  <text class="lbl" x="306" y="102">apply, mark active</text>
+  <text class="lbl" x="306" y="118">no mounting in core</text>
+
+  <!-- live system -->
+  <rect class="live" x="560" y="40" width="180" height="90"/>
+  <text class="ttl" x="576" y="66">Live filesystem</text>
+  <text class="lbl" x="576" y="86">OverlayFS: copy-up layer</text>
+  <text class="lbl" x="576" y="102">Magic Mount: tmpfs + bind</text>
+  <text class="lbl" x="576" y="118">NoMount: VFS redirect</text>
+
+  <path class="line" d="M200 85 H 286"/>
+  <path class="line" d="M470 85 H 556"/>
+  <text class="flow" x="243" y="75" text-anchor="middle">system/</text>
+  <text class="flow" x="513" y="75" text-anchor="middle">mounted</text>
+
+  <!-- engine legend -->
+  <text class="ttl" x="20" y="176">Engines</text>
+
+  <rect class="live" x="20" y="192" width="230" height="56"/>
+  <text class="lbl" x="34" y="214">OverlayFS</text>
+  <text class="lbl" x="34" y="232">kernel support, I/O on write</text>
+
+  <rect class="live" x="265" y="192" width="230" height="56"/>
+  <text class="lbl" x="279" y="214">Magic Mount</text>
+  <text class="lbl" x="279" y="232">Magisk-identical, mounts visible</text>
+
+  <rect class="live" x="510" y="192" width="230" height="56"/>
+  <text class="lbl" x="524" y="214">VFS injection (NoMount)</text>
+  <text class="lbl" x="524" y="232">nothing enters the mount table</text>
+
+  <text class="flow" x="20" y="278">Only one metamodule is active at a time. Modules without a system/ directory never reach this path.</text>
+</svg>
