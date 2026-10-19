@@ -459,7 +459,7 @@ Prebuilt kernels save you from compiling. **Verify the exact model, Android vers
 - **Official KernelSU:** build an LKM with [Ylarod/ddk](https://github.com/Ylarod/ddk). The GKI and non-GKI build guides are archival — [How to build](https://kernelsu.org/guide/how-to-build.html) · [Integrate for non-GKI](https://kernelsu.org/guide/how-to-integrate-for-non-gki.html).
 - **Forks** (KernelSU-Next, SukiSU-Ultra, BakaSU) still support direct kernel integration — see each repository's `kernel/setup.sh`.
 - **Packaging and CI:** [AnyKernel3](https://github.com/osm0sis/AnyKernel3) · [kernel_build_action](https://github.com/dabao1955/kernel_build_action) · [KernelSU_Action](https://github.com/xiaoleGun/KernelSU_Action).
-- **Vendor kernel sources:** [Google](https://android.googlesource.com/kernel/) · [Xiaomi](https://github.com/MiCode/Xiaomi_Kernel_OpenSource) · [OnePlus](https://github.com/OnePlusOSS) · [Samsung](https://opensource.samsung.com).
+- **Vendor kernel sources:** [Google](https://android.googlesource.com/kernel/) · [Xiaomi](https://github.com/MiCode/Xiaomi_Kernel_OpenSource) · [OnePlus](https://github.com/OnePlusOSS) · [Motorola](https://github.com/MotorolaMobilityLLC) · [Samsung](https://opensource.samsung.com).
 - **Writing a module:** [Module guide](https://kernelsu.org/guide/module.html) · [WebUI](https://kernelsu.org/guide/module-webui.html) · [configuration API](https://kernelsu.org/guide/module-config.html) · [Difference with Magisk](https://kernelsu.org/guide/difference-with-magisk.html).
 
 ## Documentation
