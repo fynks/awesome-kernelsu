@@ -15,7 +15,7 @@ Thank you for your interest in contributing to Awesome KernelSU! This guide will
 ### What Can You Contribute?
 
 - **Official Resources**: New official KernelSU tools, documentation, or announcements
-- **KernelSU Derivatives**: Forks like KernelSU-Next, SukiSU-Ultra, BakaSU, or new derivatives
+- **KernelSU Derivatives**: Forks like KernelSU-Next, SukiSU Nova, BakaSU, RKSU, or new derivatives
 - **Metamodules**: Mounting implementations for the metamodule system
 - **Modules**: High-quality KernelSU modules that provide useful functionality
 - **Tools**: Development tools, builders, or utilities related to KernelSU
