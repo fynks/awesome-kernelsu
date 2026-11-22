@@ -100,7 +100,7 @@ Replaces the device kernel with a generic image.
 - The option for Knox-locked Samsung devices, where LKM cannot run.
 
 > [!NOTE]
-> Since the 3.0 line, official KernelSU no longer publishes GKI images — the build guide is archival and [Ylarod/ddk](https://github.com/Ylarod/ddk) is the recommended way to produce an LKM. Forks (KernelSU-Next, SukiSU-Ultra, BakaSU) and community builders still ship GKI images.
+> Since the 3.0 line, official KernelSU no longer publishes GKI images — the build guide is archival and [Ylarod/ddk](https://github.com/Ylarod/ddk) is the recommended way to produce an LKM. Forks (KernelSU-Next, SukiSU Nova, BakaSU) and community builders still ship GKI images.
 
 <details>
 <summary>Quick comparison</summary>
@@ -122,12 +122,12 @@ Replaces the device kernel with a generic image.
 
 ## Metamodules
 
-A **metamodule** provides the module *mounting* infrastructure. Since the 3.0 line, official KernelSU does not mount modules itself — a metamodule does.
+A **metamodule** provides the module *mounting* infrastructure. Since the 3.0 line, official KernelSU does not mount modules itself — it runs the active metamodule's `metamount.sh` and lets the metamodule decide how a module's `system/` directory reaches the filesystem.
 
 > [!IMPORTANT]
 > A metamodule is required only for modules that ship a `system/` directory. Script-only, `sepolicy.rule`, and `system.prop` modules work without one. Only one metamodule can be active at a time.
 
-This applies to official KernelSU, BakaSU, YukiSU, and FinaSU. KernelSU-Next and SukiSU-Ultra still carry their own mounting engines.
+The metamodule hooks are shared: official KernelSU, KernelSU-Next, SukiSU Nova (formerly SukiSU Ultra), BakaSU, YukiSU, and FinaSU all run the same `metainstall.sh` / `metamount.sh` / `metauninstall.sh` scripts, so a metamodule ZIP is largely portable between them. The difference is what the fork adds on top — SukiSU Nova and FinaSU bundle a mount engine of their own, while KernelSU-Next stays metamodule-first and adds SUSFS loading and preinit around it.
 
 <img src="./media/metamodule-flow.svg" alt="A module's system directory is read by the metamodule at boot, which routes it to OverlayFS, Magic Mount, or VFS injection, then applies it to the live filesystem" width="760">
 
@@ -176,29 +176,35 @@ Start from your situation:
 |---|---|
 | Stock-ish GKI phone, firmware updates matter | Official KernelSU, LKM mode |
 | Kernel outside 5.10–6.18, or you want SUSFS without rebuilding | KernelSU-Next |
-| You need KPM modules or a very old kernel | SukiSU-Ultra |
+| You need KPM modules, or a kernel below 4.14 | SukiSU Nova |
 | You want the official Manager on a non-upstream kernel, or manual hooks down to 3.4 | BakaSU |
-| You want Zygisk bundled with the Manager | YukiSU or FinaSU |
+| You want Zygisk bundled with the Manager | SukiSU Nova, YukiSU, or FinaSU |
+| You maintain kernels down to 3.x and need arm32 too | RKSU or xxKSU |
 | Knox-locked Samsung, or an emulator image | GKI mode, from a fork or a community builder |
 
 Then compare the details:
 
 | Variant | Kernel support | Mounting | KPM | Multi-manager | Manager highlights | Best for |
 |---|---|---|---|---|---|---|
-| **Official KernelSU** | GKI 2.0 (5.10+), LKM to Android 17 / 6.18 | Metamodule | — | — | App profiles, module config, `adb root`, Magica, SELinux hide | Stability and OTA survival |
-| **KernelSU-Next** | Non-GKI 4.x–5.4 LTS, GKI 5.10+ | Magic Mount + OverlayFS toggle | — | — | Module/allowlist backup, prebuilt SUSFS LKM, bulk install | Wide kernel range without compiling |
-| **SukiSU-Ultra** | Non-GKI 4.x–5.4 LTS (3.x experimental), GKI 5.10+ | Built-in Magic Mount | ✅ | — | SUSFS controls, WebUI X, jailbreak mode | KPM and legacy devices |
+| **Official KernelSU** | GKI 2.0 (5.10+), LKM to Android 17 / 6.18 | Metamodule | — | — | App profiles, module config, `adb root`, Magica, SELinux hide, preinit runner | Stability and OTA survival |
+| **KernelSU-Next** | Non-GKI 4.4–5.4, GKI 5.10+, LKM to 6.18 | Metamodule | — | — | Module/allowlist backup, prebuilt SUSFS LKM, module preinit, risk checks | Wide kernel range without compiling |
+| **SukiSU Nova** | Non-GKI 4.14+ (3.x with backports), GKI 5.10+ | Built-in | ✅ | ✅ dynamic managers | SUSFS controls, NyaZygisk, theme store, kernel extension center | KPM and legacy devices |
 | **BakaSU** | GKI 2.0, 3.4+ manual | Metamodule | — | ✅ | Minimal hooks, built-in SUSFS management | Old kernels and a second Manager |
-| **YukiSU** | ARM64 GKI 2.0 | Metamodule | — | — | Built-in YukiZygisk, C++ userspace, temporary jailbreak mode | A self-contained Zygisk |
-| **FinaSU** | GKI 5.10+, 4.14+ manual | Metamodule | — | — | FolkZygisk, theme store | Customization |
+| **YukiSU** | ARM64 GKI 2.0 only, LKM only | Metamodule, with built-in Kagami and external backends | — | ✅ dynamic managers | Built-in YukiZygisk, C++ userspace, SuperKey, Kasumi rules, UTS spoofing, Lua plugins | A self-contained Zygisk |
+| **FinaSU** | GKI 5.10+, 4.14+ manual | Built-in Folk-Mount, plus NoMount | — | — | FolkZygisk, Sui (Shizuku API), theme store | Customization |
 | **KOWSU** | GKI 2.0, 4.14+ manual | Metamodule | — | ✅ | Material theming, many translations | Upstream look with a different theme |
+| **RKSU** | 4.4–6.18; 3.x only through community backports | Magic Mount | — | ✅ | Spoofed Manager builds, arm32 target | Legacy non-GKI kernels |
+| **xxKSU** | 3.0–5.4+ upstream-compliant driver | Metamodule | — | — | arm64 and arm32, patch-focused staging branches | Maintaining an old kernel tree |
+| **MKSU** (`5ec1cff`) | Follows the branch you build | Magic Mount | — | — | Where the Magic Mount API and the no-mount / no-tmpfs options came from | Reference for mount-avoidance work |
+| **SakiSU** | GKI 2.0 LKM, vendor_boot cleanup | Metamodule | — | ✅ dynamic manager | Runtime vermagic adaptation, vendor_boot module removal | vivo/iQOO devices |
+| **XECKernel Ultra** | GKI 5.10–6.18 per KMI | KernelPatch route below 5.10 | — | — | Built-in TEE engine, health score, module backup | An all-in-one manager |
 | **Wild KSU** | Archived | — | — | — | — | Historic reference only |
 
 > [!NOTE]
 > SUSFS is a separate kernel-side project ([susfs4ksu](https://gitlab.com/simonpunk/susfs4ksu)), not part of KernelSU. "Built-in management" means the Manager can drive SUSFS on a SUSFS-capable kernel; the patches or the LKM loader are still required.
 
 > [!NOTE]
-> KPM is a SukiSU-Ultra feature. [KPatch-Next](https://github.com/KernelSU-Next/KPatch-Next) ports it to Magisk and KernelSU, so a KPM module can be used on a plain KernelSU build.
+> KPM came to KernelSU through SukiSU (now Nova). [KPatch-Next](https://github.com/KernelSU-Next/KPatch-Next) ports it to Magisk and KernelSU, so a KPM module can be used on a plain KernelSU build.
 
 ### Official KernelSU
 
@@ -214,9 +220,10 @@ Then compare the details:
 <summary><b>View details</b></summary>
 
 - **Target:** GKI 2.0 (kernel 5.10+), including WSA, ChromeOS, and container-based Android.
-- **Architectures:** `arm64-v8a`, `x86_64`; `riscv64` `ksud`/`ksuinit` artifacts.
+- **Architectures:** `arm64-v8a` and `x86_64` LMKs; `riscv64` `ksud`/`ksuinit` artifacts, with riscv64 hook support under LKM.
 - **Kernel coverage in releases:** Android 12 / 5.10 through Android 17 / 6.18.
 - **Mounting:** metamodule-based.
+- **Boot:** a small preinit runner executes module `preinit.conf` files from `/metadata` before SELinux policy loads, with a size cap and a bootloop guard. `ksuinit` also tolerates a vermagic mismatch.
 - **Manager:** Material 3 and MIUI-style themes, app profiles, module config, `adb root`, Magica jailbreak mode, optional SELinux hiding, native module blacklist, late-load mode, `boot-patch-v2`, and a kernel-side `sulog` view.
 - **Not supported:** non-GKI kernels were dropped after the 1.0 line; the [integration guide](https://kernelsu.org/guide/how-to-integrate-for-non-gki.html) is archival.
 
@@ -237,37 +244,41 @@ Then compare the details:
 <details>
 <summary><b>View details</b></summary>
 
-- **Kernel support:** non-GKI 4.x–5.4 in LTS mode, GKI 5.10 upward; released LKM artifacts cover Android 12 / 5.10 through Android 17 / 6.18.
-- **Mounting:** built-in Magic Mount and OverlayFS, switchable from settings.
+- **Kernel support:** 4.4 in LTS mode, 4.19–5.4 with the driver built in, and GKI 5.10 upward; released LKM artifacts cover Android 12 / 5.10 through Android 17 / 6.18.
+- **Mounting:** metamodule-based, like upstream. The prebuilt SUSFS `.ko` files and the module preinit runner are what this fork adds at boot.
 - **SUSFS:** ships `susfs_guard_lkm.ko` per KMI, with KPROBES hiding controls in the Manager.
 - **Manager:** module backup and restore, SU allowlist backup, bulk install, auto-updates, hide-hosts via app-profile unmount, spoofed-package Manager builds, native kernel-module blocking, `shell_su_adb_only`.
-- **Architectures:** `arm64-v8a`, `armeabi-v7a`, `x86_64`.
+- **Architectures:** `arm64-v8a` and `x86_64`.
+- **Preinit:** an opt-in runner executes a module's `preinit.conf` from `/metadata` before SELinux policy loads, with a bootloop guard that gives up after repeated failures.
 - **Device list:** [unofficially supported devices](https://kernelsu-next.github.io/webpage/pages/devices.html).
 
 **Resources:** [Manager APK](https://github.com/KernelSU-Next/KernelSU-Next/releases) · [Website](https://kernelsu-next.github.io/webpage/) · [Telegram group](https://t.me/ksunext) · [CI channel](https://t.me/ksunext_ci) · [Issue tracker](https://github.com/KernelSU-Next/KernelSU-Next/issues)
 
 </details>
 
-### SukiSU-Ultra
+### SukiSU Nova
 
-[![GitHub](https://img.shields.io/badge/GitHub-SukiSU--Ultra-blue?logo=github&style=flat-square)](https://github.com/SukiSU-Ultra/SukiSU-Ultra)
-[![Release](https://img.shields.io/github/v/release/SukiSU-Ultra/SukiSU-Ultra?style=flat-square)](https://github.com/SukiSU-Ultra/SukiSU-Ultra/releases)
-[![Stars](https://img.shields.io/github/stars/SukiSU-Ultra/SukiSU-Ultra?style=flat-square)](https://github.com/SukiSU-Ultra/SukiSU-Ultra)
+[![GitHub](https://img.shields.io/badge/GitHub-SukiSU--Nova-blue?logo=github&style=flat-square)](https://github.com/SukiSU-Nova/SukiSU-Nova)
+[![Release](https://img.shields.io/github/v/release/SukiSU-Nova/SukiSU-Nova?style=flat-square)](https://github.com/SukiSU-Nova/SukiSU-Nova/releases)
+[![Stars](https://img.shields.io/github/stars/SukiSU-Nova/SukiSU-Nova?style=flat-square)](https://github.com/SukiSU-Nova/SukiSU-Nova)
 [![Docs](https://img.shields.io/badge/Docs-sukisu.org-green?style=flat-square)](https://sukisu.org/)
 [![Telegram](https://img.shields.io/badge/Telegram-SukiKSU-blue?style=flat-square&logo=telegram)](https://t.me/Sukiksu)
 
-> The variant with KPM, built-in Magic Mount, and the deepest legacy device coverage.
+> Formerly **SukiSU Ultra**. Renamed by the same maintainers, with development continuing under the new name. The variant with KPM, a bundled mount engine, and the deepest legacy device coverage.
 
 <details>
 <summary><b>View details</b></summary>
 
-- **Kernel support:** non-GKI 4.x–5.4 in LTS mode (3.x experimental), GKI 5.10 upward, with LKM, GKI, and built-in integration paths.
-- **Mounting:** built-in Magic Mount.
-- **KPM:** KernelPatch-style kernel modules, ported from APatch, with inline and syscall-table hooks.
-- **Manager:** built-in SUSFS management, Magica jailbreak mode, WebUI X, MIUI and Material themes, in-app language switcher, Zygisk implementation detection, multi-manager signature authorization, Android 8–11 support.
-- **Architectures:** `arm64-v8a`, `armeabi-v7a`, `x86_64`.
+- **Kernel support:** non-GKI 4.14 and up — 3.4–3.18 only with extra backports — plus GKI 5.10 upward, through LKM, GKI, or built-in integration.
+- **Mounting:** its own mount engine; the metamodule hooks are still present, so a metamodule can be installed for what the built-in engine does not cover.
+- **KPM:** KernelPatch-derived kernel modules with inline and syscall-table hooks, gated on `CONFIG_KPM=y`.
+- **Manager:** SUSFS controls in a dedicated kernel extension centre, NyaZygisk built in, a theme store, Magica jailbreak mode, WebUI support, Miuix and Material 3 themes, and decentralised manager authorisation instead of a fixed package name.
+- **Architectures:** `arm64-v8a`, `armeabi-v7a` (bare), `x86_64`, `riscv64`.
 
-**Resources:** [Manager APK](https://github.com/SukiSU-Ultra/SukiSU-Ultra/releases) · [Website](https://sukisu.org/) · [Installation guide](https://sukisu.org/guide/installation) · [Telegram](https://t.me/Sukiksu)
+> [!NOTE]
+> Pre-rename releases are no longer on GitHub, so a build older than the rename has to come from the project's own channels. The old `SukiSU-Ultra` URLs redirect to the new repository.
+
+**Resources:** [Manager APK](https://github.com/SukiSU-Nova/SukiSU-Nova/releases) · [Website](https://sukisu.org/) · [Installation guide](https://sukisu.org/guide/installation) · [KPM patch source](https://github.com/SukiSU-Nova/SukiSU_KernelPatch_patch) · [Telegram](https://t.me/Sukiksu)
 
 </details>
 
@@ -298,25 +309,26 @@ Then compare the details:
 
 ### YukiSU
 
-[![GitHub](https://img.shields.io/badge/GitHub-Anatdx%2FYukiSU-blue?logo=github&style=flat-square)](https://github.com/Anatdx/YukiSU)
-[![Release](https://img.shields.io/github/v/release/Anatdx/YukiSU?style=flat-square)](https://github.com/Anatdx/YukiSU/releases)
-[![Stars](https://img.shields.io/github/stars/Anatdx/YukiSU?style=flat-square)](https://github.com/Anatdx/YukiSU)
-[![Docs](https://img.shields.io/badge/Docs-yukisu.anatdx.com-green?style=flat-square)](https://yukisu.anatdx.com/)
+[![GitHub](https://img.shields.io/badge/GitHub-Rouyashiki%2FYukiSU-blue?logo=github&style=flat-square)](https://github.com/Rouyashiki/YukiSU)
+[![Release](https://img.shields.io/github/v/release/Rouyashiki/YukiSU?style=flat-square)](https://github.com/Rouyashiki/YukiSU/releases)
+[![Stars](https://img.shields.io/github/stars/Rouyashiki/YukiSU?style=flat-square)](https://github.com/Rouyashiki/YukiSU)
+[![Docs](https://img.shields.io/badge/Docs-yukisu.rouyashiki.org-green?style=flat-square)](https://yukisu.rouyashiki.org/)
 [![Telegram](https://img.shields.io/badge/Telegram-YukiSU-blue?style=flat-square&logo=telegram)](https://t.me/YukiSU)
 
-> A KernelSU fork with a rewritten C++ userspace and its own kernel-level Zygisk implementation.
+> A KernelSU fork with a rewritten C++ userspace, its own kernel-level Zygisk, and dynamic manager support.
 
 <details>
 <summary><b>View details</b></summary>
 
-- **Scope:** ARM64 GKI 2.0 with LKM, and nothing else — the project keeps a deliberately narrow target.
-- **Userspace:** `ksud`, `ksuinit`, and `su` are rewritten in C++ rather than wrapping upstream binaries.
-- **Zygisk:** [YukiZygisk](https://github.com/Anatdx/YukiZygisk) is built in and managed from the Manager, so no separate Zygisk module is needed.
-- **Jailbreak mode:** the LKM can be loaded temporarily without touching the boot image; the root does not survive a reboot.
-- **Authentication:** the official Manager authenticates by signature; a SuperKey is available for private deployments.
-- **Mounting:** metamodule-based, following upstream.
+- **Scope:** ARM64 GKI 2.0 in LKM mode only — the project deliberately dropped built-in `CONFIG_KSU=y` kernels and keeps a narrow target. The Manager needs Android 12+.
+- **Userspace:** `ksud`, `ksuinit`, and `su` are rewritten in C++ rather than wrapping upstream binaries, so behaviour can differ from other forks in ways worth reporting here first.
+- **Zygisk:** [YukiZygisk](https://github.com/Rouyashiki/YukiZygisk) is built in and managed from the Manager, and it also ships as a standalone module for other kernels.
+- **Hiding:** Kasumi hide rules with a documented userspace API, configurable `su` paths, and `uname` spoofing done by editing `uts_ns` rather than rebuilding the kernel.
+- **Extras:** Lua plugins with their own configuration and repositories, module preinit and hot-install support, `init.rc` injection, and an ImgPatch ramdisk editor.
+- **Authentication:** the Manager authenticates by signature, with an APatch-style SuperKey for private deployments; trusted managers can be added beyond the built-in package name.
+- **Mounting:** metamodule-based, with Kagami mounting built in and external metamodule backends selectable.
 
-**Resources:** [Manager APK](https://github.com/Anatdx/YukiSU/releases) · [Website](https://yukisu.anatdx.com/) · [Telegram](https://t.me/YukiSU)
+**Resources:** [Manager APK](https://github.com/Rouyashiki/YukiSU/releases) · [Website](https://yukisu.rouyashiki.org/) · [Telegram](https://t.me/YukiSU)
 
 </details>
 
@@ -327,15 +339,17 @@ Then compare the details:
 [![Stars](https://img.shields.io/github/stars/LyraVoid/FinaSU?style=flat-square)](https://github.com/LyraVoid/FinaSU)
 [![Telegram](https://img.shields.io/badge/Telegram-FinaSU-blue?style=flat-square&logo=telegram)](https://t.me/FinaSU)
 
-> A KernelSU fork with a built-in Zygisk engine, SUSFS support, and a theme store.
+> A KernelSU fork with a built-in Zygisk engine, a Shizuku backend, mountless module loading, and a theme store.
 
 <details>
 <summary><b>View details</b></summary>
 
-- **Zygisk:** the built-in FolkZygisk engine, with Manager controls.
-- **Hiding:** mount hiding, SELinux hiding, AVC log spoofing, unmount policy, and SUSFS support gated on kernel capability.
+- **Zygisk:** the built-in FolkZygisk engine, with Manager controls; it steps aside automatically when an external Zygisk provider is installed.
+- **Sui:** the built-in Shizuku API backend, so apps that talk to Shizuku reach a managed service instead of a separate installation.
+- **Mounting:** Folk-Mount runs in auto, built-in, or metamodule mode, and a NoMount VFS backend is embedded per KMI — `/proc/mounts` stays clean without a separate metamodule or the `nm` binary.
+- **Hiding:** mount hiding, SELinux hiding, AVC log spoofing, unmount policy, and SUSFS support gated on kernel capability and reported through the kernel ABI.
 - **Manager:** `.fpt` themes with a theme store, multi-page wallpapers, module repository browsing, in-app language picker.
-- **Kernel support:** GKI 5.10+; 4.14+ with a manual build.
+- **Kernel support:** GKI 5.10+; 4.14+ with a manual build. Installation by LKM, patched boot image, or AnyKernel3.
 - **Architectures:** `arm64-v8a` first, with `x86_64` and `riscv64` hooks present.
 
 **Resources:** [Manager APK](https://github.com/LyraVoid/FinaSU/releases) · [Telegram](https://t.me/FinaSU)
@@ -352,6 +366,109 @@ Then compare the details:
 > A personal upstream fork focused on Material theming and translation coverage.
 
 No tagged releases — the Manager APK comes from the project's build channel. Kernel support follows upstream: GKI 2.0, with 4.14+ through manual integration. The channel also runs a [discussion group](https://t.me/kowchannelchat).
+
+### RKSU
+
+[![GitHub](https://img.shields.io/badge/GitHub-rksuorg%2FKernelSU-blue?logo=github&style=flat-square)](https://github.com/rksuorg/KernelSU)
+[![Release](https://img.shields.io/github/v/release/rksuorg/KernelSU?style=flat-square)](https://github.com/rksuorg/KernelSU/releases)
+[![Stars](https://img.shields.io/github/stars/rksuorg/KernelSU?style=flat-square)](https://github.com/rksuorg/KernelSU)
+
+> An upstream fork that keeps non-GKI and GKI 1.0 support alive, with arm32 targets and its own kernel patch set.
+
+<details>
+<summary><b>View details</b></summary>
+
+- **Kernel support:** 4.4 to 6.18. Kernels below 4.4 need the extra backports that downstream forks such as SakiSU carry, not the main tree.
+- **Mounting:** Magic Mount, following the `5ec1cff` API.
+- **Hook:** scope-minimised hook with a manual-hook path for old kernels.
+- **Manager:** spoofed-package builds alongside the normal APK, and compatibility with several other managers' kernels.
+- **Architectures:** `arm64-v8a`, `armeabi-v7a`, `x86_64`.
+- **Pace:** releases use `-legacy` tags, and the trunk periodically freezes for rebases onto upstream — the manager build number in the release name is the reliable signal. Check the releases page and the Telegram feed rather than the default-branch commit date.
+- **Extra:** a companion [kernel_patches](https://github.com/rksuorg/kernel_patches) repository with the recommended patches.
+
+**Resources:** [Manager APK](https://github.com/rksuorg/KernelSU/releases) · [Update channel](https://t.me/rsukrnlsu)
+
+</details>
+
+### xxKSU
+
+[![GitHub](https://img.shields.io/badge/GitHub-backslashxx%2FKernelSU-blue?logo=github&style=flat-square)](https://github.com/backslashxx/KernelSU)
+[![Release](https://img.shields.io/github/v/release/backslashxx/KernelSU?style=flat-square)](https://github.com/backslashxx/KernelSU/releases)
+[![Stars](https://img.shields.io/github/stars/backslashxx/KernelSU?style=flat-square)](https://github.com/backslashxx/KernelSU)
+
+> An upstream-compliant driver for old kernels, run as a patch workshop on staging branches.
+
+<details>
+<summary><b>View details</b></summary>
+
+- **Kernel support:** an upstream-compliant driver for Linux 3.0 to 5.4+, which is why so many non-GKI kernel trees pull from it.
+- **Architectures:** `arm64-v8a` and `armeabi-v7a`.
+- **Workflow:** the maintainer develops on per-topic `archive/*` branches and merges what proves out, so the release tags are the stable surface and the branches are the lab.
+- **Contribution upstream:** several kernel fixes in official KernelSU came from here — syscall wiring, `throne_tracker` deadlocks, and the batched symbol resolver.
+
+**Resources:** [Manager APK](https://github.com/backslashxx/KernelSU/releases) · [Test and debug toolkit](https://github.com/backslashxx/ksu_toolkit)
+
+</details>
+
+### MKSU
+
+[![GitHub](https://img.shields.io/badge/GitHub-5ec1cff%2FKernelSU-blue?logo=github&style=flat-square)](https://github.com/5ec1cff/KernelSU)
+[![Release](https://img.shields.io/github/v/release/5ec1cff/KernelSU?style=flat-square)](https://github.com/5ec1cff/KernelSU/releases)
+[![Stars](https://img.shields.io/github/stars/5ec1cff/KernelSU?style=flat-square)](https://github.com/5ec1cff/KernelSU)
+
+> The personal branch of a KernelSU maintainer, and the origin of the Magic Mount API that most forks build on.
+
+<details>
+<summary><b>View details</b></summary>
+
+- **Significance:** the `mksu`, `magica`, `lkm`, `nomount`, `notmpfs`, and `syscallhook` branches are where Magic Mount and the mount-avoidance options were worked out before landing elsewhere.
+- **Mounting:** Magic Mount, with options to skip tmpfs and skip mounts entirely for apps that inspect the mount table.
+- **Release identity:** the build number is a placeholder, not a version you can compare against other forks. Treat it as a research build: read the commits and the branch you are building, not the tag.
+- **Pace:** development pauses and resumes; the repository is a working branch, not a product line.
+
+**Resources:** [Releases](https://github.com/5ec1cff/KernelSU/releases) · [Commit history](https://github.com/5ec1cff/KernelSU/commits/main)
+
+</details>
+
+### SakiSU
+
+[![GitHub](https://img.shields.io/badge/GitHub-XingChenRS%2FSakiSU-blue?logo=github&style=flat-square)](https://github.com/XingChenRS/SakiSU)
+[![Release](https://img.shields.io/github/v/release/XingChenRS/SakiSU?style=flat-square)](https://github.com/XingChenRS/SakiSU/releases)
+[![Stars](https://img.shields.io/github/stars/XingChenRS/SakiSU?style=flat-square)](https://github.com/XingChenRS/SakiSU)
+
+> An independent downstream of the ReSukiSU line, aimed at vivo/iQOO devices with vendor module complications.
+
+<details>
+<summary><b>View details</b></summary>
+
+- **Vermagic handling:** a single generic LKM is adapted at runtime by `ksuinit` during `init_module`, instead of shipping one module per build.
+- **vendor_boot handling:** selecting a `vendor_boot` image runs a separate removal pass that walks every ramdisk fragment and deletes the pre-installed `vr.ko` / `vklp.ko` references, with a SHA-1-named backup written to `/data/adb/ksu/` first.
+- **Signing:** the production certificate is defined in one place and re-checked against the built APK, so a manager either authenticates or reports itself as unofficial.
+- **Upstream:** no promise of automatic sync — changes from ReSukiSU are audited before being pulled in.
+- **Upgrade path:** releases carry a `-sakisu` suffix. Earlier CI-signed builds used a different certificate, so they cannot be upgraded in place — the Manager has to be reinstalled and re-trusted first.
+
+**Resources:** [Releases](https://github.com/XingChenRS/SakiSU/releases) · [Project site](https://resukisu.github.io)
+
+</details>
+
+### XECKernel Ultra
+
+[![GitHub](https://img.shields.io/badge/GitHub-byBOOK10086%2FXECKernelPro-blue?logo=github&style=flat-square)](https://github.com/byBOOK10086/XECKernelPro)
+[![Release](https://img.shields.io/github/v/release/byBOOK10086/XECKernelPro?style=flat-square)](https://github.com/byBOOK10086/XECKernelPro/releases)
+
+> A KernelSU fork with its own manager, a bundled TEE engine, and a device-health score.
+
+<details>
+<summary><b>View details</b></summary>
+
+- **Kernel support:** GKI 5.10 through 6.18, one `kernelsu.ko` per KMI; below 5.10 it uses the KernelPatch route.
+- **Manager:** a "root / SELinux / SUSFS / TEE / daemon / LKM / UAPI" checklist condensed into one score with per-item evidence, a radial quick menu, colour and glass themes, and module backup to a tar that restores into `modules_update` so a bad restore is undone by not rebooting.
+- **TEE:** a built-in Tricky Store–style engine with one-tap keybox refresh.
+- **Caveat:** young project, small user base, and a Manager that departs from upstream. Read its issue tracker before trusting it with a daily driver.
+
+**Resources:** [Releases](https://github.com/byBOOK10086/XECKernelPro/releases)
+
+</details>
 
 ### Wild KSU — archived
 
@@ -371,21 +488,24 @@ No tagged releases — the Manager APK comes from the project's build channel. K
 
 ### Zygisk implementations
 
-KernelSU has no built-in Zygisk. Pick one of these and install it as a module.
+Official KernelSU ships no Zygisk. Pick one of these and install it as a module; some forks (SukiSU Nova, YukiSU, FinaSU) bundle an engine instead. Run one implementation only — stacking two is the usual cause of a boot loop.
 
 | Implementation | Notes | Release |
 |---|---|---|
-| [**ZygiskNext**](https://github.com/LSPosed/ZygiskNext) | The long-standing standalone implementation, now hosted by the LSPosed organisation. The original repository is [Dr-TSNG/ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext). | [![Release](https://img.shields.io/github/v/release/LSPosed/ZygiskNext?style=flat-square)](https://github.com/LSPosed/ZygiskNext/releases) |
+| [**ZygiskNext**](https://github.com/Dr-TSNG/ZygiskNext) | The long-standing standalone implementation, maintained at its original repository again after a spell under the LSPosed organisation. | [![Release](https://img.shields.io/github/v/release/Dr-TSNG/ZygiskNext?style=flat-square)](https://github.com/Dr-TSNG/ZygiskNext/releases) |
 | [**ReZygisk**](https://github.com/PerformanC/ReZygisk) | Transparent implementation, written to be auditable. | [![Release](https://img.shields.io/github/v/release/PerformanC/ReZygisk?style=flat-square)](https://github.com/PerformanC/ReZygisk/releases) |
 | [**NeoZygisk**](https://github.com/JingMatrix/NeoZygisk) | ptrace-based zygote injection. | [![Release](https://img.shields.io/github/v/release/JingMatrix/NeoZygisk?style=flat-square)](https://github.com/JingMatrix/NeoZygisk/releases) |
-| [**ZygiskNextNext**](https://github.com/VeryBaaad/ZygiskNextNext) | A from-scratch implementation, listed in the official registry. | [![Release](https://img.shields.io/github/v/release/VeryBaaad/ZygiskNextNext?style=flat-square)](https://github.com/VeryBaaad/ZygiskNextNext/releases) |
-| [**YukiZygisk**](https://github.com/Anatdx/YukiZygisk) | Kernel-level Zygisk, bundled with YukiSU. | [![Release](https://img.shields.io/github/v/release/Anatdx/YukiZygisk?style=flat-square)](https://github.com/Anatdx/YukiZygisk/releases) |
-| [**VexZygisk**](https://github.com/Lxiaoyao077/VexZygisk) | Kernel-level Zygisk; submitted to the official registry. | [![Release](https://img.shields.io/github/v/release/Lxiaoyao077/VexZygisk?style=flat-square)](https://github.com/Lxiaoyao077/VexZygisk/releases) |
+| [**ZNNext**](https://github.com/VeryBaaad/ZNNext) | A from-scratch reimplementation of the Zygisk Next API rather than of Zygisk itself; listed in the official registry. | [![Release](https://img.shields.io/github/v/release/VeryBaaad/ZNNext?style=flat-square)](https://github.com/VeryBaaad/ZNNext/releases) |
+| [**OnyxZygisk**](https://github.com/OnyxZygisk/OnyxZygisk) | ptrace injection with hot-swappable modules, its own DenyList, and a WebUI; no kernel module needed. | [![Release](https://img.shields.io/github/v/release/OnyxZygisk/OnyxZygisk?style=flat-square)](https://github.com/OnyxZygisk/OnyxZygisk/releases) |
+| [**YukiZygisk**](https://github.com/Rouyashiki/YukiZygisk) | Kernel-level Zygisk, bundled with YukiSU and also installable standalone. | [![Release](https://img.shields.io/github/v/release/Rouyashiki/YukiZygisk?style=flat-square)](https://github.com/Rouyashiki/YukiZygisk/releases) |
+| [**VexZygisk**](https://github.com/LxyaoX/VexZygisk) | C rewrite of the ReZygisk approach, with a custom loader so module libraries bypass the system linker; one archive per root solution. | [![Release](https://img.shields.io/github/v/release/LxyaoX/VexZygisk?style=flat-square)](https://github.com/LxyaoX/VexZygisk/releases) |
+| **NyaZygisk** | Bundled inside SukiSU Nova rather than installed separately, with its running state shown on the home screen. | Shipped with the fork |
 
 For the Xposed layer on top of Zygisk: [**LSPosed**](https://github.com/LSPosed/LSPosed).
 
 ### Module managers
 
+- [**WebUI X Portable**](https://github.com/MMRLApp/WebUI-X-Portable) — the WebUI X runtime from MMRL, packaged on its own so modules that ship a WebUI can run outside it.
 - [**MMRL**](https://github.com/MMRLApp/MMRL) — module manager with a built-in repository, updates, backup and restore, and the WebUI X runtime. Community repositories: [ZGUATION-PROJECTS/ZG-R](https://github.com/ZGUATION-PROJECTS/ZG-R) · [Yukari0201/mmrl-repo](https://github.com/Yukari0201/mmrl-repo).
 
 ### Root hiding and attestation
@@ -393,10 +513,11 @@ For the Xposed layer on top of Zygisk: [**LSPosed**](https://github.com/LSPosed/
 | Project | What it does | Release |
 |---|---|---|
 | [**SUSFS**](https://gitlab.com/simonpunk/susfs4ksu) | Upstream kernel patches and userspace tool for hiding root files and mounts. The `master` branch is frozen; per-kernel-version branches carry the current code. | [![Last commit](https://img.shields.io/gitlab/last-commit/simonpunk/susfs4ksu?style=flat-square)](https://gitlab.com/simonpunk/susfs4ksu) |
-| [**susfs4ksu**](https://github.com/ShirkNeko/susfs4ksu) | Actively maintained SUSFS tree. | [![Last commit](https://img.shields.io/github/last-commit/ShirkNeko/susfs4ksu?style=flat-square)](https://github.com/ShirkNeko/susfs4ksu) |
-| [**susfs4ksu-lkm**](https://github.com/inforcqb/susfs4ksu-lkm) | SUSFS ported to a loadable kernel module, loaded through `ksud`. Releases also ship a flashable KernelSU module that picks the matching `.ko` for the device kernel and loads it at boot, so no kernel rebuild or manual loading is needed. | [![Release](https://img.shields.io/github/v/release/inforcqb/susfs4ksu-lkm?style=flat-square)](https://github.com/inforcqb/susfs4ksu-lkm/releases) |
-| [**susfs-lkm-module**](https://github.com/matsuzaka-yuki/susfs-lkm-module) | KernelSU-compatible ZIP wrapper around the pinned SUSFS LKM. | [![Release](https://img.shields.io/github/v/release/matsuzaka-yuki/susfs-lkm-module?style=flat-square)](https://github.com/matsuzaka-yuki/susfs-lkm-module/releases) |
-| [**susfs4ksu-module**](https://github.com/sidex15/susfs4ksu-module) | Userspace addon service for SUSFS. | [![Release](https://img.shields.io/github/v/release/sidex15/susfs4ksu-module?style=flat-square)](https://github.com/sidex15/susfs4ksu-module/releases) |
+| [**susfs4ksu-for-lkm**](https://github.com/inforcqb/susfs4ksu-for-lkm) | SUSFS as a loadable kernel module for GKI/CFI devices, loaded through `ksud`, so no kernel rebuild is needed. Companion ports cover x86_64 emulator images. | [![Release](https://img.shields.io/github/v/release/inforcqb/susfs4ksu-for-lkm?style=flat-square)](https://github.com/inforcqb/susfs4ksu-for-lkm/releases) |
+| [**susfs4ksu-lkm-x64**](https://github.com/ymuuuu/susfs4ksu-lkm-x64) | The x86_64 port of the above, for Android emulator images running KernelSU-Next LKM. | [![Release](https://img.shields.io/github/v/release/ymuuuu/susfs4ksu-lkm-x64?style=flat-square)](https://github.com/ymuuuu/susfs4ksu-lkm-x64/releases) |
+| [**susfs-lkm-module**](https://github.com/matsuzaka-yuki/susfs-lkm-module) | KernelSU-compatible ZIP wrapper around the pinned inforcqb LKM — loader only, no rule management. | [![Release](https://img.shields.io/github/v/release/matsuzaka-yuki/susfs-lkm-module?style=flat-square)](https://github.com/matsuzaka-yuki/susfs-lkm-module/releases) |
+| [**susfs4ksu-module**](https://github.com/sidex15/susfs4ksu-module) | The addon root-hiding service most SUSFS users install: rule persistence, profiles, and a WebUI. | [![Release](https://img.shields.io/github/v/release/sidex15/susfs4ksu-module?style=flat-square)](https://github.com/sidex15/susfs4ksu-module/releases) |
+| [**SUSFS Studio**](https://github.com/LyraVoid/SUSFS-Studio) | Independent WebUI for a SUSFS-capable device: capability diagnostics, versioned rule archives, and per-operation result reports. Does not install SUSFS itself. | [![Release](https://img.shields.io/github/v/release/LyraVoid/SUSFS-Studio?style=flat-square)](https://github.com/LyraVoid/SUSFS-Studio/releases) |
 | [**ReSuSFS**](https://github.com/ahmed-alnassif/ReSuSFS) | Packaged SUSFS experience: strong hiding by default, built-in spoofing, config files, script manager. Listed in the official registry. | [![Release](https://img.shields.io/github/v/release/ahmed-alnassif/ReSuSFS?style=flat-square)](https://github.com/ahmed-alnassif/ReSuSFS/releases) |
 | [**Zygisk Assistant**](https://github.com/snake-4/Zygisk-Assistant) | Zygisk module that hides root for KernelSU, Magisk, and APatch. | [![Release](https://img.shields.io/github/v/release/snake-4/Zygisk-Assistant?style=flat-square)](https://github.com/snake-4/Zygisk-Assistant/releases) |
 | [**Integrity-Box**](https://github.com/MeowDump/Integrity-Box) | Toolset for Play Integrity and system environment management. | [![Release](https://img.shields.io/github/v/release/MeowDump/Integrity-Box?style=flat-square)](https://github.com/MeowDump/Integrity-Box/releases) |
@@ -414,11 +535,17 @@ For the Xposed layer on top of Zygisk: [**LSPosed**](https://github.com/LSPosed/
 
 ### Kernel-side tooling
 
-- [**KPatch-Next**](https://github.com/KernelSU-Next/KPatch-Next) — standalone KPM implementation for Magisk and KernelSU, with an installer module in [KPatch-Next-Module](https://github.com/KernelSU-Next/KPatch-Next-Module). This is what makes KPM usable outside SukiSU-Ultra.
+- [**KPatch-Next**](https://github.com/KernelSU-Next/KPatch-Next) — standalone KPM implementation for Magisk and KernelSU, with an installer module in [KPatch-Next-Module](https://github.com/KernelSU-Next/KPatch-Next-Module). This is what makes KPM usable outside SukiSU Nova.
+- [**KernelPatch**](https://github.com/bmax121/KernelPatch) — the patching and hooking layer underneath APatch and the KPM implementation SukiSU Nova carries.
+- [**KernelFlasher**](https://github.com/fatalcoder524/KernelFlasher) — the maintained fork of the archived Kernel Flasher app: flash, back up, and restore kernels on device.
+- [**KSUPatcher**](https://github.com/AkuaTech/ksupatcher) — on-device boot image patching for KernelSU and KernelSU-Next, including inactive-slot installs for OTA survival.
 - [**Ylarod/ddk**](https://github.com/Ylarod/ddk) — kernel driver development kit, the recommended way to build an LKM for a custom kernel.
 - [**AnyKernel3**](https://github.com/osm0sis/AnyKernel3) — packaging and flashing for kernel ZIPs.
 - [**kernel_build_action**](https://github.com/dabao1955/kernel_build_action) — GitHub Actions workflow that builds a kernel with KernelSU in CI.
 - [**KernelSU_Action**](https://github.com/xiaoleGun/KernelSU_Action) — another CI action for integrating KernelSU into a kernel tree.
+- [**Kernel-Builder-GKI-Susfs**](https://github.com/shoey63/Kernel-Builder-GKI-Susfs) — a GKI-only CI builder that resolves the manifest, pulls the latest root environment, and emits one kernel plus the matching Manager.
+- [**gki_ksu_workflow**](https://github.com/midori01/gki_ksu_workflow) — a GKI builder that runs plain `make` instead of Kleaf/Bazel, with multi-variant KernelSU and SUSFS output.
+- [**nix-kernelsu-builder**](https://github.com/xddxdd/nix-kernelsu-builder) — Nix derivations that produce a boot image and an AnyKernel ZIP from a given kernel source tree.
 - [**KernelSU_General_porting_guide**](https://github.com/dabao1955/KernelSU_General_porting_guide) — Chinese-language guide to porting KernelSU to a non-GKI kernel.
 - [**kernelsu-coccinelle**](https://github.com/devnoname120/kernelsu-coccinelle) — automatic KernelSU patches for non-GKI kernels using Coccinelle.
 - [**KernelSU-Style-UI-Kit**](https://github.com/chenaizhang/KernelSU-Style-UI-Kit) — UI templates extracted from the KernelSU Manager, for building a custom manager.
@@ -431,6 +558,9 @@ For the Xposed layer on top of Zygisk: [**LSPosed**](https://github.com/LSPosed/
 - [**Droidspaces**](https://github.com/ravindu644/Droidspaces-OSS) — lightweight container runtime for rooted Android.
 - [**HyperUnlocked**](https://github.com/ukriu/HyperUnlocked) — unlock high-end Xiaomi features on more devices.
 - [**BRENE**](https://github.com/rrr333nnn333/BRENE) — KernelSU module bundling SUSFS support and other tweaks.
+- [**KernelSU-Tuner**](https://github.com/ylh440104/KernelSU-Tuner) — kernel-level performance profiles, charge limiting, and per-app policies with a WebUI console.
+- [**ZeroTier for KSU**](https://github.com/powerAn2020/ZeroTierForKSU) — ZeroTier networking as a managed module with its own UI.
+- [**KernelSU-Next AVD**](https://github.com/ymuuuu/KernelSU-Next-AVD) — root an Android Studio emulator through the GKI LKM path.
 - [**Awesome Android Root**](https://github.com/awesome-android-root/awesome-android-root) — the sibling list: root apps, modules, and guides across the whole scene. Worth a look if you root for reasons other than KernelSU.
 
 ## Device Kernels
@@ -445,11 +575,14 @@ Prebuilt kernels save you from compiling. **Verify the exact model, Android vers
 | [WildKernels OnePlus](https://github.com/WildKernels/OnePlus_KernelSU_SUSFS) | OnePlus | KernelSU + SUSFS | [![Release](https://img.shields.io/github/v/release/WildKernels/OnePlus_KernelSU_SUSFS?style=flat-square)](https://github.com/WildKernels/OnePlus_KernelSU_SUSFS/releases) |
 | [WildKernels Samsung](https://github.com/WildKernels/Samsung_KernelSU_SUSFS) | Samsung | KernelSU + SUSFS | [![Release](https://img.shields.io/github/v/release/WildKernels/Samsung_KernelSU_SUSFS?style=flat-square)](https://github.com/WildKernels/Samsung_KernelSU_SUSFS/releases) |
 | [WildKernels Sultan](https://github.com/WildKernels/Sultan_KernelSU_SUSFS) | Google Pixel | Sultan base + SUSFS | [![Release](https://img.shields.io/github/v/release/WildKernels/Sultan_KernelSU_SUSFS?style=flat-square)](https://github.com/WildKernels/Sultan_KernelSU_SUSFS/releases) |
-| [Action-Build](https://github.com/Numbersf/Action-Build) | OnePlus, QCOM and MTK | CI builds for SukiSU-Ultra, KernelSU, KernelSU-Next, and BakaSU | [![Release](https://img.shields.io/github/v/release/Numbersf/Action-Build?style=flat-square)](https://github.com/Numbersf/Action-Build/releases) |
+| [Action-Build](https://github.com/Numbersf/Action-Build) | OnePlus, QCOM and MTK | CI builds for SukiSU Nova, KernelSU, KernelSU-Next, BakaSU, and FinaSU | [![Release](https://img.shields.io/github/v/release/Numbersf/Action-Build?style=flat-square)](https://github.com/Numbersf/Action-Build/releases) |
 | [NonGKI_Kernel_Build_2nd](https://github.com/JackA1ltman/NonGKI_Kernel_Build_2nd) | Non-GKI devices | Non-GKI kernels with KSU and SUSFS | [![Release](https://img.shields.io/github/v/release/JackA1ltman/NonGKI_Kernel_Build_2nd?style=flat-square)](https://github.com/JackA1ltman/NonGKI_Kernel_Build_2nd/releases) |
-| [GKID-Kernels](https://github.com/ahmed-alnassif/GKID-Kernels) | GKI 2.0 | KernelSU/ReSukiSU + SUSFS, baseband guard | [![Release](https://img.shields.io/github/v/release/ahmed-alnassif/GKID-Kernels?style=flat-square)](https://github.com/ahmed-alnassif/GKID-Kernels/releases) |
+| [GKID-Kernels](https://github.com/ahmed-alnassif/GKID-Kernels) | GKI 2.0 | KernelSU or BakaSU + SUSFS, with a baseband guard | [![Release](https://img.shields.io/github/v/release/ahmed-alnassif/GKID-Kernels?style=flat-square)](https://github.com/ahmed-alnassif/GKID-Kernels/releases) |
 | [YuzakiKokuban](https://github.com/YuzakiKokuban) | Galaxy S23 / S24 / S25, Tab S10, Xiaomi | Samsung kernel sources built from Samsung's open source, with KernelSU + hybrid mount + SUSFS | [![Last commit](https://img.shields.io/github/last-commit/YuzakiKokuban/android_kernel_samsung_sm8750?style=flat-square)](https://github.com/YuzakiKokuban/android_kernel_samsung_sm8750) |
-| [kernel_msm-5.15](https://github.com/topnotchfreaks/kernel_msm-5.15) | Redmi Note 12/13 4G, Redmi Pad SE | SukiSU-Ultra, KPM, and SUSFS variants | [![Release](https://img.shields.io/github/v/release/topnotchfreaks/kernel_msm-5.15?style=flat-square)](https://github.com/topnotchfreaks/kernel_msm-5.15/releases) |
+| [OnePlus-Actions](https://github.com/Xiaomichael/OnePlus-Actions) | OnePlus, OPPO, realme (kernel 5.10–6.6) | CI builds for KernelSU, KernelSU-Next, SukiSU Nova, and the ReSukiSU line, plus a rootless optimised option | [![Last commit](https://img.shields.io/github/last-commit/Xiaomichael/OnePlus-Actions?style=flat-square)](https://github.com/Xiaomichael/OnePlus-Actions) |
+| [OnePlus_KernelSU_SUSFS](https://github.com/LingLuo17/OnePlus_KernelSU_SUSFS) | OnePlus | SukiSU Nova, BakaSU, and FinaSU variants with SUSFS | [![Release](https://img.shields.io/github/v/release/LingLuo17/OnePlus_KernelSU_SUSFS?style=flat-square)](https://github.com/LingLuo17/OnePlus_KernelSU_SUSFS/releases) |
+| [KernelSU_on_Huawei](https://github.com/xixiaobei-bei/KernelSU_on_Huawei) | Huawei (EMUI / HarmonyOS-era devices) | KernelSU builds for Huawei, where unlocking and kernel access work differently from the rest of the scene | [![Release](https://img.shields.io/github/v/release/xixiaobei-bei/KernelSU_on_Huawei?style=flat-square)](https://github.com/xixiaobei-bei/KernelSU_on_Huawei/releases) |
+| [Kernel-Builder-GKI-Susfs](https://github.com/shoey63/Kernel-Builder-GKI-Susfs) | Any GKI 2.0 device | Build your own kernel with the root environment of your choice rather than waiting for a maintainer | [![Last commit](https://img.shields.io/github/last-commit/shoey63/Kernel-Builder-GKI-Susfs?style=flat-square)](https://github.com/shoey63/Kernel-Builder-GKI-Susfs) |
 | [KernelSU_LKM_For_Oneplus12](https://github.com/snowwolf725/KernelSU_LKM_For_Oneplus12) | OnePlus 12 | LKM for OxygenOS/ColorOS | [![Release](https://img.shields.io/github/v/release/snowwolf725/KernelSU_LKM_For_Oneplus12?style=flat-square)](https://github.com/snowwolf725/KernelSU_LKM_For_Oneplus12/releases) |
 | [s10plus-snapdragon-droidspaces-kernel](https://github.com/tingao/s10plus-snapdragon-droidspaces-kernel) | Galaxy S10+ Snapdragon (SM-G9750) | Non-GKI 4.14 with KernelSU-Next built in (manual hooks) and Droidspaces container support | [![Release](https://img.shields.io/github/v/release/tingao/s10plus-snapdragon-droidspaces-kernel?style=flat-square)](https://github.com/tingao/s10plus-snapdragon-droidspaces-kernel/releases) |
 | [saipan-droidspaces-kernel](https://github.com/tingao/saipan-droidspaces-kernel) | moto g(50) 5G (XT2149-1) | Non-GKI 4.14 with KernelSU-Next (legacy branch), vendor-module CRC tolerance, and Droidspaces container support | [![Release](https://img.shields.io/github/v/release/tingao/saipan-droidspaces-kernel?style=flat-square)](https://github.com/tingao/saipan-droidspaces-kernel/releases) |
@@ -460,7 +593,7 @@ Prebuilt kernels save you from compiling. **Verify the exact model, Android vers
 ## Building from Source
 
 - **Official KernelSU:** build an LKM with [Ylarod/ddk](https://github.com/Ylarod/ddk). The GKI and non-GKI build guides are archival — [How to build](https://kernelsu.org/guide/how-to-build.html) · [Integrate for non-GKI](https://kernelsu.org/guide/how-to-integrate-for-non-gki.html).
-- **Forks** (KernelSU-Next, SukiSU-Ultra, BakaSU) still support direct kernel integration — see each repository's `kernel/setup.sh`.
+- **Forks** (KernelSU-Next, SukiSU Nova, BakaSU, RKSU, xxKSU) still support direct kernel integration — see each repository's `kernel/setup.sh`.
 - **Packaging and CI:** [AnyKernel3](https://github.com/osm0sis/AnyKernel3) · [kernel_build_action](https://github.com/dabao1955/kernel_build_action) · [KernelSU_Action](https://github.com/xiaoleGun/KernelSU_Action).
 - **Vendor kernel sources:** [Google](https://android.googlesource.com/kernel/) · [Xiaomi](https://github.com/MiCode/Xiaomi_Kernel_OpenSource) · [OnePlus](https://github.com/OnePlusOSS) · [Motorola](https://github.com/MotorolaMobilityLLC) · [Samsung](https://opensource.samsung.com).
 - **Writing a module:** [Module guide](https://kernelsu.org/guide/module.html) · [WebUI](https://kernelsu.org/guide/module-webui.html) · [configuration API](https://kernelsu.org/guide/module-config.html) · [Difference with Magisk](https://kernelsu.org/guide/difference-with-magisk.html).
@@ -484,14 +617,16 @@ Prebuilt kernels save you from compiling. **Verify the exact model, Android vers
 
 - [@KernelSU](https://t.me/KernelSU) — official announcements channel.
 - [@KernelSU_group](https://t.me/KernelSU_group) — official community group.
-- [@Sukiksu](https://t.me/Sukiksu) — SukiSU-Ultra channel.
+- [@Sukiksu](https://t.me/Sukiksu) — SukiSU Nova channel.
 - [@BAKASU_grp](https://t.me/BAKASU_grp) — BakaSU group (the former ReSukiSU group).
 - [@YukiSU](https://t.me/YukiSU) — YukiSU contact channel.
 - [@ksunext](https://t.me/ksunext) — KernelSU-Next community group.
 - [@ksunext_ci](https://t.me/ksunext_ci) — KernelSU-Next CI and build announcements channel.
+- [@rsukrnlsu](https://t.me/rsukrnlsu) — RKSU build feed, useful because its GitHub trunk goes quiet during rebases.
+- [@FinaSU](https://t.me/FinaSU) — FinaSU group.
 
 > [!NOTE]
-> KOWSU publishes through GitHub and its own build channel rather than a Telegram group.
+> KOWSU publishes through GitHub and its own build channel rather than a Telegram group. XDA threads are where device-specific kernel builds and KSU Next + SUSFS rooting walkthroughs usually appear first.
 
 **Other**
 
@@ -773,7 +908,7 @@ See [Metamodules](#metamodules).
 |---|---|---|
 | **Architecture** | Kernel-level | Userspace, ramdisk-based |
 | **Root control** | Per-app profiles with UID, GID, capabilities, SELinux domain | DenyList |
-| **Module system** | Metamodule-based (3.0+) | Magic Mount, built in |
+| **Module system** | Metamodule-based (3.0+) | Built in |
 | **Installation** | LKM or GKI | Boot image patching |
 | **Compatibility** | Needs a matching kernel | Broad |
 | **Zygisk** | External implementation required | Built in |
@@ -796,9 +931,10 @@ Official releases no longer ship GKI images, so a GKI install comes from a fork 
 
 - **GKI device, modern phone, stability first** → official KernelSU
 - **Kernel outside 5.10–6.18, or you want SUSFS without rebuilding** → KernelSU-Next
-- **KPM modules, or a very old kernel** → SukiSU-Ultra
+- **KPM modules, or a very old kernel** → SukiSU Nova
 - **Manual hooks down to 3.4, or a second Manager** → BakaSU
-- **Bundled Zygisk** → YukiSU or FinaSU
+- **Kernel down to 3.x with arm32 targets** → RKSU or xxKSU
+- **Bundled Zygisk** → SukiSU Nova, YukiSU, or FinaSU
 
 See [KernelSU Variants](#kernelsu-variants).
 
@@ -934,7 +1070,7 @@ Configure them per app in the Manager. Full details: [App Profile](https://kerne
 <details>
 <summary><b>What is KPM?</b></summary>
 
-KPM — Kernel Patch Module — runs code in kernel space with inline hooks and syscall-table hooks. It started in APatch and was ported to KernelSU by SukiSU-Ultra. It is no longer exclusive to SukiSU: [KPatch-Next](https://github.com/KernelSU-Next/KPatch-Next) provides a standalone implementation for Magisk and KernelSU.
+KPM — Kernel Patch Module — runs code in kernel space with inline hooks and syscall-table hooks. It started in APatch and was ported to KernelSU by SukiSU, now Nova. It is no longer exclusive to that fork: [KPatch-Next](https://github.com/KernelSU-Next/KPatch-Next) provides a standalone implementation for Magisk and KernelSU.
 
 </details>
 
@@ -1061,7 +1197,8 @@ KernelSU and its derivatives are independent, community-driven projects. They ar
 **Derivative maintainers**
 
 - **KernelSU-Next** — wider kernel coverage, module backup, prebuilt SUSFS loaders.
-- **SukiSU-Ultra** — KPM integration, legacy device support, and the deepest Manager feature set.
+- **SukiSU Nova** — KPM integration, legacy device support, and the deepest Manager feature set.
+- **RKSU, xxKSU, and MKSU** — the non-GKI work and the Magic Mount API that the other forks build on.
 - **BakaSU** — minimal hooks and multi-manager support.
 - **YukiSU and FinaSU** — bundled Zygisk engines and a different Manager direction.
 - **KOWSU** — Material theming and translation coverage on top of upstream.
