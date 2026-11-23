@@ -17,7 +17,6 @@ Thank you for your interest in contributing to Awesome KernelSU! This guide will
 - **Official Resources**: New official KernelSU tools, documentation, or announcements
 - **KernelSU Derivatives**: Forks like KernelSU-Next, SukiSU Nova, BakaSU, RKSU, or new derivatives
 - **Metamodules**: Mounting implementations for the metamodule system
-- **Modules**: High-quality KernelSU modules that provide useful functionality
 - **Tools**: Development tools, builders, or utilities related to KernelSU
 - **Documentation**: Tutorials, guides, or educational content
 - **Community Resources**: Forums, communities, or discussion platforms
@@ -31,7 +30,6 @@ Thank you for your interest in contributing to Awesome KernelSU! This guide will
 - **Duplicate Entries**: Resources already listed in the same section
 - **Broken Links**: Non-functional or redirecting links
 - **Low-Quality Resources**: Poorly documented or unreliable projects
-- **Mirrored Releases**: Modules that are already listed in the [KernelSU Modules registry](https://modules.kernelsu.org/) — link the registry entry instead of duplicating it
 
 ## Resource Quality Standards
 
@@ -130,10 +128,10 @@ Create a pull request with:
 
 ### Possible Outcomes
 
-- ✅ **Approved**: Resource meets all standards
-- 📝 **Needs Changes**: Minor adjustments required
-- ❌ **Rejected**: Doesn't meet quality standards
-- 🔄 **Deferred**: Good resource, wrong timing
+- **Approved**: Resource meets all standards
+- **Needs Changes**: Minor adjustments required
+- **Rejected**: Doesn't meet quality standards
+- **Deferred**: Good resource, wrong timing
 
 ## Maintenance
 
@@ -177,14 +175,6 @@ When adding derivatives:
 - Note any unique features or limitations
 - Verify active development and community support
 
-### Modules
-
-For KernelSU modules:
-- Confirm compatibility with current KernelSU versions
-- Include brief functionality description
-- Note any special requirements or dependencies
-- Verify the module is safe and well-tested
-
 ### Documentation
 
 For tutorials and guides:
@@ -204,6 +194,4 @@ If you have questions about contributing:
 
 ---
 
-Thank you for helping make Awesome KernelSU the best resource for the community! 🚀
-
-*Every contribution, no matter how small, helps make the KernelSU ecosystem stronger.*
+Thanks for helping keep this list accurate.
